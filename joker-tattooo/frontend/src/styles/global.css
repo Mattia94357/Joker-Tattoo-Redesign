@@ -187,3 +187,10 @@ address{font-style:normal}
 }
 
 .map-placeholder small{display:inline-block;margin-top:.35rem;max-width:240px;color:var(--muted);font-size:.68rem;line-height:1.5;text-transform:none;letter-spacing:0}
+
+.language-switcher{gap:.3rem}
+.language-switcher button{display:grid;place-items:center;min-width:36px;min-height:36px;padding:.3rem;border:1px solid transparent;border-radius:8px;opacity:.52;filter:saturate(.72);transition:opacity .2s,filter .2s,background .2s,border-color .2s,transform .2s}
+.language-switcher button:hover{opacity:1;filter:saturate(1);transform:translateY(-1px)}
+.language-switcher button.active{opacity:1;filter:saturate(1);border-color:rgba(114,239,115,.45);background:rgba(114,239,115,.08)}
+.language-flag{display:block;font-size:1.15rem;line-height:1}
+@media(max-width:900px){.language-switcher button{min-width:44px;min-height:44px}.language-flag{font-size:1.25rem}}
