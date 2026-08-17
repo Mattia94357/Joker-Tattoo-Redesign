@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import serviceHero from '../../assets/8FFBhedj6Z3Q9mLAQbDdXWm5V4.avif';
 import { faqs } from '../data/faq';
 import { services } from '../data/services';
 import { contactDetails } from '../data/contact';
-import { Button } from '../components/ui/Button';
+import { BookingButton } from '../components/booking/BookingButton';
+import { useBooking } from '../context/BookingContext';
 import { Reveal } from '../components/ui/Reveal';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { useLanguage } from '../context/LanguageContext';
@@ -15,6 +15,7 @@ import { seoConfig } from '../config/seo';
 export function ServicesPage() {
   const [open, setOpen] = useState<number | null>(0);
   const { t } = useLanguage();
+  const { openBooking } = useBooking();
   const visibleFaqs = faqs.map(([question, answer]) => [t(question), t(answer)]);
 
   return <main className="page">
@@ -25,7 +26,7 @@ export function ServicesPage() {
     </section>
     <section className="section services">
       <Reveal><SectionHeading eyebrow={t('Tattoo services')} title={t('No templates. No shortcuts.')} /></Reveal>
-      <div className="service-list">{services.map(([title, text], index) => <Reveal key={title}><article><span>{String(index + 1).padStart(2, '0')}</span><h3>{t(title)}</h3><div><p>{t(text)}</p><Link to="/contact">{t('Discuss this tattoo service')} <span aria-hidden="true">→</span></Link></div></article></Reveal>)}</div>
+      <div className="service-list">{services.map(([title, text], index) => <Reveal key={title}><article><span>{String(index + 1).padStart(2, '0')}</span><h3>{t(title)}</h3><div><p>{t(text)}</p><button className="service-booking-link" onClick={openBooking}>{t('Discuss this tattoo service')} <span aria-hidden="true">→</span></button></div></article></Reveal>)}</div>
     </section>
     <section className="premium-faq">
       <div className="premium-faq__glow" aria-hidden="true" />
@@ -43,7 +44,7 @@ export function ServicesPage() {
             <div className="premium-faq__answer" id={answerId}><div><p>{answer}</p></div></div>
           </article>;
         })}</div>
-        <Reveal><div className="premium-faq__cta"><div><p className="eyebrow">{t('Personal guidance')}</p><h3>{t('Still have questions?')}</h3><p>{t("We're happy to help. Contact our artists today and we'll guide you through the entire process.")}</p></div><div className="button-row"><Button to="/contact" variant="red">{t('Book a Tattoo')}</Button><a className="button button--outline" href={contactDetails.whatsapp} target="_blank" rel="noopener noreferrer">{t('WhatsApp Us')}<span aria-hidden="true">↗</span></a></div></div></Reveal>
+        <Reveal><div className="premium-faq__cta"><div><p className="eyebrow">{t('Personal guidance')}</p><h3>{t('Still have questions?')}</h3><p>{t("We're happy to help. Contact our artists today and we'll guide you through the entire process.")}</p></div><div className="button-row"><BookingButton variant="red">{t('Book a Tattoo')}</BookingButton><a className="button button--outline" href={contactDetails.whatsapp} target="_blank" rel="noopener noreferrer">{t('WhatsApp Us')}<span aria-hidden="true">↗</span></a></div></div></Reveal>
       </div>
     </section>
   </main>;

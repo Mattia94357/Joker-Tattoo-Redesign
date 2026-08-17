@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 import { tattooStyles } from '../data/services';
 import { customerReviews, googleReviewsUrl } from '../data/reviews';
 import { Button } from '../components/ui/Button';
+import { BookingButton } from '../components/booking/BookingButton';
 import { ImageCard } from '../components/ui/ImageCard';
 import { MagneticLink } from '../components/ui/MagneticLink';
 import { Reveal } from '../components/ui/Reveal';
@@ -59,7 +60,7 @@ export function HomePage() {
         <p className="eyebrow">{t('Patong · Phuket · Custom tattoo studio')}</p>
         <h1><span>{t('Wear your story.')}</span><em>{t('Leave your mark.')}</em></h1>
         <p>{t('Custom tattoo work created in the heart of Patong, Phuket.')}</p>
-        <div className="button-row"><Button to="/gallery">{t('Explore Our Work')}</Button><Button to="/contact" variant="outline">{t('Book a Tattoo')}</Button></div>
+        <div className="button-row"><Button to="/gallery">{t('Explore Our Work')}</Button><BookingButton variant="outline">{t('Book a Tattoo')}</BookingButton></div>
       </div>
       <a className="scroll-cue" href="#intro">{t('Scroll to discover')} <span aria-hidden="true">↓</span></a>
     </section>
@@ -100,6 +101,6 @@ export function HomePage() {
       </Reveal>)}</div>
       <a className="reviews-link" href={googleReviewsUrl} target="_blank" rel="noopener noreferrer">{t('Read all Google reviews')} <span aria-hidden="true">↗</span></a>
     </section>
-    <section className="booking-cta"><div><p className="eyebrow">{t('Your idea starts here')}</p><h2>{t('Ready to make')}<br />{t('it permanent?')}</h2></div><div className="button-row"><Button to="/contact" variant="red">{t('Discuss your tattoo idea')}</Button><Button to="/contact" variant="outline">{t('Book a Tattoo')}</Button></div></section>
+    <section className="booking-cta"><div><p className="eyebrow">{t('Your idea starts here')}</p><h2>{t('Ready to make')}<br />{t('it permanent?')}</h2></div><div className="button-row"><BookingButton variant="red">{t('Discuss your tattoo idea')}</BookingButton><BookingButton variant="outline">{t('Book a Tattoo')}</BookingButton></div></section>
   </main>;
 }

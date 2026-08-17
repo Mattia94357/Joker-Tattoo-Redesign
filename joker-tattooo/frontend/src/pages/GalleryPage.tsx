@@ -2,7 +2,7 @@ import { useEffect, useState, type CSSProperties } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { galleryCategories, galleryItems } from '../data/gallery';
 import { SectionHeading } from '../components/ui/SectionHeading';
-import { Button } from '../components/ui/Button';
+import { BookingButton } from '../components/booking/BookingButton';
 import { useLanguage } from '../context/LanguageContext';
 import { SEO } from '../components/seo/SEO';
 import { breadcrumbSchema, imageObjectSchema, webPageSchema } from '../components/seo/structuredData';
@@ -39,7 +39,7 @@ export function GalleryPage() {
     <section className="gallery-section">
       <div className="filters" role="group" aria-label={t('Filter gallery')}>{galleryCategories.map(category => <button className={filter === category ? 'active' : ''} onClick={() => setFilter(category)} key={category}>{t(category)}</button>)}</div>
       <motion.div layout className="masonry">{visible.map((item, index) => <motion.button layout className={`gallery-tile gallery-tile--${index % 4}`} key={item.id} onClick={() => setActive(galleryItems.indexOf(item))}><img src={item.imageSmall} srcSet={item.imageSmall !== item.image ? `${item.imageSmall} 640w, ${item.image} ${item.width}w` : undefined} sizes="(max-width: 700px) 100vw, 33vw" width={item.width} height={item.height} alt={t(item.alt)} loading="lazy" decoding="async" /><span><strong>{t(item.title)}</strong><small>{t(item.category)}</small></span></motion.button>)}</motion.div>
-      <div className="gallery-cta"><p>{t('Have a direction in mind? Tell the studio about your idea.')}</p><Button to="/contact" variant="outline">{t('Discuss your tattoo idea')}</Button></div>
+      <div className="gallery-cta"><p>{t('Have a direction in mind? Tell the studio about your idea.')}</p><BookingButton variant="outline">{t('Discuss your tattoo idea')}</BookingButton></div>
     </section>
     <AnimatePresence>{active !== null && <motion.div className="lightbox" role="dialog" aria-modal="true" aria-label={t('Gallery image viewer')} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <button className="lightbox__close" onClick={() => setActive(null)} aria-label={t('Close image viewer')}>{t('Close')} ×</button>

@@ -5,6 +5,7 @@ import { HelmetProvider } from 'react-helmet-async';
 
 import App from './App';
 import { LanguageProvider } from './context/LanguageContext';
+import { BookingProvider } from './context/BookingContext';
 import './styles/global.css';
 
 createRoot(document.getElementById('root')!).render(
@@ -12,7 +13,7 @@ createRoot(document.getElementById('root')!).render(
     <HelmetProvider>
       <LanguageProvider>
         <BrowserRouter>
-          <App />
+          <BookingProvider><App /></BookingProvider>
         </BrowserRouter>
       </LanguageProvider>
     </HelmetProvider>
