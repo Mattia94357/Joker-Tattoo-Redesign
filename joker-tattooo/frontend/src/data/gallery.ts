@@ -1,6 +1,4 @@
 import chestSakYant from '../../assets/chestsakyant.jpg';
-import colourDragon from '../../assets/colordragonjapanese.jpg';
-import dragonBackpiece from '../../assets/dragonjapanese.jpg';
 import japaneseHannya from '../../assets/japanese1.jpg';
 import japaneseOni from '../../assets/japanese2.jpg';
 import pinkHannya from '../../assets/pinkhannyajapanese.jpg';
@@ -9,7 +7,6 @@ import sacredGeometry from '../../assets/religionrealism.jpg';
 import sakYantBack from '../../assets/sakyantback.jpg';
 import tigerSakYant from '../../assets/tattoo10.jpg';
 import religiousSleeve from '../../assets/tattoo4.jpg';
-import blackGreySleeve from '../../assets/tattoo5.jpg';
 import thaiWarrior from '../../assets/thaiwarriorleg.jpg';
 import tigerSleeve from '../../assets/tigersleevejapanese.jpg';
 import womanRealism from '../../assets/womanrealism.jpg';
@@ -45,12 +42,9 @@ export const galleryItems: GalleryItem[] = [
   item(7, 'Daruma Sleeve', 'Japanese', japaneseOni, 1000, 1257, 'Japanese guardian and red Daruma full sleeve tattoo'),
   item(8, 'Sacred Backpiece', 'Sak Yant', sakYantBack, 320, 401, 'Traditional Sak Yant full back tattoo'),
   item(9, 'Woman & Rose', 'Realism', womanRealism, 201, 251, 'Black and grey realistic woman and rose arm tattoo'),
-  item(10, 'Japanese Dragon', 'Colour', colourDragon, 224, 225, 'Colour Japanese dragon full sleeve tattoo'),
-  item(11, 'Temple Backpiece', 'Black & Grey', dragonBackpiece, 198, 255, 'Black and grey Japanese temple and dragon backpiece'),
   item(12, 'Purple Hannya', 'Colour', japaneseHannya, 791, 976, 'Purple Japanese Hannya mask colour tattoo'),
   item(13, 'Ornamental Mandala', 'Black & Grey', sacredGeometry, 624, 779, 'Ornamental blackwork mandala tattoo across the upper back'),
   item(14, 'Religious Sleeve', 'Realism', religiousSleeve, 216, 233, 'Black and grey religious realism sleeve tattoo'),
-  item(15, 'Faith & Architecture', 'Black & Grey', blackGreySleeve, 225, 224, 'Black and grey religious and architectural sleeve tattoo'),
   item(16, 'Japanese Backpiece', 'Japanese', japaneseBackpiece, 813, 1024, 'Large-scale Japanese backpiece tattoo by Joker Tattoo Patong'),
   item(17, 'Sak Yant Chest', 'Sak Yant', sakYantChest, 741, 1024, 'Traditional Sak Yant chest tattoo by Joker Tattoo Patong'),
   item(18, 'Blue Dragon', 'Colour', blueDragon, 1016, 1024, 'Vivid blue Japanese dragon sleeve tattoo'),

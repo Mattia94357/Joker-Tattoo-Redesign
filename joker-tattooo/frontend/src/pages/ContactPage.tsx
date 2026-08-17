@@ -18,7 +18,10 @@ export function ContactPage() {
           <div><p className="eyebrow">{t('Studio hours')}</p><p>{t(contactDetails.hours)}</p></div>
         </address>
         <div className="social-row"><a href={contactDetails.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={contactDetails.facebook} target="_blank" rel="noopener noreferrer">Facebook</a><a href={contactDetails.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp</a></div>
-        <a className="map-placeholder" id="map" href={contactDetails.maps} target="_blank" rel="noopener noreferrer" aria-label={t('Open Joker Tattoo in Google Maps')}><span aria-hidden="true">MAP</span><p>{t('Open Joker Tattoo in Google Maps')}<br /><small>{t(contactDetails.address)}</small></p></a>
+        <div className="contact-map" id="map">
+          <iframe src={contactDetails.mapsEmbed} title={t('Interactive map showing Joker Tattoo in Patong')} loading="lazy" allowFullScreen referrerPolicy="no-referrer-when-downgrade" />
+          <a href={contactDetails.maps} target="_blank" rel="noopener noreferrer">{t('Open Joker Tattoo in Google Maps')}<span aria-hidden="true">↗</span></a>
+        </div>
       </aside>
       <div className="contact-booking-card">
         <span className="contact-booking-card__number">01</span><p className="eyebrow">{t('Appointment requests')}</p><h2>{t('Your idea starts here.')}</h2>

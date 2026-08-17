@@ -31,6 +31,7 @@ const italian: Record<string, string> = {
   '91 Nanai Rd, Tambon Patong, Amphoe Kathu, Chang Wat Phuket 83150': '91 Nanai Rd, Tambon Patong, Amphoe Kathu, Chang Wat Phuket 83150',
   'Monday – Sunday, 1:00 PM – 8:00 PM': 'Lunedì – Domenica, 13:00 – 20:00',
   'Open Joker Tattoo in Google Maps': 'Apri Joker Tattoo su Google Maps',
+  'Interactive map showing Joker Tattoo in Patong': 'Mappa interattiva che mostra Joker Tattoo a Patong',
   'Patong · Phuket · Custom tattoo studio': 'Patong · Phuket · Studio di tatuaggi personalizzati',
   'Wear your story.': 'Indossa la tua storia.',
   'Leave your mark.': 'Lascia il tuo segno.',
