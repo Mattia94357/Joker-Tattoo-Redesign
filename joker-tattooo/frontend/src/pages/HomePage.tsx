@@ -95,9 +95,9 @@ export function HomePage() {
     <section className="section reviews-section">
       <Reveal><SectionHeading eyebrow={t('Google Reviews')} title={t('Stories carried forward.')} text={t('What clients say about their experience at Joker Tattoo Patong.')} /></Reveal>
       <div className="reviews-grid">{customerReviews.map((review, index) => <Reveal key={review.name} className="review-card">
-        <div className="review-card__top"><span className="review-card__index">{String(index + 1).padStart(2, '0')}</span><span className="review-card__stars" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}</span></div>
+        <div className="review-card__top"><span className="review-card__index">{String(index + 1).padStart(2, '0')}</span><span className="review-card__stars" aria-label={`${review.rating} ${t('out of 5 stars')}`}>{'★'.repeat(review.rating)}</span></div>
         <blockquote>“{t(review.text)}”</blockquote>
-        <footer><strong>{review.name}</strong><span>Customer Review</span></footer>
+        <footer><strong>{review.name}</strong><span>{t('Customer Review')}</span></footer>
       </Reveal>)}</div>
       <a className="reviews-link" href={googleReviewsUrl} target="_blank" rel="noopener noreferrer">{t('Read all Google reviews')} <span aria-hidden="true">↗</span></a>
     </section>

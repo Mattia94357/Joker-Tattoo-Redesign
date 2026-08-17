@@ -17,6 +17,6 @@ export function Footer() {
     <address><p className="eyebrow">{t('Visit')}</p><p>{t(contactDetails.address)}</p><p>{t(contactDetails.hours)}</p></address>
     <address><p className="eyebrow">{t('Contact')}</p><p><a href={contactDetails.whatsapp} target="_blank" rel="noopener noreferrer">{t(contactDetails.phone)} · WhatsApp</a></p><p>{t(contactDetails.email)}</p></address>
     <div><p className="eyebrow">{t('Follow')}</p><a href={contactDetails.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={contactDetails.facebook} target="_blank" rel="noopener noreferrer">Facebook</a><a href={contactDetails.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp</a><a href={contactDetails.maps} target="_blank" rel="noopener noreferrer">Google Maps</a></div>
-    <div className="footer-bottom"><span>© {new Date().getFullYear()} Joker Tattoo. {t('Prototype.')}</span><button className="footer-booking-link" onClick={openBooking}>{t('Discuss your tattoo idea')} →</button></div>
+    <div className="footer-bottom"><span>© {new Date().getFullYear()} Joker Tattoo. {t('All rights reserved.')}</span><button className="footer-booking-link" onClick={openBooking}>{t('Discuss your tattoo idea')} →</button></div>
   </footer>;
 }

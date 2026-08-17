@@ -1,7 +1,7 @@
 export const contactDetails = {
   address: '91 Nanai Rd, Tambon Patong, Amphoe Kathu, Chang Wat Phuket 83150',
   phone: '+66 64 858 7105',
-  email: 'Email address to be confirmed',
+  email: 'jokertattoopatongth@gmail.com',
   hours: 'Monday – Sunday, 1:00 PM – 8:00 PM',
   instagram: 'https://www.instagram.com/jokertattoopatong/?hl=en',
   facebook: 'https://www.facebook.com/JokerTattooPatongStudio/',
