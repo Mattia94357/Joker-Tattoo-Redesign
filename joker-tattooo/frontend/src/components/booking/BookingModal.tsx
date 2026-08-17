@@ -41,8 +41,9 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
 
   const addFiles = (incoming: FileList | File[]) => {
     const images = Array.from(incoming).filter(file => file.type.startsWith('image/'));
-    setFiles(current => [...current, ...images].filter((file, index, all) => all.findIndex(item => item.name === file.name && item.size === file.size) === index));
-    setErrors(current => ({ ...current, references: undefined }));
+    const oversized = images.some(file => file.size > 3 * 1024 * 1024);
+    setFiles(current => [...current, ...images.filter(file => file.size <= 3 * 1024 * 1024)].filter((file, index, all) => all.findIndex(item => item.name === file.name && item.size === file.size) === index).slice(0, 5));
+    setErrors(current => ({ ...current, references: oversized ? t('Each image must be 3 MB or smaller.') : current.references }));
   };
 
   const onFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -126,6 +127,7 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
               <input type="file" accept="image/*" multiple capture={undefined} onChange={onFileChange} />
               <span className="booking-upload__icon" aria-hidden="true">＋</span><strong>{t('Add reference images')}</strong><small>{t('Drag & drop or choose from camera / gallery')}</small>
             </label>
+            {errors.references && <p className="booking-upload-error" role="alert">{errors.references}</p>}
             {files.length > 0 && <div className="booking-files" aria-label={t('Selected reference images')}>{files.map((file, index) => <div key={`${file.name}-${file.size}`}><span>{file.name}</span><small>{(file.size / 1048576).toFixed(1)} MB</small><button type="button" onClick={() => setFiles(current => current.filter((_, itemIndex) => itemIndex !== index))} aria-label={`${t('Remove')} ${file.name}`}>×</button></div>)}</div>}
             <Field label={t('Additional Notes')}><textarea name="notes" rows={4} placeholder={t('Tell us about placement, meaning, colours, or anything else we should know.')} /></Field>
           </fieldset>

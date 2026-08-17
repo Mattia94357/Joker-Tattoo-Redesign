@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 
 test.describe('global booking request', () => {
   test('opens from the home CTA, validates, and reaches success', async ({ page }) => {
+    await page.route('**/api/bookings', route => route.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify({ success: true, id: 'test-message-id' }) }));
     await page.goto('http://127.0.0.1:4173/');
     await page.getByRole('button', { name: 'Book a Tattoo' }).first().click();
     const dialog = page.getByRole('dialog', { name: 'Begin your piece.' });

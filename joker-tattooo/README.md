@@ -43,6 +43,13 @@ npm run dev:backend
 - Backend: http://localhost:4001
 - API health check: http://localhost:4001/api/health
 
+## Booking email setup
+
+Booking requests are delivered by the backend over SMTP. Copy `backend/.env.example`
+to `backend/.env` and set `SMTP_PASS` to the Gmail app password for the sending
+account. Requests are addressed to `jokertattoopatongth@gmail.com`; uploaded image
+references are included as attachments. Never commit the completed `.env` file.
+
 ## Checks and production builds
 
 ```bash
@@ -50,4 +57,3 @@ npm run typecheck
 npm run lint
 npm run build
 ```
-

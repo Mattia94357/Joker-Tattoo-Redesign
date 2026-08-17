@@ -174,6 +174,7 @@ const italian: Record<string, string> = {
   'Add reference images': 'Aggiungi immagini di riferimento',
   'Drag & drop or choose from camera / gallery': 'Trascina qui o scegli dalla fotocamera / galleria',
   'Selected reference images': 'Immagini di riferimento selezionate',
+  'Each image must be 3 MB or smaller.': 'Ogni immagine deve essere di 3 MB o meno.',
   'Remove': 'Rimuovi',
   'Additional Notes': 'Note aggiuntive',
   'Tell us about placement, meaning, colours, or anything else we should know.': 'Raccontaci posizione, significato, colori o qualsiasi altra cosa dovremmo sapere.',

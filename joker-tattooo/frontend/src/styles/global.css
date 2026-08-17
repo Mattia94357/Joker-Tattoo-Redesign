@@ -244,6 +244,7 @@ address{font-style:normal}
 .booking-upload__icon{display:grid;place-items:center;width:42px;height:42px;margin-bottom:.5rem;border:1px solid rgba(114,239,115,.38);border-radius:50%;color:var(--green);font-size:1.4rem}
 .booking-upload strong{font:600 1.15rem var(--display);letter-spacing:.02em;text-transform:uppercase}
 .booking-upload small{color:#737973;font-size:.68rem}
+.booking-upload-error{margin:-.4rem 0 1rem;color:#ff8186;font-size:.68rem}
 .booking-files{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem;margin-bottom:1rem}
 .booking-files>div{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:.7rem;min-width:0;padding:.7rem .8rem;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.025);font-size:.7rem}
 .booking-files span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.booking-files small{color:#737973}.booking-files button{width:28px;height:28px;border:0;border-radius:50%;background:rgba(255,255,255,.07);cursor:pointer}

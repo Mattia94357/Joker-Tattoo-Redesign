@@ -2,6 +2,8 @@ import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import multer from 'multer';
+import bookingRoutes from './routes/bookings';
 
 const app = express();
 
@@ -21,5 +23,14 @@ app.get('/api/health', (_request, response) => {
   });
 });
 
-export default app;
+app.use('/api/bookings', bookingRoutes);
 
+app.use((error: unknown, _request: express.Request, response: express.Response, next: express.NextFunction) => {
+  if (error instanceof multer.MulterError) {
+    response.status(400).json({ success: false, message: error.code === 'LIMIT_FILE_SIZE' ? 'Each reference image must be 3 MB or smaller.' : 'A maximum of 5 reference images can be attached.' });
+    return;
+  }
+  next(error);
+});
+
+export default app;
