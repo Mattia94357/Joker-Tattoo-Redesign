@@ -7,11 +7,11 @@ This project provides a technical and local SEO foundation. It does not guarante
 Set the production origin before building:
 
 ```env
-VITE_SITE_URL=https://your-production-domain.com
+VITE_SITE_URL=https://www.jokertattoopatong.com
 VITE_BUSINESS_NAME=Joker Tattoo
 ```
 
-Never use a temporary preview URL as the permanent `VITE_SITE_URL`. Canonicals, Open Graph URLs, the sitemap, robots reference, and structured-data URLs are generated from this value. The checked-in `https://example.com` value is an explicit placeholder and must be replaced before launch.
+Never use a temporary preview URL as the permanent `VITE_SITE_URL`. Canonicals, Open Graph URLs, the sitemap, robots reference, and structured-data URLs are generated from this value. The checked-in fallback uses the resolving Joker Tattoo domain, while `VITE_SITE_URL` remains available as the deployment-level override.
 
 ## Metadata system
 
@@ -45,11 +45,11 @@ Do not add ratings or reviews unless they are genuine, visible, current, and eli
 1. Generates static route HTML for `/`, `/gallery`, `/why-joker`, `/contact`, and `/404`.
 2. Injects each route’s unique title, description, canonical, robots, social metadata, JSON-LD, heading, summary, and internal links.
 3. Writes `dist/sitemap.xml` with public routes, priorities, and update frequencies.
-4. Writes `dist/robots.txt` referencing the production sitemap and explicitly allowing major search-focused AI crawlers.
+4. Writes a minimal `dist/robots.txt` whose wildcard rule allows conventional and AI crawlers and references the production sitemap.
 5. Writes `dist/llms.txt` with concise, source-linked business and page facts for AI retrieval systems that choose to consume it.
 6. Writes `dist/404.html` with `noindex, follow`.
 
-Checked-in copies under `frontend/public` use `example.com` as a safe placeholder for development. The build output replaces them using `VITE_SITE_URL`.
+Checked-in copies under `frontend/public` use the production domain. The build output regenerates them using `VITE_SITE_URL` when an environment override is present.
 
 The route snapshots are crawlable SEO-first HTML shells rather than a full server-rendered copy of every animated component. The React application replaces the snapshot after startup. This is a practical static prerender layer for the current Vite SPA; full SSG could be considered later if content becomes more complex.
 

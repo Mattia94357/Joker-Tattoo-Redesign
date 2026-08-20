@@ -209,7 +209,7 @@ for (const [key, page] of Object.entries(config.pages)) {
 
 const publicPages = Object.values(config.pages).filter(page => page.path !== '/404');
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${publicPages.map(page => `  <url>\n    <loc>${absolute(page.path)}</loc>\n    <changefreq>${page.changefreq}</changefreq>\n    <priority>${Number(page.priority).toFixed(1)}</priority>\n  </url>`).join('\n')}\n</urlset>\n`;
-const robots = `User-agent: *\nAllow: /\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`;
+const robots = `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`;
 const llms = `# ${businessName}\n\n> ${config.businessDescription}\n\n## Key facts\n\n- Address: ${config.address.streetAddress}, ${config.address.addressLocality}, ${config.address.addressRegion} ${config.address.postalCode}, Thailand\n- Phone: ${config.telephone}\n- Email: ${config.email}\n- Hours: Daily, 1:00 PM to 8:00 PM\n- Services: Custom tattoos, Japanese tattoos, realism tattoos, Sak Yant, black and grey, fine line, cover-ups and large-scale tattoos.\n- Booking: Customers can request an appointment online and receive a personal reply from the studio.\n\n## Public pages\n\n${publicPages.map(page => `- [${page.heading}](${absolute(page.path)}): ${page.summary}`).join('\n')}\n`;
 await writeFile(path.join(dist, 'sitemap.xml'), sitemap);
 await writeFile(path.join(dist, 'robots.txt'), robots);

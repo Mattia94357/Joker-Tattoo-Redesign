@@ -30,7 +30,7 @@ test('public pages expose unique, complete metadata', async ({ page }) => {
 
     expect(result.title).toBeTruthy();
     expect(result.description).toBeTruthy();
-    expect(result.canonical).toBe(`https://example.com${route}`);
+    expect(result.canonical).toBe(`https://www.jokertattoopatong.com${route}`);
     expect(result.ogTitle).toBe(result.title);
     expect(result.ogDescription).toBe(result.description);
     expect(result.ogImage).toBeTruthy();
@@ -88,4 +88,40 @@ test('legacy route redirects and video keeps required playback attributes', asyn
   await expect(video).toHaveAttribute('playsinline', '');
   await expect(video).not.toHaveAttribute('controls', '');
   expect(await video.evaluate(element => (element as HTMLVideoElement).muted)).toBeTruthy();
+});
+
+test('page ownership remains intentional with no duplicated Why Joker sections', async ({ page }) => {
+  await page.goto('http://127.0.0.1:5173/', { waitUntil: 'networkidle' });
+  await expect(page.locator('.safety-section')).toHaveCount(1);
+  await expect(page.locator('.reviews-section')).toHaveCount(1);
+  await expect(page.locator('.booking-cta')).toHaveCount(1);
+
+  await page.goto('http://127.0.0.1:5173/why-joker', { waitUntil: 'networkidle' });
+  await expect(page.locator('.service-hero__media video')).toHaveCount(1);
+  await expect(page.locator('.services')).toHaveCount(1);
+  await expect(page.locator('.consultation-section')).toHaveCount(1);
+  await expect(page.locator('.premium-faq')).toHaveCount(1);
+  await expect(page.locator('.safety-section')).toHaveCount(0);
+  await expect(page.locator('.reviews-section')).toHaveCount(0);
+  await expect(page.locator('.premium-faq__cta')).toHaveCount(0);
+  await expect(page.locator('.booking-cta')).toHaveCount(1);
+
+  await page.goto('http://127.0.0.1:5173/gallery', { waitUntil: 'networkidle' });
+  await expect(page.locator('.masonry')).toHaveCount(1);
+  await expect(page.locator('.gallery-cta')).toHaveCount(1);
+  await expect(page.locator('.safety-section, .reviews-section, .booking-cta')).toHaveCount(0);
+
+  await page.goto('http://127.0.0.1:5173/contact', { waitUntil: 'networkidle' });
+  await expect(page.locator('.contact-map')).toHaveCount(1);
+  await expect(page.locator('.contact-booking-card')).toHaveCount(1);
+  await expect(page.locator('.safety-section, .reviews-section, .booking-cta')).toHaveCount(0);
+});
+
+test('booking flow opens one modal from the shared header action', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('http://127.0.0.1:5173/', { waitUntil: 'networkidle' });
+  const headerBooking = page.locator('.site-header .button');
+  await expect(headerBooking).toHaveCount(1);
+  await headerBooking.click();
+  await expect(page.locator('.booking-modal [role="dialog"]')).toHaveCount(1);
 });

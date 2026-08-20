@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 const productionOrigin = 'http://127.0.0.1:4173';
-const routes = ['/', '/gallery', '/why-joker', '/contact', '/direct-spa-route'];
+const routes = ['/', '/gallery', '/why-joker', '/contact'];
 
 for (const route of routes) {
   test(`production route and assets load: ${route}`, async ({ page }) => {
@@ -19,3 +19,9 @@ for (const route of routes) {
     expect(failedRequests).toEqual([]);
   });
 }
+
+test('unknown production route returns a real 404', async ({ page }) => {
+  const response = await page.goto(`${productionOrigin}/missing-search-test-page`, { waitUntil: 'networkidle' });
+  expect(response?.status()).toBe(404);
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
+});
