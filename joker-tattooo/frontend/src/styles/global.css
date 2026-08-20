@@ -172,8 +172,13 @@ address{font-style:normal}
   .lightbox__next{right:.25rem}
   .lightbox__caption{padding:.65rem .8rem;border-radius:12px;background:rgba(7,8,7,.75);backdrop-filter:blur(8px)}
   .service-hero h1{font-size:clamp(3.8rem,18vw,4.7rem)}
-  .service-list article{grid-template-columns:34px minmax(0,1fr)}
-  .service-list h3{overflow-wrap:anywhere}
+  .services{padding-inline:clamp(1.5rem,7vw,2rem)}
+  .service-list article{grid-template-columns:minmax(0,1fr);justify-items:center;padding:3.75rem 0;text-align:center}
+  .service-list article>span{display:block;margin-bottom:1rem;font-size:1.25rem;line-height:1}
+  .service-list h3{max-width:100%;margin:0 0 1.35rem;font-size:clamp(2rem,10vw,2.55rem);overflow-wrap:normal}
+  .service-list article>div{display:flex;width:100%;flex-direction:column;align-items:center}
+  .service-list article p{grid-column:auto;width:min(100%,340px);margin:0;color:var(--muted);font-size:1rem;line-height:1.7;text-align:center}
+  .service-booking-link{justify-content:center;max-width:340px;margin-top:1.65rem;text-align:center}
 }
 
 @media(max-width:360px){
