@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import serviceHero from '../../assets/8FFBhedj6Z3Q9mLAQbDdXWm5V4.avif';
+import serviceHeroVideo from '../../assets/jokertattooshopvideo.mp4';
 import { faqs } from '../data/faq';
 import { services } from '../data/services';
 import { contactDetails } from '../data/contact';
@@ -22,7 +22,22 @@ export function ServicesPage() {
     <SEO {...seoConfig.pages.services} structuredData={[webPageSchema(seoConfig.pages.services.path, seoConfig.pages.services.title, seoConfig.pages.services.description), breadcrumbSchema('What We Do', seoConfig.pages.services.path), faqSchema(visibleFaqs)]} />
     <section className="service-hero">
       <div><p className="eyebrow">{t('What we do')}</p><h1>{t('Your idea.')}<br /><span>{t('Our craft.')}</span></h1><p>{t('Custom work with the patience, planning and precision it deserves.')}</p></div>
-      <img src={serviceHero} sizes="(max-width: 900px) 100vw, 50vw" width="883" height="1024" alt={t('Black and grey custom portfolio tattoo by Joker Tattoo Patong')} loading="eager" fetchPriority="high" decoding="async" />
+      <div className="service-hero__media">
+        <video
+          src={serviceHeroVideo}
+          width="883"
+          height="1024"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          controls={false}
+          controlsList="nodownload nofullscreen noremoteplayback"
+          disablePictureInPicture
+          aria-label={t('Tattoo artist working on a client at Joker Tattoo Patong')}
+        />
+      </div>
     </section>
     <section className="section services">
       <Reveal><SectionHeading eyebrow={t('Tattoo services')} title={t('No templates. No shortcuts.')} /></Reveal>
