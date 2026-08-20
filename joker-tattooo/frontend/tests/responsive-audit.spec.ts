@@ -1,6 +1,6 @@
 import { test } from '@playwright/test';
 
-const routes = ['/', '/gallery', '/what-we-do', '/contact'];
+const routes = ['/', '/gallery', '/why-joker', '/contact'];
 const viewports = [
   { name: 'mobile-320', width: 320, height: 720 },
   { name: 'mobile-390', width: 390, height: 844 },

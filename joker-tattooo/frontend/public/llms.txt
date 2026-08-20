@@ -1,0 +1,19 @@
+# Joker Tattoo
+
+> Joker Tattoo is a premium custom tattoo studio in Patong, Phuket, creating Japanese, realism, Sak Yant, black and grey, fine line, cover-up and large-scale tattoo work for travellers and local clients.
+
+## Key facts
+
+- Address: 91 Nanai Rd, Tambon Patong, Amphoe Kathu, Patong, Phuket 83150, Thailand
+- Phone: +66 64 858 7105
+- Email: jokertattoopatongth@gmail.com
+- Hours: Daily, 1:00 PM to 8:00 PM
+- Services: Custom tattoos, Japanese tattoos, realism tattoos, Sak Yant, black and grey, fine line, cover-ups and large-scale tattoos.
+- Booking: Customers can request an appointment online and receive a personal reply from the studio.
+
+## Public pages
+
+- [Home](https://example.com/): Studio overview, tattoo styles and booking information.
+- [Tattoo Gallery](https://example.com/gallery): Selected work by Joker Tattoo artists.
+- [Why Joker](https://example.com/why-joker): Services, consultations, hygiene standards, client reasons, frequently asked questions and booking.
+- [Contact](https://example.com/contact): Studio address, opening hours and appointment request.

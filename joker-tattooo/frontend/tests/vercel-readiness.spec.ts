@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 const productionOrigin = 'http://127.0.0.1:4173';
-const routes = ['/', '/gallery', '/what-we-do', '/contact', '/direct-spa-route'];
+const routes = ['/', '/gallery', '/why-joker', '/contact', '/direct-spa-route'];
 
 for (const route of routes) {
   test(`production route and assets load: ${route}`, async ({ page }) => {

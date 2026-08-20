@@ -7,6 +7,7 @@
     "dev": "vite",
     "prepare:assets": "node scripts/prepare-assets.mjs",
     "generate:seo": "node scripts/generate-seo.mjs",
+    "audit:seo": "node scripts/audit-seo-output.mjs",
     "build": "npm run prepare:assets && tsc -b && vite build && npm run generate:seo",
     "lint": "eslint .",
     "typecheck": "tsc -b --pretty false"

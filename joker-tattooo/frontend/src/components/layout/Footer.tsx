@@ -10,7 +10,7 @@ export function Footer() {
   const { openBooking } = useBooking();
   return <footer className="site-footer">
     <div className="footer-brand">
-      <img className="footer-wordmark" src={jokerWordmark} width="688" height="181" alt="Joker Tattoo Patong" loading="lazy" />
+      <img className="footer-wordmark" src={jokerWordmark} width="688" height="181" alt={t('Joker Tattoo Patong studio wordmark')} loading="lazy" decoding="async" />
       <p>{t('Original tattoo work in the heart of Patong, Phuket.')}</p>
       <nav className="footer-nav" aria-label={t('Footer navigation')}>{navigation.map(item => <Link key={item.to} to={item.to}>{t(item.label)}</Link>)}</nav>
     </div>

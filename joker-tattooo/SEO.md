@@ -27,24 +27,27 @@ Edit page titles and descriptions centrally in `seo.json`; do not duplicate them
 
 `frontend/src/components/seo/structuredData.ts` provides:
 
-- `LocalBusiness` on Home.
+- `Organization` on every public page to establish a consistent publisher entity.
+- `TattooParlor` + `LocalBusiness` on Home and Contact.
 - `WebSite` on Home.
 - `WebPage` on all public pages.
-- `BreadcrumbList` on Gallery, What We Do, and Contact.
-- `FAQPage` on What We Do only, using the same visible questions and answers from `frontend/src/data/faq.json`.
+- `BreadcrumbList` on Gallery, Why Joker, and Contact.
+- `FAQPage` on Why Joker only, using the same visible questions and answers from `frontend/src/data/faq.json`.
 - `ImageObject` for the real generated social-sharing image.
+- A disabled `AggregateRating` configuration hook in `seo.json`; enable it only after verified rating and review-count values are available and eligible.
 
-Unconfirmed phone, email, street address, postal code, coordinates, opening hours, price range, and social accounts are omitted from published JSON-LD. Do not add ratings or reviews unless they are genuine, visible, and eligible under current search-engine guidelines.
+Do not add ratings or reviews unless they are genuine, visible, current, and eligible under current search-engine guidelines.
 
 ## Sitemap, robots, and prerender snapshots
 
 `npm run build` runs `frontend/scripts/generate-seo.mjs` after Vite. It:
 
-1. Generates static route HTML for `/`, `/gallery`, `/what-we-do`, `/contact`, and `/404`.
+1. Generates static route HTML for `/`, `/gallery`, `/why-joker`, `/contact`, and `/404`.
 2. Injects each route’s unique title, description, canonical, robots, social metadata, JSON-LD, heading, summary, and internal links.
-3. Writes `dist/sitemap.xml` with public routes only.
-4. Writes `dist/robots.txt` referencing the production sitemap.
-5. Writes `dist/404.html` with `noindex, follow`.
+3. Writes `dist/sitemap.xml` with public routes, priorities, and update frequencies.
+4. Writes `dist/robots.txt` referencing the production sitemap and explicitly allowing major search-focused AI crawlers.
+5. Writes `dist/llms.txt` with concise, source-linked business and page facts for AI retrieval systems that choose to consume it.
+6. Writes `dist/404.html` with `noindex, follow`.
 
 Checked-in copies under `frontend/public` use `example.com` as a safe placeholder for development. The build output replaces them using `VITE_SITE_URL`.
 
@@ -68,16 +71,7 @@ Update confirmed details in:
 - `frontend/src/config/seo.json` for machine-readable SEO data.
 - `frontend/src/data/contact.ts` for visible contact content.
 
-Keep both sources aligned. Fields still awaiting confirmation:
-
-- Full street address and postal code.
-- Telephone and WhatsApp.
-- Public email address.
-- Opening hours.
-- Geographic coordinates.
-- Instagram and Facebook URLs.
-- Google Maps place/directions URL.
-- Price range, if the business wants to publish it.
+Keep both sources aligned. The address, contact channels, opening hours, geographic coordinates, social profiles, and map URL currently match across both sources. The optional price range remains unpublished.
 
 Do not publish placeholders as if they were real details.
 
