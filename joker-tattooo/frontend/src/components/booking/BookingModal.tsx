@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { useEffect, useId, useRef, useState, type ChangeEvent, type DragEvent, type FormEvent } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { submitBookingRequest, type BookingRequest } from '../../services/booking';
@@ -91,9 +91,9 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
 
   const today = new Date().toISOString().slice(0, 10);
 
-  return <AnimatePresence>{open && <motion.div className="booking-modal" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .24 }}>
+  return <AnimatePresence>{open && <m.div className="booking-modal" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .24 }}>
     <button className="booking-modal__backdrop" aria-label={t('Close booking form')} onClick={close} />
-    <motion.section className="booking-modal__panel" role="dialog" aria-modal="true" aria-labelledby={titleId} initial={{ opacity: 0, y: 34, scale: .985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 28, scale: .99 }} transition={{ duration: .42, ease: [0.22, 1, 0.36, 1] }}>
+    <m.section className="booking-modal__panel" role="dialog" aria-modal="true" aria-labelledby={titleId} initial={{ opacity: 0, y: 34, scale: .985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 28, scale: .99 }} transition={{ duration: .42, ease: [0.22, 1, 0.36, 1] }}>
       <div className="booking-modal__rail" aria-hidden="true"><span>JOKER TATTOO</span><i /><small>PATONG · PHUKET</small></div>
       <button ref={closeRef} className="booking-modal__close" onClick={close} aria-label={t('Close booking form')}><span>{t('Close')}</span><i aria-hidden="true">×</i></button>
       {success ? <div className="booking-success">
@@ -138,8 +138,8 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
           {errors.submit && <p className="booking-submit-error" role="alert">{errors.submit}</p>}
         </footer>
       </form>}
-    </motion.section>
-  </motion.div>}</AnimatePresence>;
+    </m.section>
+  </m.div>}</AnimatePresence>;
 }
 
 function Field({ label, required, error, children }: { label: string; required?: boolean; error?: string; children: React.ReactNode }) {

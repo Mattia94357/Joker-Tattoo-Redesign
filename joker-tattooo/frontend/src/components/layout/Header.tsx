@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import jokerLogo from '../../../assets/joker-tattoo-patong-studio-emblem.jpg';
+import jokerLogo from '../../assets/images/optimized/joker-tattoo-patong-studio-emblem-96.webp';
 import { navigation } from '../../data/navigation';
 import { useLanguage } from '../../context/LanguageContext';
 import { BookingButton } from '../booking/BookingButton';
@@ -34,7 +34,7 @@ export function Header() {
   return <>
     <header className={`site-header ${solid ? 'site-header--solid' : ''}`}>
       <NavLink className="logo site-logo" to="/" aria-label={t('Joker Tattoo home')}>
-        <img src={jokerLogo} width="225" height="225" alt={t('Joker Tattoo Patong studio logo')} decoding="async" />
+        <img src={jokerLogo} width="96" height="96" alt={t('Joker Tattoo Patong studio logo')} decoding="async" />
         <span><b>JOKER</b><small>TATTOO · PHUKET</small></span>
       </NavLink>
       <nav className="desktop-nav" aria-label="Main navigation">{navigation.map(x => <NavLink key={x.to} to={x.to} className={({ isActive }) => isActive ? 'active' : ''}>{t(x.label)}</NavLink>)}</nav>

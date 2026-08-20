@@ -52,6 +52,9 @@
       "description": "Discover custom tattoo work in Patong, Phuket. Explore tattoo styles, view our gallery and contact Joker Tattoo to discuss your next piece.",
       "heading": "Wear Your Story. Leave Your Mark.",
       "summary": "Joker Tattoo is a custom tattoo studio in Patong, Phuket. Explore our tattoo styles and selected work, then contact the studio to discuss your idea.",
+      "preloadImage": "/images/hero/traditional-tiger-sak-yant-tattoo-480.avif",
+      "preloadImageSrcSet": "/images/hero/traditional-tiger-sak-yant-tattoo-480.avif 480w, /images/hero/traditional-tiger-sak-yant-tattoo-768.avif 768w, /images/hero/traditional-tiger-sak-yant-tattoo.avif 1000w",
+      "preloadImageSizes": "100vw",
       "changefreq": "weekly",
       "priority": 1.0,
       "facts": [

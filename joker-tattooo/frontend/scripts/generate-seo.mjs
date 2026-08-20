@@ -152,6 +152,9 @@ function metadata(page, noindex = false) {
   }
   if (page.path === '/contact') schemas.push(localBusinessSchema());
   if (page.path === '/why-joker') schemas.push(faqSchema());
+  const preload = page.preloadImage
+    ? `<link rel="preload" as="image" href="${page.preloadImage}" imagesrcset="${page.preloadImageSrcSet}" imagesizes="${page.preloadImageSizes}" fetchpriority="high">`
+    : '';
   return `
     <title>${escape(page.title)}</title>
     <meta name="description" content="${escape(page.description)}">
@@ -162,6 +165,7 @@ function metadata(page, noindex = false) {
     <meta name="geo.placename" content="Patong">
     <meta name="ICBM" content="${config.geo.latitude}, ${config.geo.longitude}">
     <link rel="canonical" href="${canonical}">
+    ${preload}
     <meta property="og:type" content="website">
     <meta property="og:title" content="${escape(page.title)}">
     <meta property="og:description" content="${escape(page.description)}">

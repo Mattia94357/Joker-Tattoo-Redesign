@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import jokerWordmark from '../../../assets/joker-tattoo-patong-logo.png';
+import jokerWordmark from '../../assets/images/optimized/joker-tattoo-patong-logo.webp';
+import jokerWordmarkSmall from '../../assets/images/optimized/joker-tattoo-patong-logo-344.webp';
 import { contactDetails } from '../../data/contact';
 import { navigation } from '../../data/navigation';
 import { useLanguage } from '../../context/LanguageContext';
@@ -10,7 +11,7 @@ export function Footer() {
   const { openBooking } = useBooking();
   return <footer className="site-footer">
     <div className="footer-brand">
-      <img className="footer-wordmark" src={jokerWordmark} width="688" height="181" alt={t('Joker Tattoo Patong studio wordmark')} loading="lazy" decoding="async" />
+      <img className="footer-wordmark" src={jokerWordmarkSmall} srcSet={`${jokerWordmarkSmall} 344w, ${jokerWordmark} 688w`} sizes="(max-width: 600px) calc(100vw - 40px), 25vw" width="688" height="181" alt={t('Joker Tattoo Patong studio wordmark')} loading="lazy" decoding="async" />
       <p>{t('Original tattoo work in the heart of Patong, Phuket.')}</p>
       <nav className="footer-nav" aria-label={t('Footer navigation')}>{navigation.map(item => <Link key={item.to} to={item.to}>{t(item.label)}</Link>)}</nav>
     </div>

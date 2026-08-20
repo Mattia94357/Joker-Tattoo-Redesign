@@ -10,10 +10,13 @@ type SEOProps = {
   imageAlt?: string;
   type?: string;
   noindex?: boolean;
+  preloadImage?: string;
+  preloadImageSrcSet?: string;
+  preloadImageSizes?: string;
   structuredData?: JsonLd | JsonLd[];
 };
 
-export function SEO({ title, description, path, image = seoConfig.defaultImage, imageAlt = seoConfig.defaultImageAlt, type = 'website', noindex = false, structuredData }: SEOProps) {
+export function SEO({ title, description, path, image = seoConfig.defaultImage, imageAlt = seoConfig.defaultImageAlt, type = 'website', noindex = false, preloadImage, preloadImageSrcSet, preloadImageSizes, structuredData }: SEOProps) {
   const canonical = absoluteUrl(path.split('?')[0]);
   const socialImage = absoluteUrl(image);
   const schemas = structuredData ? (Array.isArray(structuredData) ? structuredData : [structuredData]) : [];
@@ -28,6 +31,7 @@ export function SEO({ title, description, path, image = seoConfig.defaultImage, 
     <meta name="geo.placename" content="Patong, Phuket" />
     <meta name="ICBM" content={`${seoConfig.geo.latitude}, ${seoConfig.geo.longitude}`} />
     <link rel="canonical" href={canonical} />
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} imageSrcSet={preloadImageSrcSet} imageSizes={preloadImageSizes} fetchPriority="high" />}
     <meta property="og:type" content={type} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />

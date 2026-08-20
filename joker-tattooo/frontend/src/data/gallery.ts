@@ -1,35 +1,69 @@
-import chestSakYant from '../../assets/chestsakyant.jpg';
-import japaneseHannya from '../../assets/japanese-hannya-mask-tattoo.jpg';
-import japaneseOni from '../../assets/japanese-oni-mask-tattoo.jpg';
-import pinkHannya from '../../assets/pinkhannyajapanese.jpg';
-import redOni from '../../assets/redonijapanese.jpg';
-import sacredGeometry from '../../assets/religionrealism.jpg';
-import sakYantBack from '../../assets/sakyantback.jpg';
-import tigerSakYant from '../../assets/traditional-tiger-sak-yant-tattoo.jpg';
-import religiousSleeve from '../../assets/black-grey-religious-sleeve-tattoo.jpg';
-import thaiWarrior from '../../assets/thaiwarriorleg.jpg';
-import tigerSleeve from '../../assets/tigersleevejapanese.jpg';
-import womanRealism from '../../assets/womanrealism.jpg';
+import chestSakYant from '../assets/images/optimized/chestsakyant.avif';
+import chestSakYantSmall from '../assets/images/optimized/chestsakyant-480.webp';
+import japaneseHannya from '../assets/images/optimized/japanese-hannya-mask-tattoo.avif';
+import japaneseHannyaSmall from '../assets/images/optimized/japanese-hannya-mask-tattoo-480.webp';
+import japaneseOni from '../assets/images/optimized/japanese-oni-mask-tattoo.avif';
+import japaneseOniSmall from '../assets/images/optimized/japanese-oni-mask-tattoo-480.webp';
+import pinkHannya from '../assets/images/optimized/pinkhannyajapanese.avif';
+import pinkHannyaSmall from '../assets/images/optimized/pinkhannyajapanese-480.webp';
+import redOni from '../assets/images/optimized/redonijapanese.avif';
+import redOniSmall from '../assets/images/optimized/redonijapanese-480.webp';
+import sacredGeometry from '../assets/images/optimized/religionrealism.avif';
+import sacredGeometrySmall from '../assets/images/optimized/religionrealism-480.webp';
+import sakYantBack from '../assets/images/optimized/sakyantback.avif';
+import religiousSleeve from '../assets/images/optimized/black-grey-religious-sleeve-tattoo.avif';
+import thaiWarrior from '../assets/images/optimized/thaiwarriorleg.avif';
+import thaiWarriorSmall from '../assets/images/optimized/thaiwarriorleg-480.webp';
+import tigerSleeve from '../assets/images/optimized/tigersleevejapanese.avif';
+import tigerSleeveSmall from '../assets/images/optimized/tigersleevejapanese-480.webp';
+import womanRealism from '../assets/images/optimized/womanrealism.avif';
 import customPortfolio from '../../assets/custom-black-grey-tattoo.avif';
+import customPortfolioSmall from '../assets/images/optimized/custom-black-grey-tattoo-480.webp';
 import japaneseBackpiece from '../../assets/japanesebackjokertattoo.avif';
+import japaneseBackpieceSmall from '../assets/images/optimized/japanesebackjokertattoo-480.webp';
 import sakYantChest from '../../assets/sakyantjokerchest.avif';
+import sakYantChestSmall from '../assets/images/optimized/sakyantjokerchest-480.webp';
 import blueDragon from '../../assets/dragonbluejoker.webp';
+import blueDragonSmall from '../assets/images/optimized/dragonbluejoker-480.webp';
 import fullBackSakYant from '../../assets/fullbackjokersakyant.webp';
+import fullBackSakYantSmall from '../assets/images/optimized/fullbackjokersakyant-480.webp';
 import womanRealismTwo from '../../assets/woman2realismjoker.webp';
+import womanRealismTwoSmall from '../assets/images/optimized/woman2realismjoker-480.webp';
 import thaiTraditionalSleeve from '../../assets/thaitraditionalsleevejoker.webp';
-import womanSmileRealism from '../../assets/woman-smile-realism.png';
-import tribalChest from '../../assets/tribal-chest.png';
-import tribalLeg from '../../assets/tribal-leg.png';
-import traditionalThai from '../../assets/traditional-thai.png';
-import realisticWomanGun from '../../assets/realistic-woman-gun.png';
-import japaneseSleeve from '../../assets/japanese-sleeve.png';
+import thaiTraditionalSleeveSmall from '../assets/images/optimized/thaitraditionalsleevejoker-480.webp';
+import womanSmileRealism from '../assets/images/optimized/woman-smile-realism.avif';
+import tribalChest from '../assets/images/optimized/tribal-chest.avif';
+import tribalLeg from '../assets/images/optimized/tribal-leg.avif';
+import traditionalThai from '../assets/images/optimized/traditional-thai.avif';
+import realisticWomanGun from '../assets/images/optimized/realistic-woman-gun.avif';
+import japaneseSleeve from '../assets/images/optimized/japanese-sleeve.avif';
 
 export type GalleryItem = { id: number; title: string; category: string; image: string; imageSmall: string; width: number; height: number; alt: string };
 
 export const galleryCategories = ['All', 'Japanese', 'Sak Yant', 'Realism', 'Black & Grey', 'Tribal', 'Colour', 'Thai Traditional'];
 
+const tigerSakYant = '/images/hero/traditional-tiger-sak-yant-tattoo.webp';
+const smallImages: Record<number, string> = {
+  1: '/images/hero/traditional-tiger-sak-yant-tattoo-480.webp',
+  2: tigerSleeveSmall,
+  3: chestSakYantSmall,
+  4: thaiWarriorSmall,
+  5: pinkHannyaSmall,
+  6: redOniSmall,
+  7: japaneseOniSmall,
+  12: japaneseHannyaSmall,
+  13: sacredGeometrySmall,
+  16: japaneseBackpieceSmall,
+  17: sakYantChestSmall,
+  18: blueDragonSmall,
+  19: fullBackSakYantSmall,
+  20: womanRealismTwoSmall,
+  21: thaiTraditionalSleeveSmall,
+  22: customPortfolioSmall,
+};
+
 const item = (id: number, title: string, category: string, image: string, width: number, height: number, alt: string): GalleryItem => ({
-  id, title, category, image, imageSmall: image, width, height, alt,
+  id, title, category, image, imageSmall: smallImages[id] ?? image, width, height, alt,
 });
 
 export const galleryItems: GalleryItem[] = [
