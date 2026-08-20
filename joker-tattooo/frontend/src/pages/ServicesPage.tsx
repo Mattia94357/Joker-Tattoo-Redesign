@@ -11,13 +11,6 @@ import { SEO } from '../components/seo/SEO';
 import { breadcrumbSchema, faqSchema, imageObjectSchema, organizationSchema, webPageSchema } from '../components/seo/structuredData';
 import { seoConfig } from '../config/seo';
 
-const consultationSteps = [
-  ['Tell us your idea', 'Bring references, a rough thought or simply a feeling.'],
-  ['Choose the right direction', 'We help refine the style, placement, scale and composition around your body.'],
-  ['Meet the right artist', 'Your project is matched with an experienced artist whose strengths suit the work.'],
-  ['Plan with confidence', 'You receive clear guidance on timing, pricing, preparation and what happens next.'],
-];
-
 export function WhyJokerPage() {
   const [open, setOpen] = useState<number | null>(0);
   const { t } = useLanguage();
@@ -48,10 +41,6 @@ export function WhyJokerPage() {
     <section className="section services">
       <Reveal><SectionHeading eyebrow={t('Tattoo services')} title={t('No templates. No shortcuts.')} /></Reveal>
       <div className="service-list">{services.filter(([title]) => title !== 'Tattoo Consultations').map(([title, text], index) => <Reveal key={title}><article><span>{String(index + 1).padStart(2, '0')}</span><h3>{t(title)}</h3><div><p>{t(text)}</p><button className="service-booking-link" onClick={openBooking}>{t('Discuss this tattoo service')} <span aria-hidden="true">→</span></button></div></article></Reveal>)}</div>
-    </section>
-    <section className="section process-section consultation-section">
-      <Reveal><SectionHeading eyebrow={t('Tattoo Consultations')} title={t('A considered process.')} text={t('A professional consultation turns an early idea into a clear, achievable tattoo plan before any work begins.')} /></Reveal>
-      <div className="process-grid">{consultationSteps.map(([title, text], index) => <Reveal key={title}><article><strong>{String(index + 1).padStart(2, '0')}</strong><h3>{t(title)}</h3><p>{t(text)}</p></article></Reveal>)}</div>
     </section>
     <section className="premium-faq">
       <div className="premium-faq__glow" aria-hidden="true" />

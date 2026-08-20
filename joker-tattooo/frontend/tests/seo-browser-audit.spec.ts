@@ -99,7 +99,7 @@ test('page ownership remains intentional with no duplicated Why Joker sections',
   await page.goto('http://127.0.0.1:5173/why-joker', { waitUntil: 'networkidle' });
   await expect(page.locator('.service-hero__media video')).toHaveCount(1);
   await expect(page.locator('.services')).toHaveCount(1);
-  await expect(page.locator('.consultation-section')).toHaveCount(1);
+  await expect(page.locator('.consultation-section')).toHaveCount(0);
   await expect(page.locator('.premium-faq')).toHaveCount(1);
   await expect(page.locator('.safety-section')).toHaveCount(0);
   await expect(page.locator('.reviews-section')).toHaveCount(0);
