@@ -18,20 +18,20 @@ import customImageSmall from '../assets/images/optimized/chestsakyant-480.avif';
 import customImageMedium from '../assets/images/optimized/chestsakyant-768.avif';
 
 export const tattooStyles = [
-  { title: 'Realism', text: 'Depth, texture and striking detail.', image: realismImage, imageSmall: realismImageSmall, imageMedium: realismImageMedium, width: 757, height: 1024 },
-  { title: 'Black & Grey', text: 'Controlled contrast with a timeless edge.', image: blackGreyImage, imageSmall: blackGreyImageSmall, imageMedium: blackGreyImageMedium, width: 1000, height: 1124 },
-  { title: 'Traditional', text: 'Bold forms built to hold their presence.', image: traditionalImage, imageSmall: traditionalImageSmall, imageMedium: traditionalImageMedium, width: 512, height: 510 },
-  { title: 'Japanese', text: 'Flowing compositions designed for the body.', image: japaneseImage, imageSmall: japaneseImageSmall, imageMedium: japaneseImageMedium, width: 1016, height: 1024 },
-  { title: 'Fine Line', text: 'Quiet precision and delicate detail.', image: fineLineImage, imageSmall: fineLineImageSmall, imageMedium: fineLineImageMedium, width: 624, height: 779 },
-  { title: 'Custom Designs', text: 'Original work developed around your story.', image: customImage, imageSmall: customImageSmall, imageMedium: customImageMedium, width: 1000, height: 1244 },
+  { title: 'Realism', text: 'Depth, texture and detail with true-to-life presence.', image: realismImage, imageSmall: realismImageSmall, imageMedium: realismImageMedium, width: 757, height: 1024 },
+  { title: 'Black & Grey', text: 'Carefully balanced contrast with timeless character.', image: blackGreyImage, imageSmall: blackGreyImageSmall, imageMedium: blackGreyImageMedium, width: 1000, height: 1124 },
+  { title: 'Traditional', text: 'Bold lines, strong colour and forms made to endure.', image: traditionalImage, imageSmall: traditionalImageSmall, imageMedium: traditionalImageMedium, width: 512, height: 510 },
+  { title: 'Japanese', text: 'Flowing compositions shaped to move with the body.', image: japaneseImage, imageSmall: japaneseImageSmall, imageMedium: japaneseImageMedium, width: 1016, height: 1024 },
+  { title: 'Fine Line', text: 'Delicate detail, clean spacing and precise linework.', image: fineLineImage, imageSmall: fineLineImageSmall, imageMedium: fineLineImageMedium, width: 624, height: 779 },
+  { title: 'Custom Designs', text: 'Original work drawn around your story and your body.', image: customImage, imageSmall: customImageSmall, imageMedium: customImageMedium, width: 1000, height: 1244 },
 ];
 
 export const services = [
-  ['Custom Tattoos', 'One-of-one concepts shaped around your idea, placement and personal style.'],
+  ['Custom Tattoos', 'Original concepts developed around your idea, placement and personal style.'],
   ['Tattoo Consultations', 'A focused conversation to define the direction before design begins.'],
-  ['Cover-Ups', 'Thoughtful options for transforming an existing piece.'],
-  ['Tattoo Redesign', 'Reworking older tattoos with a stronger, more intentional composition.'],
+  ['Cover-Ups', 'Carefully planned options for transforming an existing tattoo.'],
+  ['Tattoo Redesign', 'Older tattoos reworked with clearer detail, balance and composition.'],
   ['Fine Line Work', 'Refined linework with attention to spacing, balance and scale.'],
-  ['Large-Scale Pieces', 'Cohesive sleeves, backs and multi-session projects planned as a whole.'],
-  ['Aftercare Guidance', 'Clear studio guidance to help you care for your new tattoo.'],
+  ['Large-Scale Pieces', 'Sleeves, back pieces and multi-session work planned as one complete composition.'],
+  ['Aftercare Guidance', 'Practical, personalised guidance for caring for your new tattoo.'],
 ];

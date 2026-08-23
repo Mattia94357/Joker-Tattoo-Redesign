@@ -35,11 +35,11 @@ export function GalleryPage() {
 
   return <main className="page">
     <SEO {...seoConfig.pages.gallery} structuredData={[organizationSchema(), webPageSchema(seoConfig.pages.gallery.path, seoConfig.pages.gallery.title, seoConfig.pages.gallery.description), breadcrumbSchema('Gallery', seoConfig.pages.gallery.path), imageObjectSchema()]} />
-    <section className="page-hero page-hero--gallery"><SectionHeading level="h1" eyebrow={t('The work')} title={t('Every piece has a pulse.')} text={t('Explore tattoo work created by Joker Tattoo in Patong, from Japanese sleeves and realism to traditional Sak Yant.')} /></section>
+    <section className="page-hero page-hero--gallery"><SectionHeading level="h1" eyebrow={t('Our work')} title={t('Made to belong to you.')} text={t('Explore tattoos created at Joker Tattoo in Patong, from Japanese sleeves and realism to traditional Sak Yant.')}/></section>
     <section className="gallery-section" aria-label={t('Joker Tattoo portfolio gallery')}>
       <div className="filters" role="group" aria-label={t('Filter gallery')}>{galleryCategories.map(category => <button className={filter === category ? 'active' : ''} onClick={() => setFilter(category)} key={category}>{t(category)}</button>)}</div>
       <m.div layout className="masonry">{visible.map((item, index) => <m.button layout className={`gallery-tile gallery-tile--${index % 4}`} key={item.id} onClick={() => setActive(galleryItems.indexOf(item))}><img src={item.imageSmall} srcSet={item.imageSmall !== item.image ? `${item.imageSmall} 480w, ${item.image} ${item.width}w` : undefined} sizes="(max-width: 700px) calc(100vw - 40px), 33vw" width={item.width} height={item.height} alt={t(item.alt)} loading="lazy" decoding="async" /><span><strong>{t(item.title)}</strong><small>{t(item.category)}</small></span></m.button>)}</m.div>
-      <div className="gallery-cta"><p>{t('Have a direction in mind? Tell the studio about your idea.')}</p><BookingButton variant="outline">{t('Discuss your tattoo idea')}</BookingButton></div>
+      <div className="gallery-cta"><p>{t('Found a direction you like? Tell us what you have in mind.')}</p><BookingButton variant="outline">{t('Start Your Tattoo Journey')}</BookingButton></div>
     </section>
     <AnimatePresence>{active !== null && <m.div className="lightbox" role="dialog" aria-modal="true" aria-label={t('Gallery image viewer')} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <button className="lightbox__close" onClick={() => setActive(null)} aria-label={t('Close image viewer')}>{t('Close')} ×</button>

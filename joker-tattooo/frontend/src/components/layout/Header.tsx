@@ -38,7 +38,7 @@ export function Header() {
         <span><b>JOKER</b><small>TATTOO · PHUKET</small></span>
       </NavLink>
       <nav className="desktop-nav" aria-label="Main navigation">{navigation.map(x => <NavLink key={x.to} to={x.to} className={({ isActive }) => isActive ? 'active' : ''}>{t(x.label)}</NavLink>)}</nav>
-      <div className="header-actions"><LanguageSwitcher compact /><BookingButton>{t('Book a Tattoo')}</BookingButton><button className={`menu-toggle ${open ? 'is-open' : ''}`} onClick={() => setOpen(!open)} aria-expanded={open} aria-label={t(open ? 'Close menu' : 'Open menu')}><span /><span /><em>{t(open ? 'Close' : 'Menu')}</em></button></div>
+      <div className="header-actions"><LanguageSwitcher compact /><BookingButton>{t('Book Your Tattoo')}</BookingButton><button className={`menu-toggle ${open ? 'is-open' : ''}`} onClick={() => setOpen(!open)} aria-expanded={open} aria-label={t(open ? 'Close menu' : 'Open menu')}><span /><span /><em>{t(open ? 'Close' : 'Menu')}</em></button></div>
     </header>
     <MobileMenu open={open} close={() => setOpen(false)} />
   </>;

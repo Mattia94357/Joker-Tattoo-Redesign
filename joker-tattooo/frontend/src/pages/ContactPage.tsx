@@ -9,7 +9,7 @@ export function ContactPage() {
   const { t } = useLanguage();
   return <main className="page contact-page">
     <SEO {...seoConfig.pages.contact} structuredData={[organizationSchema(), webPageSchema(seoConfig.pages.contact.path, seoConfig.pages.contact.title, seoConfig.pages.contact.description), breadcrumbSchema('Contact', seoConfig.pages.contact.path), localBusinessSchema(), imageObjectSchema()]} />
-    <section className="contact-intro"><p className="eyebrow">{t('Contact / Booking')}</p><h1>{t('Let’s make')}<br /><span>{t('something permanent.')}</span></h1><p>{t('Tell us what you have in mind. The more context you share, the better the first conversation can be.')}</p></section>
+    <section className="contact-intro"><p className="eyebrow">{t('Consultation / Booking')}</p><h1>{t('Let’s create')}<br /><span>{t('something personal.')}</span></h1><p>{t('Tell us about your idea, preferred style and placement. We’ll reply personally and help you plan the next step.')}</p></section>
     <section className="contact-layout">
       <aside aria-label={t('Joker Tattoo business information')}>
         <address>
@@ -24,11 +24,11 @@ export function ContactPage() {
         </div>
       </aside>
       <article className="contact-booking-card">
-        <span className="contact-booking-card__number">01</span><p className="eyebrow">{t('Appointment requests')}</p><h2>{t('Your idea starts here.')}</h2>
-        <p>{t('Send your preferred date, time and references through our private booking request. Our team will review everything and reply personally by WhatsApp or email.')}</p>
+        <span className="contact-booking-card__number">01</span><p className="eyebrow">{t('Booking requests')}</p><h2>{t('Start with your idea.')}</h2>
+        <p>{t('Share your preferred date and time, along with any reference images. Our studio team will review your request and reply personally by WhatsApp or email.')}</p>
         <ul><li>{t('No commitment')}</li><li>{t('Personal studio reply')}</li><li>{t('Reference images welcome')}</li></ul>
-        <BookingButton variant="red">{t('Book a Tattoo')}</BookingButton>
-        <small>{t('This is a request only. Your appointment is confirmed after our team contacts you.')}</small>
+        <BookingButton variant="red">{t('Request Your Booking')}</BookingButton>
+        <small>{t('Your appointment is confirmed once our studio team contacts you.')}</small>
       </article>
     </section>
   </main>;

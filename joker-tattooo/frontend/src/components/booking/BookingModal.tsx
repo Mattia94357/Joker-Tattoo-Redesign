@@ -105,8 +105,8 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
         <button className="button booking-success__button" onClick={close}>{t('Return to Website')}<span aria-hidden="true">↗</span></button>
       </div> : <form className="booking-request" onSubmit={submit} noValidate>
         <header className="booking-request__header">
-          <div><p className="eyebrow">{t('Private appointment request')}</p><h2 id={titleId}>{t('Begin your piece.')}</h2></div>
-          <p>{t('Share the essentials. Our team will contact you personally to discuss your idea and confirm availability.')}</p>
+          <div><p className="eyebrow">{t('Private booking request')}</p><h2 id={titleId}>{t('Tell us your idea.')}</h2></div>
+          <p>{t('Share a few details and our studio team will contact you personally to discuss your tattoo and confirm availability.')}</p>
         </header>
         <div className="booking-request__body">
           <fieldset><legend><span>01</span>{t('Your details')}</legend><div className="booking-fields">
@@ -117,7 +117,7 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
           <fieldset><legend><span>02</span>{t('Preferred appointment')}</legend><div className="booking-fields booking-fields--two">
             <Field label={t('Preferred Date')} required error={errors.preferredDate}><input name="preferredDate" type="date" min={today} aria-invalid={!!errors.preferredDate} /></Field>
             <Field label={t('Preferred Time')} required error={errors.preferredTime}><input name="preferredTime" type="time" aria-invalid={!!errors.preferredTime} /></Field>
-          </div><p className="booking-request__hint">{t('This is a request, not an instant booking. We will confirm availability with you.')}</p></fieldset>
+          </div><p className="booking-request__hint">{t('This is a booking request. We will contact you to confirm availability.')}</p></fieldset>
           <fieldset><legend><span>03</span>{t('Your tattoo')}</legend><div className="booking-fields booking-fields--two">
             <Field label={t('Tattoo Style')}><select name="tattooStyle" defaultValue=""><option value="">{t('Select a style (optional)')}</option>{styles.map(style => <option key={style} value={style}>{t(style)}</option>)}</select></Field>
             <Field label={t('Estimated Size')}><select name="estimatedSize" defaultValue=""><option value="">{t('Select a size (optional)')}</option>{sizes.map(size => <option key={size} value={size}>{t(size)}</option>)}</select></Field>
@@ -129,12 +129,12 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
             </label>
             {errors.references && <p className="booking-upload-error" role="alert">{errors.references}</p>}
             {files.length > 0 && <div className="booking-files" aria-label={t('Selected reference images')}>{files.map((file, index) => <div key={`${file.name}-${file.size}`}><span>{file.name}</span><small>{(file.size / 1048576).toFixed(1)} MB</small><button type="button" onClick={() => setFiles(current => current.filter((_, itemIndex) => itemIndex !== index))} aria-label={`${t('Remove')} ${file.name}`}>×</button></div>)}</div>}
-            <Field label={t('Additional Notes')}><textarea name="notes" rows={4} placeholder={t('Tell us about placement, meaning, colours, or anything else we should know.')} /></Field>
+            <Field label={t('Additional Notes')}><textarea name="notes" rows={4} placeholder={t('Tell us about the placement, meaning, colours or any other detail that matters to you.')} /></Field>
           </fieldset>
         </div>
         <footer className="booking-request__footer">
-          <div><span className="booking-request__secure" aria-hidden="true">◇</span><p><strong>{t('Personal review')}</strong><small>{t('Your request goes directly to our studio team.')}</small></p></div>
-          <button className="booking-submit" type="submit" disabled={submitting}>{submitting ? t('Sending request…') : t('Request Appointment')}<span aria-hidden="true">↗</span></button>
+          <div><span className="booking-request__secure" aria-hidden="true">◇</span><p><strong>{t('Reviewed by our studio')}</strong><small>{t('Your request goes directly to the Joker Tattoo team.')}</small></p></div>
+          <button className="booking-submit" type="submit" disabled={submitting}>{submitting ? t('Sending request…') : t('Send Booking Request')}<span aria-hidden="true">↗</span></button>
           {errors.submit && <p className="booking-submit-error" role="alert">{errors.submit}</p>}
         </footer>
       </form>}

@@ -4,16 +4,16 @@ export const customerReviews = [
   {
     name: 'Daniel D',
     rating: 5,
-    text: 'Friendly, professional and right in the centre of Patong.',
+    text: 'Friendly, professional and right in the heart of Patong.',
   },
   {
     name: 'Meg S',
     rating: 5,
-    text: 'Helpful with ideas, pricing and timing, with a fresh and clean studio.',
+    text: 'The team helped with the design, price and timing, and the studio was spotless.',
   },
   {
     name: 'Wood.83',
     rating: 5,
-    text: 'A returning client who praises the helpful team and specialist artists.',
+    text: 'I keep coming back for the helpful team and Tattoo Artists who truly know their craft.',
   },
 ];

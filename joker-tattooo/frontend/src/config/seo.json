@@ -1,15 +1,15 @@
 {
   "businessName": "Joker Tattoo",
   "defaultTitle": "Joker Tattoo Phuket | Custom Tattoo Studio in Patong",
-  "defaultDescription": "Discover custom tattoo work in Patong, Phuket. Explore tattoo styles, view our gallery and contact Joker Tattoo to discuss your next piece.",
+  "defaultDescription": "Explore custom tattoo work by Joker Tattoo in Patong, Phuket. View our gallery and request a Consultation with an experienced Tattoo Artist.",
   "fallbackSiteUrl": "https://www.jokertattoopatong.com",
   "defaultImage": "/images/og/joker-tattoo-og.jpg",
   "defaultImageWidth": 1200,
   "defaultImageHeight": 630,
-  "defaultImageAlt": "Joker Tattoo Patong premium tattoo studio and custom tattoo work",
+  "defaultImageAlt": "Joker Tattoo custom tattoo studio and original tattoo work in Patong, Phuket",
   "logo": "/icons/icon-512.png",
   "defaultLocale": "en_US",
-  "businessDescription": "Joker Tattoo is a premium custom tattoo studio in Patong, Phuket, creating Japanese, realism, Sak Yant, black and grey, fine line, cover-up and large-scale tattoo work for travellers and local clients.",
+  "businessDescription": "Joker Tattoo is a custom tattoo studio in Patong, Phuket, specialising in Japanese, realism, Sak Yant, black and grey, fine line, cover-up and large-scale tattoo work for local and international clients.",
   "mapUrl": "https://maps.app.goo.gl/aAkB6G3RLMMayqYT7",
   "areaServed": ["Patong", "Phuket"],
   "socialAccounts": [
@@ -49,9 +49,9 @@
     "home": {
       "path": "/",
       "title": "Joker Tattoo Phuket | Custom Tattoo Studio in Patong",
-      "description": "Discover custom tattoo work in Patong, Phuket. Explore tattoo styles, view our gallery and contact Joker Tattoo to discuss your next piece.",
+      "description": "Explore custom tattoo work by Joker Tattoo in Patong, Phuket. View our gallery and request a Consultation with an experienced Tattoo Artist.",
       "heading": "Wear Your Story. Leave Your Mark.",
-      "summary": "Joker Tattoo is a custom tattoo studio in Patong, Phuket. Explore our tattoo styles and selected work, then contact the studio to discuss your idea.",
+      "summary": "Joker Tattoo is a custom tattoo studio in Patong, Phuket. Explore our tattoo styles and portfolio, then request a Consultation to discuss your idea.",
       "preloadImage": "/images/hero/traditional-tiger-sak-yant-tattoo-480.avif",
       "preloadImageSrcSet": "/images/hero/traditional-tiger-sak-yant-tattoo-480.avif 480w, /images/hero/traditional-tiger-sak-yant-tattoo-768.avif 768w, /images/hero/traditional-tiger-sak-yant-tattoo.avif 1000w",
       "preloadImageSizes": "100vw",
@@ -66,13 +66,13 @@
     "gallery": {
       "path": "/gallery",
       "title": "Tattoo Gallery Phuket | Joker Tattoo Patong",
-      "description": "Explore tattoo work created at Joker Tattoo in Patong, Phuket, including custom, realism, black and grey, colour and fine line pieces.",
+      "description": "View tattoos created at Joker Tattoo in Patong, Phuket, including Japanese, Sak Yant, realism, black and grey, colour and fine line work.",
       "heading": "Tattoo Gallery in Patong, Phuket",
-      "summary": "Browse a selection of custom tattoo work and discover black and grey, realism, traditional, Japanese and fine line directions.",
+      "summary": "Browse custom tattoo work in black and grey, realism, traditional, Japanese, Sak Yant and fine line styles.",
       "changefreq": "weekly",
       "priority": 0.9,
       "facts": [
-        "This gallery shows tattoo work created by Joker Tattoo artists in Patong, Phuket.",
+        "This gallery shows tattoo work created by the Tattoo Artists at Joker Tattoo in Patong, Phuket.",
         "Portfolio categories include Japanese, Sak Yant, realism, black and grey, tribal, colour and Thai traditional tattooing.",
         "Visitors can use the booking request to discuss a style, placement, size and preferred appointment date."
       ]
@@ -80,22 +80,22 @@
     "whyJoker": {
       "path": "/why-joker",
       "title": "Why Choose Joker Tattoo | Premium Tattoo Studio in Patong, Phuket",
-      "description": "Discover why travellers and locals choose Joker Tattoo Patong. Experienced artists, premium hygiene standards, custom designs, Japanese tattoos, realism and Sak Yant.",
+      "description": "Meet the experienced Tattoo Artists at Joker Tattoo in Patong, Phuket. Discover our custom approach, professional hygiene standards and specialist styles.",
       "heading": "Why Choose Joker Tattoo in Patong, Phuket",
       "breadcrumbLabel": "Why Joker",
-      "summary": "Discover experienced artists, premium hygiene standards, custom tattoo design and trusted client experiences at Joker Tattoo Patong.",
+      "summary": "Discover experienced Tattoo Artists, professional hygiene standards, custom design and client experiences at Joker Tattoo in Patong.",
       "changefreq": "monthly",
       "priority": 0.9,
       "facts": [
         "Joker Tattoo develops original tattoo designs around each client’s idea, body placement and preferred style.",
         "The Patong studio uses single-use sterile needles, disposable barriers, professional sterilisation procedures and premium tattoo inks.",
-        "Experienced artists create Japanese, realism, Sak Yant, fine line, cover-up and large-scale tattoo work."
+        "Experienced Tattoo Artists create Japanese, realism, Sak Yant, fine line, cover-up and large-scale tattoo work."
       ]
     },
     "contact": {
       "path": "/contact",
       "title": "Contact Joker Tattoo | Tattoo Studio in Patong, Phuket",
-      "description": "Contact Joker Tattoo in Patong, Phuket to discuss your tattoo idea, preferred style, placement, size and appointment availability.",
+      "description": "Contact Joker Tattoo in Patong, Phuket to discuss your tattoo idea, style, placement and size, or request a Consultation and Booking.",
       "heading": "Contact Joker Tattoo in Patong",
       "summary": "Contact the studio to discuss your tattoo idea, preferred style, placement, approximate size and appointment availability.",
       "changefreq": "monthly",

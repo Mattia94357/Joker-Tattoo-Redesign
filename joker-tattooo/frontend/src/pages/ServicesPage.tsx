@@ -20,7 +20,7 @@ export function WhyJokerPage() {
   return <main className="page">
     <SEO {...seoConfig.pages.whyJoker} structuredData={[organizationSchema(), webPageSchema(seoConfig.pages.whyJoker.path, seoConfig.pages.whyJoker.title, seoConfig.pages.whyJoker.description), breadcrumbSchema('Why Joker', seoConfig.pages.whyJoker.path), faqSchema(visibleFaqs), imageObjectSchema()]} />
     <section className="service-hero">
-      <div><p className="eyebrow">{t('Why Joker')}</p><h1>{t('Your idea.')}<br /><span>{t('Our craft.')}</span></h1><p>{t('Custom work with the patience, planning and precision it deserves.')}</p></div>
+      <div><p className="eyebrow">{t('Why Joker')}</p><h1>{t('Your idea.')}<br /><span>{t('Our craft.')}</span></h1><p>{t('Custom tattoo work, shaped with patience, precision and a clear point of view.')}</p></div>
       <div className="service-hero__media">
         <video
           src={serviceHeroVideo}
@@ -34,18 +34,18 @@ export function WhyJokerPage() {
           controls={false}
           controlsList="nodownload nofullscreen noremoteplayback"
           disablePictureInPicture
-          aria-label={t('Tattoo artist working on a client at Joker Tattoo Patong')}
+          aria-label={t('Tattoo Artist working with a client at Joker Tattoo in Patong')}
         />
       </div>
     </section>
     <section className="section services">
-      <Reveal><SectionHeading eyebrow={t('Tattoo services')} title={t('No templates. No shortcuts.')} /></Reveal>
+      <Reveal><SectionHeading eyebrow={t('Tattoo services')} title={t('Designed for you. Made to last.')} /></Reveal>
       <div className="service-list">{services.filter(([title]) => title !== 'Tattoo Consultations').map(([title, text], index) => <Reveal key={title}><article><span>{String(index + 1).padStart(2, '0')}</span><h3>{t(title)}</h3><div><p>{t(text)}</p><button className="service-booking-link" onClick={openBooking}>{t('Discuss this tattoo service')} <span aria-hidden="true">→</span></button></div></article></Reveal>)}</div>
     </section>
     <section className="premium-faq">
       <div className="premium-faq__glow" aria-hidden="true" />
       <div className="premium-faq__inner">
-        <Reveal><header className="premium-faq__header"><p className="eyebrow">{t('Before you book')}</p><h2>{t('Frequently Asked Questions')}</h2><p>{t('Everything you need to know before booking your tattoo session at Joker Tattoo Phuket.')}</p></header></Reveal>
+        <Reveal><header className="premium-faq__header"><p className="eyebrow">{t('Before you book')}</p><h2>{t('Frequently Asked Questions')}</h2><p>{t('Clear answers to the questions clients ask before booking with Joker Tattoo in Patong, Phuket.')}</p></header></Reveal>
         <div className="premium-faq__grid">{visibleFaqs.map(([question, answer], index) => {
           const isOpen = open === index;
           const answerId = `faq-answer-${index}`;
@@ -60,6 +60,6 @@ export function WhyJokerPage() {
         })}</div>
       </div>
     </section>
-    <section className="booking-cta"><div><p className="eyebrow">{t('Your idea starts here')}</p><h2>{t('Ready to make')}<br />{t('it permanent?')}</h2></div><div className="button-row"><BookingButton variant="red">{t('Discuss your tattoo idea')}</BookingButton><BookingButton variant="outline">{t('Book a Tattoo')}</BookingButton></div></section>
+    <section className="booking-cta"><div><p className="eyebrow">{t('Your idea starts here')}</p><h2>{t('Ready to make')}<br />{t('it permanent?')}</h2></div><div className="button-row"><BookingButton variant="red">{t('Start the Conversation')}</BookingButton><BookingButton variant="outline">{t('Request a Consultation')}</BookingButton></div></section>
   </main>;
 }
