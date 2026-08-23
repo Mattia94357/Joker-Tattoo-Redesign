@@ -16,7 +16,7 @@ import { seoConfig } from '../config/seo';
 import { SafetySection } from '../components/sections/SafetySection';
 
 export function HomePage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   return <main>
     <SEO {...seoConfig.pages.home} structuredData={[organizationSchema(), localBusinessSchema(), websiteSchema(), webPageSchema(seoConfig.pages.home.path, seoConfig.pages.home.title, seoConfig.pages.home.description), imageObjectSchema()]} />
     <section className="hero">
@@ -24,7 +24,7 @@ export function HomePage() {
       <div className="hero__overlay" />
       <div className="hero__content">
         <p className="eyebrow">{t('Patong · Phuket · Custom tattoo studio')}</p>
-        <h1><span>{t('Wear your story.')}</span><em>{t('Leave your mark.')}</em></h1>
+        <h1>{language === 'it' ? <><span>UNA STORIA.</span><span>LA TUA.</span><em>CHE LASCIA IL SEGNO.</em></> : <><span>{t('Wear your story.')}</span><em>{t('Leave your mark.')}</em></>}</h1>
         <p>{t('Custom tattoos, thoughtfully designed and expertly made in the heart of Patong, Phuket.')}</p>
         <div className="button-row"><Button to="/gallery">{t('Explore Our Work')}</Button><BookingButton variant="outline">{t('Book Your Tattoo')}</BookingButton></div>
       </div>
