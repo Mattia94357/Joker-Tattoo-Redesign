@@ -1,7 +1,8 @@
 import { AnimatePresence, m } from 'framer-motion';
-import { useEffect, useId, useRef, useState, type ChangeEvent, type DragEvent, type FormEvent } from 'react';
+import { useCallback, useEffect, useId, useRef, useState, type ChangeEvent, type DragEvent, type FormEvent } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { submitBookingRequest, type BookingRequest } from '../../services/booking';
+import { InternationalPhoneInput, type InternationalPhoneValue } from './InternationalPhoneInput';
 
 const styles = ['Japanese', 'Realism', 'Black & Grey', 'Fine Line', 'Colour', 'Tribal', 'Bamboo Tattoo', 'Cover Up', 'Not Sure Yet'];
 const sizes = ['Small', 'Medium', 'Large', 'Full Sleeve', 'Half Sleeve', 'Back Piece', 'Leg Sleeve', 'Chest', 'Other'];
@@ -16,6 +17,12 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
   const [dragging, setDragging] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [whatsapp, setWhatsapp] = useState<InternationalPhoneValue>({ e164: '', hasValue: false, isValid: false });
+
+  const updateWhatsapp = useCallback((value: InternationalPhoneValue) => {
+    setWhatsapp(value);
+    setErrors(current => current.whatsapp ? { ...current, whatsapp: undefined } : current);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -36,6 +43,7 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
       setSuccess(false);
       setErrors({});
       setFiles([]);
+      setWhatsapp({ e164: '', hasValue: false, isValid: false });
     }, 350);
   };
 
@@ -65,14 +73,15 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
     const next: Errors = {};
     if (!value('name')) next.name = t('Please enter your name.');
     if (!/^\S+@\S+\.\S+$/.test(value('email'))) next.email = t('Please enter a valid email.');
-    if (!value('whatsapp')) next.whatsapp = t('Please enter your WhatsApp number.');
+    if (!whatsapp.hasValue) next.whatsapp = t('Please enter your WhatsApp number.');
+    else if (!whatsapp.isValid) next.whatsapp = t('Please enter a valid WhatsApp number for the selected country.');
     if (!value('preferredDate')) next.preferredDate = t('Please choose a preferred date.');
     if (!value('preferredTime')) next.preferredTime = t('Please choose a preferred time.');
     setErrors(next);
     if (Object.keys(next).length) return;
 
     const request: BookingRequest = {
-      name: value('name'), email: value('email'), whatsapp: value('whatsapp'),
+      name: value('name'), email: value('email'), whatsapp: whatsapp.e164,
       preferredDate: value('preferredDate'), preferredTime: value('preferredTime'),
       tattooStyle: value('tattooStyle') || undefined, estimatedSize: value('estimatedSize') || undefined,
       notes: value('notes') || undefined, references: files,
@@ -112,7 +121,7 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
           <fieldset><legend><span>01</span>{t('Your details')}</legend><div className="booking-fields">
             <Field label={t('Name')} required error={errors.name}><input name="name" autoComplete="name" placeholder={t('Your full name')} aria-invalid={!!errors.name} /></Field>
             <Field label={t('Email')} required error={errors.email}><input name="email" type="email" inputMode="email" autoComplete="email" placeholder="you@example.com" aria-invalid={!!errors.email} /></Field>
-            <Field label={t('WhatsApp')} required error={errors.whatsapp}><input name="whatsapp" type="tel" inputMode="tel" autoComplete="tel" placeholder="+66 ..." aria-invalid={!!errors.whatsapp} /></Field>
+            <InternationalPhoneInput error={errors.whatsapp} onValueChange={updateWhatsapp} />
           </div></fieldset>
           <fieldset><legend><span>02</span>{t('Preferred appointment')}</legend><div className="booking-fields booking-fields--two">
             <Field label={t('Preferred Date')} required error={errors.preferredDate}><input name="preferredDate" type="date" min={today} aria-invalid={!!errors.preferredDate} /></Field>

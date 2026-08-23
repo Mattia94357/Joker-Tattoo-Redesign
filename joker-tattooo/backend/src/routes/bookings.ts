@@ -2,6 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import { sendBookingEmail } from '../services/bookingEmail';
 import type { BookingEmailInput } from '../types/booking';
+import { isValidPhoneNumber } from 'libphonenumber-js';
 
 const router = Router();
 const upload = multer({
@@ -22,11 +23,16 @@ router.post('/', upload.array('references', 5), async (request, response) => {
     response.status(400).json({ success: false, message: 'A valid email address is required.' });
     return;
   }
+  const whatsapp = String(request.body.whatsapp).trim();
+  if (!/^\+[1-9]\d+$/.test(whatsapp) || !isValidPhoneNumber(whatsapp)) {
+    response.status(400).json({ success: false, message: 'A valid international WhatsApp number is required.' });
+    return;
+  }
 
   const booking: BookingEmailInput = {
     name: String(request.body.name).trim(),
     email: String(request.body.email).trim(),
-    whatsapp: String(request.body.whatsapp).trim(),
+    whatsapp,
     preferredDate: String(request.body.preferredDate).trim(),
     preferredTime: String(request.body.preferredTime).trim(),
     tattooStyle: String(request.body.tattooStyle ?? '').trim() || undefined,
