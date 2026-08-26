@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import jokerLogo from '../../assets/images/optimized/joker-tattoo-patong-studio-emblem-96.webp';
 import { navigation } from '../../data/navigation';
@@ -6,11 +6,15 @@ import { useLanguage } from '../../context/LanguageContext';
 import { BookingButton } from '../booking/BookingButton';
 import { LanguageSwitcher } from '../ui/LanguageSwitcher';
 import { MobileMenu } from './MobileMenu';
+import { useBooking } from '../../context/BookingContext';
 
 export function Header() {
   const { t } = useLanguage();
+  const { isBookingPresent } = useBooking();
   const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
+  const [menuPresent, setMenuPresent] = useState(false);
+  const scrollLocked = menuPresent || isBookingPresent;
 
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > 30);
@@ -19,10 +23,12 @@ export function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [open]);
+  useLayoutEffect(() => {
+    if (!scrollLocked) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [scrollLocked]);
 
   useEffect(() => {
     if (!open) return;
@@ -38,8 +44,8 @@ export function Header() {
         <span><b>JOKER</b><small>TATTOO · PHUKET</small></span>
       </NavLink>
       <nav className="desktop-nav" aria-label="Main navigation">{navigation.map(x => <NavLink key={x.to} to={x.to} className={({ isActive }) => isActive ? 'active' : ''}>{t(x.label)}</NavLink>)}</nav>
-      <div className="header-actions"><LanguageSwitcher compact /><BookingButton>{t('Book Your Tattoo')}</BookingButton><button className={`menu-toggle ${open ? 'is-open' : ''}`} onClick={() => setOpen(!open)} aria-expanded={open} aria-label={t(open ? 'Close menu' : 'Open menu')}><span /><span /><em>{t(open ? 'Close' : 'Menu')}</em></button></div>
+      <div className="header-actions"><LanguageSwitcher compact /><BookingButton>{t('Book Your Tattoo')}</BookingButton><button className={`menu-toggle ${open ? 'is-open' : ''}`} onClick={() => { if (open) setOpen(false); else { setMenuPresent(true); setOpen(true); } }} aria-expanded={open} aria-label={t(open ? 'Close menu' : 'Open menu')}><span /><span /><em>{t(open ? 'Close' : 'Menu')}</em></button></div>
     </header>
-    <MobileMenu open={open} close={() => setOpen(false)} />
+    <MobileMenu open={open} close={() => setOpen(false)} onExitComplete={() => { if (!open) setMenuPresent(false); }} />
   </>;
 }

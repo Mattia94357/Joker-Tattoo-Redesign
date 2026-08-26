@@ -1,17 +1,22 @@
 import { createContext, useCallback, useContext, useState, type ReactNode } from 'react';
 import { BookingModal } from '../components/booking/BookingModal';
 
-type BookingContextValue = { openBooking: () => void; closeBooking: () => void };
+type BookingContextValue = { openBooking: () => void; closeBooking: () => void; isBookingPresent: boolean };
 const BookingContext = createContext<BookingContextValue | null>(null);
 
 export function BookingProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
-  const openBooking = useCallback(() => setOpen(true), []);
+  const [present, setPresent] = useState(false);
+  const openBooking = useCallback(() => {
+    setPresent(true);
+    setOpen(true);
+  }, []);
   const closeBooking = useCallback(() => setOpen(false), []);
+  const completeExit = useCallback(() => setPresent(false), []);
 
-  return <BookingContext.Provider value={{ openBooking, closeBooking }}>
+  return <BookingContext.Provider value={{ openBooking, closeBooking, isBookingPresent: present }}>
     {children}
-    <BookingModal open={open} onClose={closeBooking} />
+    <BookingModal open={open} onClose={closeBooking} onExitComplete={completeExit} />
   </BookingContext.Provider>;
 }
 

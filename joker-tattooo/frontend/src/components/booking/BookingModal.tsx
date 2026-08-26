@@ -8,7 +8,7 @@ const styles = ['Japanese', 'Realism', 'Black & Grey', 'Fine Line', 'Colour', 'T
 const sizes = ['Small', 'Medium', 'Large', 'Full Sleeve', 'Half Sleeve', 'Back Piece', 'Leg Sleeve', 'Chest', 'Other'];
 type Errors = Partial<Record<'name' | 'email' | 'whatsapp' | 'preferredDate' | 'preferredTime' | 'references' | 'submit', string>>;
 
-export function BookingModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+export function BookingModal({ open, onClose, onExitComplete }: { open: boolean; onClose: () => void; onExitComplete: () => void }) {
   const { t } = useLanguage();
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -26,25 +26,19 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
 
   useEffect(() => {
     if (!open) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
     const escape = (event: KeyboardEvent) => event.key === 'Escape' && onClose();
     window.addEventListener('keydown', escape);
     window.setTimeout(() => closeRef.current?.focus(), 50);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', escape);
-    };
+    return () => window.removeEventListener('keydown', escape);
   }, [open, onClose]);
 
-  const close = () => {
-    onClose();
-    window.setTimeout(() => {
-      setSuccess(false);
-      setErrors({});
-      setFiles([]);
-      setWhatsapp({ e164: '', hasValue: false, isValid: false });
-    }, 350);
+  const completeExit = () => {
+    if (open) return;
+    setSuccess(false);
+    setErrors({});
+    setFiles([]);
+    setWhatsapp({ e164: '', hasValue: false, isValid: false });
+    onExitComplete();
   };
 
   const addFiles = (incoming: FileList | File[]) => {
@@ -100,18 +94,18 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
 
   const today = new Date().toISOString().slice(0, 10);
 
-  return <AnimatePresence>{open && <m.div className="booking-modal" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .24 }}>
-    <button className="booking-modal__backdrop" aria-label={t('Close booking form')} onClick={close} />
+  return <AnimatePresence onExitComplete={completeExit}>{open && <m.div className="booking-modal" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .24 }}>
+    <button className="booking-modal__backdrop" aria-label={t('Close booking form')} onClick={onClose} />
     <m.section className="booking-modal__panel" role="dialog" aria-modal="true" aria-labelledby={titleId} initial={{ opacity: 0, y: 34, scale: .985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 28, scale: .99 }} transition={{ duration: .42, ease: [0.22, 1, 0.36, 1] }}>
       <div className="booking-modal__rail" aria-hidden="true"><span>JOKER TATTOO</span><i /><small>PATONG · PHUKET</small></div>
-      <button ref={closeRef} className="booking-modal__close" onClick={close} aria-label={t('Close booking form')}><span>{t('Close')}</span><i aria-hidden="true">×</i></button>
+      <button ref={closeRef} className="booking-modal__close" onClick={onClose} aria-label={t('Close booking form')}><span>{t('Close')}</span><i aria-hidden="true">×</i></button>
       {success ? <div className="booking-success">
         <div className="booking-success__mark" aria-hidden="true"><span>✓</span></div>
         <p className="eyebrow">{t('Request received')}</p>
         <h2 id={titleId}>{t('Thank you!')}</h2>
         <p>{t("We've received your booking request.")}</p>
         <p>{t('Our team will contact you shortly via WhatsApp or email to confirm your appointment.')}</p>
-        <button className="button booking-success__button" onClick={close}>{t('Return to Website')}<span aria-hidden="true">↗</span></button>
+        <button className="button booking-success__button" onClick={onClose}>{t('Return to Website')}<span aria-hidden="true">↗</span></button>
       </div> : <form className="booking-request" onSubmit={submit} noValidate>
         <header className="booking-request__header">
           <div><p className="eyebrow">{t('Private booking request')}</p><h2 id={titleId}>{t('Tell us your idea.')}</h2></div>
