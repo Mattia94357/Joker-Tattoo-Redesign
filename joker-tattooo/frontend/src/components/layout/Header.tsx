@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import jokerLogo from '../../assets/images/optimized/joker-tattoo-patong-studio-emblem-96.webp';
 import { navigation } from '../../data/navigation';
 import { useLanguage } from '../../context/LanguageContext';
@@ -10,6 +10,7 @@ import { useBooking } from '../../context/BookingContext';
 
 export function Header() {
   const { t } = useLanguage();
+  const { pathname } = useLocation();
   const { isBookingPresent } = useBooking();
   const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
@@ -22,6 +23,8 @@ export function Header() {
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useLayoutEffect(() => { setSolid(false); }, [pathname]);
 
   useLayoutEffect(() => {
     if (!scrollLocked) return;
