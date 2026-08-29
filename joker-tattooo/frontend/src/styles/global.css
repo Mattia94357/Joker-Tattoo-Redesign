@@ -327,4 +327,12 @@ address{font-style:normal}
   .contact-map{height:360px;border-radius:16px}
 }
 @media(max-width:380px){.booking-request__header{padding-top:4.5rem}.booking-request__header h2{font-size:3.2rem}.booking-request__header>p{display:none}.booking-request__body{padding-top:1.2rem}}
-.reveal{opacity:0;transform:translate3d(0,34px,0);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);will-change:opacity,transform}.reveal--visible{opacity:1;transform:translate3d(0,0,0)}.magnetic{transition:transform .25s}.magnetic:hover{transform:translate3d(5px,0,0)}.image-card{transition:transform .25s}.image-card:hover{transform:translate3d(0,-8px,0)}@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.magnetic,.image-card{transition:none}}
+.reveal{opacity:0;transform:translate3d(0,34px,0);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);will-change:opacity,transform}.reveal--visible{opacity:1;transform:translate3d(0,0,0);will-change:auto}.magnetic{transition:transform .25s}.magnetic:hover{transform:translate3d(5px,0,0)}.image-card{transition:transform .25s}.image-card:hover{transform:translate3d(0,-8px,0)}@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.magnetic,.image-card{transition:none}}
+
+@media(max-width:760px){
+  body:before{content:none}
+  .site-header--solid,.booking-modal__backdrop,.booking-modal__close,.booking-request__footer,.lightbox__close,.lightbox__prev,.lightbox__next,.lightbox__caption{-webkit-backdrop-filter:none;backdrop-filter:none}
+  .booking-modal__panel{height:100%}
+}
+
+.gallery-tile--preparing{position:fixed;width:1px;height:1px;visibility:hidden;pointer-events:none}

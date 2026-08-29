@@ -193,9 +193,10 @@ function render(page, noindex = false) {
   const facts = page.facts?.length
     ? `<section aria-labelledby="page-facts"><h2 id="page-facts">About ${escape(businessName)}</h2><ul>${page.facts.map(fact => `<li>${escape(fact)}</li>`).join('')}</ul></section>`
     : '';
+  const fallback = `<main data-prerendered="true"><h1>${escape(page.heading)}</h1><p>${escape(page.summary)}</p>${facts}<nav aria-label="Primary">${nav}</nav></main>`;
   return clean
     .replace('</head>', `${metadata(page, noindex)}\n</head>`)
-    .replace('<div id="root"></div>', `<div id="root"><main data-prerendered="true"><h1>${escape(page.heading)}</h1><p>${escape(page.summary)}</p>${facts}<nav aria-label="Primary">${nav}</nav></main></div>`);
+    .replace('<div id="root"></div>', `<div id="root"></div><noscript>${fallback}</noscript>`);
 }
 
 for (const [key, page] of Object.entries(config.pages)) {
