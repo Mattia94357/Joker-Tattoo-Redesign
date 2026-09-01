@@ -2,19 +2,21 @@ import { createContext, useCallback, useContext, useState, type ReactNode } from
 import { BookingModal } from '../components/booking/BookingModal';
 
 type BookingContextValue = { openBooking: () => void; closeBooking: () => void; isBookingPresent: boolean };
+type BookingPhase = 'closed' | 'open' | 'closing';
 const BookingContext = createContext<BookingContextValue | null>(null);
 
 export function BookingProvider({ children }: { children: ReactNode }) {
-  const [open, setOpen] = useState(false);
-  const [present, setPresent] = useState(false);
-  const openBooking = useCallback(() => {
-    setPresent(true);
-    setOpen(true);
+  const [phase, setPhase] = useState<BookingPhase>('closed');
+  const openBooking = useCallback(() => setPhase('open'), []);
+  const closeBooking = useCallback(() => {
+    setPhase(current => current === 'open' ? 'closing' : current);
   }, []);
-  const closeBooking = useCallback(() => setOpen(false), []);
-  const completeExit = useCallback(() => setPresent(false), []);
+  const completeExit = useCallback(() => {
+    setPhase(current => current === 'closing' ? 'closed' : current);
+  }, []);
+  const open = phase === 'open';
 
-  return <BookingContext.Provider value={{ openBooking, closeBooking, isBookingPresent: present }}>
+  return <BookingContext.Provider value={{ openBooking, closeBooking, isBookingPresent: phase !== 'closed' }}>
     {children}
     <BookingModal open={open} onClose={closeBooking} onExitComplete={completeExit} />
   </BookingContext.Provider>;

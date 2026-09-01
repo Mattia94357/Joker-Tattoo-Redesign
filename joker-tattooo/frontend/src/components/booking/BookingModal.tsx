@@ -1,5 +1,5 @@
 import { AnimatePresence, m } from 'framer-motion';
-import { useCallback, useEffect, useId, useRef, useState, type ChangeEvent, type DragEvent, type FormEvent } from 'react';
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type ChangeEvent, type DragEvent, type FormEvent, type MouseEvent } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { submitBookingRequest, type BookingRequest } from '../../services/booking';
 import { InternationalPhoneInput, type InternationalPhoneValue } from './InternationalPhoneInput';
@@ -12,12 +12,26 @@ export function BookingModal({ open, onClose, onExitComplete }: { open: boolean;
   const { t } = useLanguage();
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
+  const openRef = useRef(open);
+  const backdropArmedRef = useRef(false);
   const [errors, setErrors] = useState<Errors>({});
   const [files, setFiles] = useState<File[]>([]);
   const [dragging, setDragging] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [whatsapp, setWhatsapp] = useState<InternationalPhoneValue>({ e164: '', hasValue: false, isValid: false });
+
+  useLayoutEffect(() => {
+    openRef.current = open;
+    if (!open) {
+      backdropArmedRef.current = false;
+      return;
+    }
+    const frame = requestAnimationFrame(() => {
+      backdropArmedRef.current = true;
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [open]);
 
   const updateWhatsapp = useCallback((value: InternationalPhoneValue) => {
     setWhatsapp(value);
@@ -33,12 +47,17 @@ export function BookingModal({ open, onClose, onExitComplete }: { open: boolean;
   }, [open, onClose]);
 
   const completeExit = () => {
-    if (open) return;
+    if (openRef.current) return;
     setSuccess(false);
     setErrors({});
     setFiles([]);
     setWhatsapp({ e164: '', hasValue: false, isValid: false });
     onExitComplete();
+  };
+
+  const closeFromBackdrop = (event: MouseEvent<HTMLButtonElement>) => {
+    if (event.target !== event.currentTarget || !backdropArmedRef.current) return;
+    onClose();
   };
 
   const addFiles = (incoming: FileList | File[]) => {
@@ -95,7 +114,7 @@ export function BookingModal({ open, onClose, onExitComplete }: { open: boolean;
   const today = new Date().toISOString().slice(0, 10);
 
   return <AnimatePresence onExitComplete={completeExit}>{open && <m.div className="booking-modal" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .24 }}>
-    <button className="booking-modal__backdrop" aria-label={t('Close booking form')} onClick={onClose} />
+    <button className="booking-modal__backdrop" aria-label={t('Close booking form')} onClick={closeFromBackdrop} />
     <m.section className="booking-modal__panel" role="dialog" aria-modal="true" aria-labelledby={titleId} initial={{ opacity: 0, y: 34, scale: .985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 28, scale: .99 }} transition={{ duration: .42, ease: [0.22, 1, 0.36, 1] }}>
       <div className="booking-modal__rail" aria-hidden="true"><span>JOKER TATTOO</span><i /><small>PATONG · PHUKET</small></div>
       <button ref={closeRef} className="booking-modal__close" onClick={onClose} aria-label={t('Close booking form')}><span>{t('Close')}</span><i aria-hidden="true">×</i></button>
