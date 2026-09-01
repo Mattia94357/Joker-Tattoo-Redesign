@@ -3,6 +3,7 @@ import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type 
 import { useLanguage } from '../../context/LanguageContext';
 import { submitBookingRequest, type BookingRequest } from '../../services/booking';
 import { InternationalPhoneInput, type InternationalPhoneValue } from './InternationalPhoneInput';
+import { useMobileViewport } from '../../hooks/useMobileViewport';
 
 const styles = ['Japanese', 'Realism', 'Black & Grey', 'Fine Line', 'Colour', 'Tribal', 'Bamboo Tattoo', 'Cover Up', 'Not Sure Yet'];
 const sizes = ['Small', 'Medium', 'Large', 'Full Sleeve', 'Half Sleeve', 'Back Piece', 'Leg Sleeve', 'Chest', 'Other'];
@@ -10,6 +11,7 @@ type Errors = Partial<Record<'name' | 'email' | 'whatsapp' | 'preferredDate' | '
 
 export function BookingModal({ open, onClose, onExitComplete }: { open: boolean; onClose: () => void; onExitComplete: () => void }) {
   const { t } = useLanguage();
+  const mobile = useMobileViewport();
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
   const openRef = useRef(open);
@@ -113,9 +115,9 @@ export function BookingModal({ open, onClose, onExitComplete }: { open: boolean;
 
   const today = new Date().toISOString().slice(0, 10);
 
-  return <AnimatePresence onExitComplete={completeExit}>{open && <m.div className="booking-modal" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .24 }}>
+  return <AnimatePresence onExitComplete={completeExit}>{open && <m.div className="booking-modal" initial={mobile ? false : { opacity: 0 }} animate={mobile ? undefined : { opacity: 1 }} exit={mobile ? undefined : { opacity: 0 }} transition={mobile ? undefined : { duration: .24 }}>
     <button className="booking-modal__backdrop" aria-label={t('Close booking form')} onClick={closeFromBackdrop} />
-    <m.section className="booking-modal__panel" role="dialog" aria-modal="true" aria-labelledby={titleId} initial={{ opacity: 0, y: 34, scale: .985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 28, scale: .99 }} transition={{ duration: .42, ease: [0.22, 1, 0.36, 1] }}>
+    <m.section className="booking-modal__panel" role="dialog" aria-modal="true" aria-labelledby={titleId} initial={mobile ? false : { opacity: 0, y: 34, scale: .985 }} animate={mobile ? undefined : { opacity: 1, y: 0, scale: 1 }} exit={mobile ? undefined : { opacity: 0, y: 28, scale: .99 }} transition={mobile ? undefined : { duration: .42, ease: [0.22, 1, 0.36, 1] }}>
       <div className="booking-modal__rail" aria-hidden="true"><span>JOKER TATTOO</span><i /><small>PATONG · PHUKET</small></div>
       <button ref={closeRef} className="booking-modal__close" onClick={onClose} aria-label={t('Close booking form')}><span>{t('Close')}</span><i aria-hidden="true">×</i></button>
       {success ? <div className="booking-success">
