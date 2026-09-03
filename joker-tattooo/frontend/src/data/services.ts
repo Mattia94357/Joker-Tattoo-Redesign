@@ -16,14 +16,26 @@ import fineLineImageMedium from '../assets/images/optimized/religionrealism-768.
 import customImage from '../assets/images/optimized/chestsakyant.avif';
 import customImageSmall from '../assets/images/optimized/chestsakyant-480.avif';
 import customImageMedium from '../assets/images/optimized/chestsakyant-768.avif';
+import type { GalleryCategorySlug } from './gallery';
 
-export const tattooStyles = [
-  { title: 'Realism', text: 'Depth, texture and detail with true-to-life presence.', image: realismImage, imageSmall: realismImageSmall, imageMedium: realismImageMedium, width: 757, height: 1024 },
-  { title: 'Black & Grey', text: 'Carefully balanced contrast with timeless character.', image: blackGreyImage, imageSmall: blackGreyImageSmall, imageMedium: blackGreyImageMedium, width: 1000, height: 1124 },
-  { title: 'Traditional', text: 'Bold lines, strong colour and forms made to endure.', image: traditionalImage, imageSmall: traditionalImageSmall, imageMedium: traditionalImageMedium, width: 512, height: 510 },
-  { title: 'Japanese', text: 'Flowing compositions shaped to move with the body.', image: japaneseImage, imageSmall: japaneseImageSmall, imageMedium: japaneseImageMedium, width: 1016, height: 1024 },
-  { title: 'Fine Line', text: 'Delicate detail, clean spacing and precise linework.', image: fineLineImage, imageSmall: fineLineImageSmall, imageMedium: fineLineImageMedium, width: 624, height: 779 },
-  { title: 'Custom Designs', text: 'Original work drawn around your story and your body.', image: customImage, imageSmall: customImageSmall, imageMedium: customImageMedium, width: 1000, height: 1244 },
+type TattooStyle = {
+  title: string;
+  text: string;
+  galleryCategory: GalleryCategorySlug;
+  image: string;
+  imageSmall: string;
+  imageMedium: string;
+  width: number;
+  height: number;
+};
+
+export const tattooStyles: TattooStyle[] = [
+  { title: 'Realism', text: 'Depth, texture and detail with true-to-life presence.', galleryCategory: 'realism', image: realismImage, imageSmall: realismImageSmall, imageMedium: realismImageMedium, width: 757, height: 1024 },
+  { title: 'Black & Grey', text: 'Carefully balanced contrast with timeless character.', galleryCategory: 'black-grey', image: blackGreyImage, imageSmall: blackGreyImageSmall, imageMedium: blackGreyImageMedium, width: 1000, height: 1124 },
+  { title: 'Traditional', text: 'Bold lines, strong colour and forms made to endure.', galleryCategory: 'colour', image: traditionalImage, imageSmall: traditionalImageSmall, imageMedium: traditionalImageMedium, width: 512, height: 510 },
+  { title: 'Japanese', text: 'Flowing compositions shaped to move with the body.', galleryCategory: 'japanese', image: japaneseImage, imageSmall: japaneseImageSmall, imageMedium: japaneseImageMedium, width: 1016, height: 1024 },
+  { title: 'Fine Line', text: 'Delicate detail, clean spacing and precise linework.', galleryCategory: 'black-grey', image: fineLineImage, imageSmall: fineLineImageSmall, imageMedium: fineLineImageMedium, width: 624, height: 779 },
+  { title: 'Custom Designs', text: 'Original work drawn around your story and your body.', galleryCategory: 'black-grey', image: customImage, imageSmall: customImageSmall, imageMedium: customImageMedium, width: 1000, height: 1244 },
 ];
 
 export const services = [

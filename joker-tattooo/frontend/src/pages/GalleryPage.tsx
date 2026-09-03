@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { AnimatePresence, motion as m } from 'framer-motion';
-import { galleryCategories, galleryItems, type GalleryItem } from '../data/gallery';
+import { useLocation, useSearchParams } from 'react-router-dom';
+import { galleryCategories, galleryCategoryLabel, galleryFilterFromSlug, galleryItemMatches, galleryItems, type GalleryFilterSlug, type GalleryItem } from '../data/gallery';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { BookingButton } from '../components/booking/BookingButton';
 import { useLanguage } from '../context/LanguageContext';
@@ -50,32 +51,46 @@ function waitForImage(image?: HTMLImageElement) {
 }
 
 export function GalleryPage() {
-  const [filter, setFilter] = useState('All');
-  const [pendingFilter, setPendingFilter] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { hash } = useLocation();
+  const filter = galleryFilterFromSlug(searchParams.get('category'));
+  const [pendingFilter, setPendingFilter] = useState<GalleryFilterSlug | null>(null);
   const [active, setActive] = useState<number | null>(null);
   const [activeImage, setActiveImage] = useState('');
   const filterRequest = useRef(0);
   const imageRequest = useRef(0);
   const imageElements = useRef(new Map<number, HTMLImageElement>());
   const { t } = useLanguage();
+  const filteredIndices = galleryItems.reduce<number[]>((indices, item, index) => {
+    if (galleryItemMatches(item, filter)) indices.push(index);
+    return indices;
+  }, []);
   const activeItem = active === null ? null : galleryItems[active];
+  const activePosition = active === null ? -1 : filteredIndices.indexOf(active);
   const activeItemIsLowResolution = activeItem !== null && Math.min(activeItem.width, activeItem.height) < 800;
   const activeImageStyle = activeItemIsLowResolution ? {
     '--lightbox-max-width': `${Math.round(activeItem.width * 1.75)}px`,
     '--lightbox-max-height': `${Math.round(activeItem.height * 1.75)}px`,
   } as CSSProperties : undefined;
 
-  const selectFilter = async (category: string) => {
-    if (category === filter) return;
+  const selectFilter = async (category: GalleryFilterSlug) => {
+    if (category === filter) {
+      filterRequest.current += 1;
+      setPendingFilter(null);
+      return;
+    }
     const request = ++filterRequest.current;
-    const nextItems = category === 'All' ? galleryItems : galleryItems.filter(item => item.category === category);
+    const nextItems = galleryItems.filter(item => galleryItemMatches(item, category));
     setPendingFilter(category);
     await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
     await Promise.all(nextItems.map(item => waitForImage(imageElements.current.get(item.id))));
     await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
     if (request === filterRequest.current) {
-      setFilter(category);
       setPendingFilter(null);
+      const nextSearchParams = new URLSearchParams(searchParams);
+      if (category === 'all') nextSearchParams.delete('category');
+      else nextSearchParams.set('category', category);
+      setSearchParams(nextSearchParams);
     }
   };
 
@@ -101,8 +116,9 @@ export function GalleryPage() {
   };
 
   const move = async (direction: number) => {
-    if (active === null) return;
-    const index = (active + direction + galleryItems.length) % galleryItems.length;
+    if (active === null || activePosition < 0 || filteredIndices.length === 0) return;
+    const position = (activePosition + direction + filteredIndices.length) % filteredIndices.length;
+    const index = filteredIndices[position];
     const request = ++imageRequest.current;
     const item = galleryItems[index];
     const src = await preloadThumbnail(item);
@@ -111,6 +127,17 @@ export function GalleryPage() {
     setActive(index);
     loadFullImage(index, request);
   };
+
+  useLayoutEffect(() => {
+    if (hash === '#gallery') document.getElementById('gallery')?.scrollIntoView({ block: 'start' });
+  }, [hash]);
+
+  useEffect(() => {
+    filterRequest.current += 1;
+    setPendingFilter(null);
+    imageRequest.current += 1;
+    setActive(null);
+  }, [filter]);
 
   useEffect(() => {
     if (active === null) return;
@@ -126,12 +153,12 @@ export function GalleryPage() {
   return <main className="page">
     <SEO {...seoConfig.pages.gallery} structuredData={[organizationSchema(), webPageSchema(seoConfig.pages.gallery.path, seoConfig.pages.gallery.title, seoConfig.pages.gallery.description), breadcrumbSchema('Gallery', seoConfig.pages.gallery.path), imageObjectSchema()]} />
     <section className="page-hero page-hero--gallery"><SectionHeading level="h1" eyebrow={t('Our work')} title={t('Made to belong to you.')} text={t('Explore tattoos created at Joker Tattoo in Patong, from Japanese sleeves and realism to traditional Sak Yant.')}/></section>
-    <section className="gallery-section" aria-label={t('Joker Tattoo portfolio gallery')}>
-      <div className="filters" role="group" aria-label={t('Filter gallery')}>{galleryCategories.map(category => <button className={filter === category ? 'active' : ''} onClick={() => void selectFilter(category)} key={category}>{t(category)}</button>)}</div>
+    <section className="gallery-section" id="gallery" aria-label={t('Joker Tattoo portfolio gallery')}>
+      <div className="filters" role="group" aria-label={t('Filter gallery')}>{galleryCategories.map(category => <button className={filter === category.slug ? 'active' : ''} onClick={() => void selectFilter(category.slug)} key={category.slug}>{t(category.label)}</button>)}</div>
       <div className="masonry">{galleryItems.map((item, index) => {
-        const shown = filter === 'All' || item.category === filter;
-        const requested = pendingFilter === 'All' || pendingFilter === item.category;
-        return <button className={`gallery-tile gallery-tile--${index % 4}${requested && !shown ? ' gallery-tile--preparing' : ''}`} hidden={!shown && !requested} key={item.id} onClick={() => openImage(index)}><img ref={node => { if (node) imageElements.current.set(item.id, node); else imageElements.current.delete(item.id); }} src={item.imageSmall} srcSet={thumbnailSrcSet(item)} sizes={thumbnailSizes} width={item.width} height={item.height} alt={t(item.alt)} loading={index < 3 || requested ? 'eager' : 'lazy'} decoding="async" /><span><strong>{t(item.title)}</strong><small>{t(item.category)}</small></span></button>;
+        const shown = galleryItemMatches(item, filter);
+        const requested = pendingFilter !== null && galleryItemMatches(item, pendingFilter);
+        return <button className={`gallery-tile gallery-tile--${index % 4}${requested && !shown ? ' gallery-tile--preparing' : ''}`} hidden={!shown && !requested} key={item.id} onClick={() => openImage(index)}><img ref={node => { if (node) imageElements.current.set(item.id, node); else imageElements.current.delete(item.id); }} src={item.imageSmall} srcSet={thumbnailSrcSet(item)} sizes={thumbnailSizes} width={item.width} height={item.height} alt={t(item.alt)} loading={index < 3 || requested ? 'eager' : 'lazy'} decoding="async" /><span><strong>{t(item.title)}</strong><small>{t(galleryCategoryLabel(item.categories[0]))}</small></span></button>;
       })}</div>
       <div className="gallery-cta"><p>{t('Found a direction you like? Tell us what you have in mind.')}</p><BookingButton variant="outline">{t('Start Your Tattoo Journey')}</BookingButton></div>
     </section>
@@ -139,7 +166,7 @@ export function GalleryPage() {
       <button className="lightbox__close" onClick={closeImage} aria-label={t('Close image viewer')}>{t('Close')} ×</button>
       <button className="lightbox__prev" onClick={() => void move(-1)} aria-label={t('Previous image')}>←</button>
       <m.img className={activeItemIsLowResolution ? 'lightbox__image lightbox__image--low-res' : 'lightbox__image'} style={activeImageStyle} initial={{ opacity: 0, scale: .965 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: .32, ease: 'easeOut' }} src={activeImage} width={galleryItems[active].width} height={galleryItems[active].height} alt={t(galleryItems[active].alt)} decoding="async" />
-      <div className="lightbox__caption"><strong>{t(galleryItems[active].title)}</strong><span>{t(galleryItems[active].category)} · {active + 1}/{galleryItems.length}</span></div>
+      <div className="lightbox__caption"><strong>{t(galleryItems[active].title)}</strong><span>{t(galleryCategoryLabel(galleryItems[active].categories[0]))} · {activePosition + 1}/{filteredIndices.length}</span></div>
       <button className="lightbox__next" onClick={() => void move(1)} aria-label={t('Next image')}>→</button>
     </m.div>}</AnimatePresence>
   </main>;

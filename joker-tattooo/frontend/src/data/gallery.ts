@@ -47,9 +47,29 @@ import realisticWomanGunSmall from '../assets/images/optimized/realistic-woman-g
 import japaneseSleeve from '../assets/images/optimized/japanese-sleeve.avif';
 import japaneseSleeveSmall from '../assets/images/optimized/japanese-sleeve-480.webp';
 
-export type GalleryItem = { id: number; title: string; category: string; image: string; imageSmall: string; width: number; height: number; alt: string };
+export const galleryCategories = [
+  { slug: 'all', label: 'All' },
+  { slug: 'japanese', label: 'Japanese' },
+  { slug: 'realism', label: 'Realism' },
+  { slug: 'sak-yant', label: 'Sak Yant' },
+  { slug: 'black-grey', label: 'Black & Grey' },
+  { slug: 'colour', label: 'Colour' },
+] as const;
 
-export const galleryCategories = ['All', 'Japanese', 'Sak Yant', 'Realism', 'Black & Grey', 'Tribal', 'Colour', 'Thai Traditional'];
+export type GalleryFilterSlug = typeof galleryCategories[number]['slug'];
+export type GalleryCategorySlug = Exclude<GalleryFilterSlug, 'all'>;
+export type GalleryItem = { id: number; title: string; categories: readonly GalleryCategorySlug[]; image: string; imageSmall: string; width: number; height: number; alt: string };
+
+export function galleryFilterFromSlug(value: string | null): GalleryFilterSlug {
+  return galleryCategories.some(category => category.slug === value) ? value as GalleryFilterSlug : 'all';
+}
+
+export function galleryCategoryLabel(slug: GalleryCategorySlug) {
+  return galleryCategories.find(category => category.slug === slug)!.label;
+}
+
+export const galleryCategoryPath = (slug: GalleryCategorySlug) => `/gallery?category=${slug}#gallery`;
+export const galleryItemMatches = (item: GalleryItem, filter: GalleryFilterSlug) => filter === 'all' || item.categories.includes(filter);
 
 const tigerSakYant = '/images/hero/traditional-tiger-sak-yant-tattoo.webp';
 const smallImages: Record<number, string> = {
@@ -80,34 +100,34 @@ const smallImages: Record<number, string> = {
   28: japaneseSleeveSmall,
 };
 
-const item = (id: number, title: string, category: string, image: string, width: number, height: number, alt: string): GalleryItem => ({
-  id, title, category, image, imageSmall: smallImages[id] ?? image, width, height, alt,
+const item = (id: number, title: string, categories: readonly GalleryCategorySlug[], image: string, width: number, height: number, alt: string): GalleryItem => ({
+  id, title, categories, image, imageSmall: smallImages[id] ?? image, width, height, alt,
 });
 
 export const galleryItems: GalleryItem[] = [
-  item(1, 'Tiger Sak Yant', 'Sak Yant', tigerSakYant, 1000, 1260, 'Traditional tiger Sak Yant tattoo across the back'),
-  item(2, 'Japanese Tiger Sleeves', 'Japanese', tigerSleeve, 1000, 997, 'Colour Japanese tiger and floral sleeve tattoos'),
-  item(3, 'Sacred Geometry', 'Black & Grey', chestSakYant, 1000, 1244, 'Black and grey sacred geometry chest tattoo'),
-  item(4, 'Thai Warrior', 'Black & Grey', thaiWarrior, 1000, 1124, 'Detailed black and grey Thai warrior leg tattoo'),
-  item(5, 'Hannya & Koi', 'Japanese', pinkHannya, 1000, 1043, 'Colour Japanese Hannya mask and koi sleeve tattoos'),
-  item(6, 'Oni Sleeves', 'Japanese', redOni, 1000, 1004, 'Japanese Oni, peony and koi sleeve tattoos'),
-  item(7, 'Daruma Sleeve', 'Japanese', japaneseOni, 1000, 1257, 'Japanese guardian and red Daruma full sleeve tattoo'),
-  item(8, 'Sacred Backpiece', 'Sak Yant', sakYantBack, 320, 401, 'Traditional Sak Yant full back tattoo'),
-  item(9, 'Woman & Rose', 'Realism', womanRealism, 201, 251, 'Black and grey realistic woman and rose arm tattoo'),
-  item(12, 'Purple Hannya', 'Colour', japaneseHannya, 791, 976, 'Purple Japanese Hannya mask colour tattoo'),
-  item(13, 'Ornamental Mandala', 'Black & Grey', sacredGeometry, 624, 779, 'Ornamental blackwork mandala tattoo across the upper back'),
-  item(14, 'Religious Sleeve', 'Realism', religiousSleeve, 216, 233, 'Black and grey religious realism sleeve tattoo'),
-  item(16, 'Japanese Backpiece', 'Japanese', japaneseBackpiece, 813, 1024, 'Large-scale Japanese backpiece tattoo by Joker Tattoo Patong'),
-  item(17, 'Sak Yant Chest', 'Sak Yant', sakYantChest, 741, 1024, 'Traditional Sak Yant chest tattoo by Joker Tattoo Patong'),
-  item(18, 'Blue Dragon', 'Colour', blueDragon, 1016, 1024, 'Vivid blue Japanese dragon sleeve tattoo'),
-  item(19, 'Full Back Sak Yant', 'Sak Yant', fullBackSakYant, 803, 1024, 'Full-back traditional Sak Yant composition'),
-  item(20, 'Portrait Realism', 'Realism', womanRealismTwo, 757, 1024, 'Black and grey woman portrait realism tattoo'),
-  item(21, 'Thai Traditional Sleeve', 'Thai Traditional', thaiTraditionalSleeve, 512, 510, 'Thai traditional Ganesha full sleeve tattoo'),
-  item(22, 'Custom Portfolio Piece', 'Black & Grey', customPortfolio, 883, 1024, 'Custom tattoo work by Joker Tattoo Patong'),
-  item(23, 'Woman Smile Portrait', 'Realism', womanSmileRealism, 478, 480, 'Black and grey realistic woman portrait tattoo with theatrical face details'),
-  item(24, 'Polynesian Chest & Shoulder', 'Tribal', tribalChest, 478, 421, 'Polynesian tribal chest and shoulder tattoo shown from three angles'),
-  item(25, 'Geometric Tribal Leg', 'Tribal', tribalLeg, 417, 517, 'Geometric ornamental tribal leg tattoo shown from three angles'),
-  item(26, 'Thai Guardian', 'Thai Traditional', traditionalThai, 483, 483, 'Detailed traditional Thai guardian tattoo on the lower leg'),
-  item(27, 'Woman & Rifle', 'Realism', realisticWomanGun, 402, 522, 'Black and grey realistic woman portrait with rifle tattoo'),
-  item(28, 'Japanese Serpent Sleeve', 'Japanese', japaneseSleeve, 487, 489, 'Black and grey Japanese serpent and floral full sleeve tattoo'),
+  item(1, 'Tiger Sak Yant', ['sak-yant', 'black-grey'], tigerSakYant, 1000, 1260, 'Traditional tiger Sak Yant tattoo across the back'),
+  item(2, 'Japanese Tiger Sleeves', ['japanese', 'colour'], tigerSleeve, 1000, 997, 'Colour Japanese tiger and floral sleeve tattoos'),
+  item(3, 'Sacred Geometry', ['black-grey'], chestSakYant, 1000, 1244, 'Black and grey sacred geometry chest tattoo'),
+  item(4, 'Thai Warrior', ['realism', 'black-grey'], thaiWarrior, 1000, 1124, 'Detailed black and grey Thai warrior leg tattoo'),
+  item(5, 'Hannya & Koi', ['japanese', 'colour'], pinkHannya, 1000, 1043, 'Colour Japanese Hannya mask and koi sleeve tattoos'),
+  item(6, 'Oni Sleeves', ['japanese', 'colour'], redOni, 1000, 1004, 'Japanese Oni, peony and koi sleeve tattoos'),
+  item(7, 'Daruma Sleeve', ['japanese', 'colour'], japaneseOni, 1000, 1257, 'Japanese guardian and red Daruma full sleeve tattoo'),
+  item(8, 'Sacred Backpiece', ['sak-yant', 'black-grey'], sakYantBack, 320, 401, 'Traditional Sak Yant full back tattoo'),
+  item(9, 'Woman & Rose', ['realism', 'black-grey'], womanRealism, 201, 251, 'Black and grey realistic woman and rose arm tattoo'),
+  item(12, 'Purple Hannya', ['japanese', 'colour'], japaneseHannya, 791, 976, 'Purple Japanese Hannya mask colour tattoo'),
+  item(13, 'Ornamental Mandala', ['black-grey'], sacredGeometry, 624, 779, 'Ornamental blackwork mandala tattoo across the upper back'),
+  item(14, 'Religious Sleeve', ['sak-yant', 'black-grey'], religiousSleeve, 216, 233, 'Black and grey religious realism sleeve tattoo'),
+  item(16, 'Japanese Backpiece', ['japanese', 'colour'], japaneseBackpiece, 813, 1024, 'Large-scale Japanese backpiece tattoo by Joker Tattoo Patong'),
+  item(17, 'Sak Yant Chest', ['sak-yant', 'black-grey'], sakYantChest, 741, 1024, 'Traditional Sak Yant chest tattoo by Joker Tattoo Patong'),
+  item(18, 'Blue Dragon', ['japanese', 'colour'], blueDragon, 1016, 1024, 'Vivid blue Japanese dragon sleeve tattoo'),
+  item(19, 'Full Back Sak Yant', ['sak-yant', 'black-grey'], fullBackSakYant, 803, 1024, 'Full-back traditional Sak Yant composition'),
+  item(20, 'Portrait Realism', ['realism', 'black-grey'], womanRealismTwo, 757, 1024, 'Black and grey woman portrait realism tattoo'),
+  item(21, 'Thai Traditional Sleeve', ['colour'], thaiTraditionalSleeve, 512, 510, 'Thai traditional Ganesha full sleeve tattoo'),
+  item(22, 'Custom Portfolio Piece', ['realism', 'black-grey'], customPortfolio, 883, 1024, 'Custom tattoo work by Joker Tattoo Patong'),
+  item(23, 'Woman Smile Portrait', ['realism', 'black-grey'], womanSmileRealism, 478, 480, 'Black and grey realistic woman portrait tattoo with theatrical face details'),
+  item(24, 'Polynesian Chest & Shoulder', ['black-grey'], tribalChest, 478, 421, 'Polynesian tribal chest and shoulder tattoo shown from three angles'),
+  item(25, 'Geometric Tribal Leg', ['black-grey'], tribalLeg, 417, 517, 'Geometric ornamental tribal leg tattoo shown from three angles'),
+  item(26, 'Thai Guardian', ['realism', 'black-grey'], traditionalThai, 483, 483, 'Detailed traditional Thai guardian tattoo on the lower leg'),
+  item(27, 'Woman & Rifle', ['realism', 'black-grey'], realisticWomanGun, 402, 522, 'Black and grey realistic woman portrait with rifle tattoo'),
+  item(28, 'Japanese Serpent Sleeve', ['japanese', 'black-grey'], japaneseSleeve, 487, 489, 'Black and grey Japanese serpent and floral full sleeve tattoo'),
 ];
