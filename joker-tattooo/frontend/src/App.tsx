@@ -10,10 +10,11 @@ import { HomePage } from './pages/HomePage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { WhyJokerPage } from './pages/ServicesPage';
 import { useMobileViewport } from './hooks/useMobileViewport';
+import { Analytics } from './components/analytics/Analytics';
 
 export default function App() {
   const location = useLocation();
   const mobile = useMobileViewport();
   const routes = <PageTransition key={location.pathname}><Routes location={location}><Route path="/" element={<HomePage />} /><Route path="/gallery" element={<GalleryPage />} /><Route path="/why-joker" element={<WhyJokerPage />} /><Route path="/what-we-do" element={<Navigate to="/why-joker" replace />} /><Route path="/contact" element={<ContactPage />} /><Route path="*" element={<NotFoundPage />} /></Routes></PageTransition>;
-  return <><ScrollToTop /><Header />{mobile ? routes : <AnimatePresence mode="popLayout">{routes}</AnimatePresence>}<Footer /></>;
+  return <><Analytics /><ScrollToTop /><Header />{mobile ? routes : <AnimatePresence mode="popLayout">{routes}</AnimatePresence>}<Footer /></>;
 }

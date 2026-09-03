@@ -5,6 +5,7 @@ import { contactDetails } from '../../data/contact';
 import { navigation } from '../../data/navigation';
 import { useLanguage } from '../../context/LanguageContext';
 import { useBooking } from '../../context/BookingContext';
+import { trackEvent } from '../../lib/analytics';
 
 export function Footer() {
   const { t } = useLanguage();
@@ -16,8 +17,8 @@ export function Footer() {
       <nav className="footer-nav" aria-label={t('Footer navigation')}>{navigation.map(item => <Link key={item.to} to={item.to}>{t(item.label)}</Link>)}</nav>
     </div>
     <address><p className="eyebrow">{t('Visit')}</p><p>{t(contactDetails.address)}</p><p>{t(contactDetails.hours)}</p></address>
-    <address><p className="eyebrow">{t('Contact')}</p><p><a href={contactDetails.whatsapp} target="_blank" rel="noopener noreferrer">{t(contactDetails.phone)} · WhatsApp</a></p><p>{t(contactDetails.email)}</p></address>
-    <div><p className="eyebrow">{t('Follow')}</p><a href={contactDetails.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={contactDetails.facebook} target="_blank" rel="noopener noreferrer">Facebook</a><a href={contactDetails.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp</a><a href={contactDetails.maps} target="_blank" rel="noopener noreferrer">Google Maps</a></div>
+    <address><p className="eyebrow">{t('Contact')}</p><p><a href={contactDetails.whatsapp} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('whatsapp_click')}>{t(contactDetails.phone)} · WhatsApp</a></p><p>{t(contactDetails.email)}</p></address>
+    <div><p className="eyebrow">{t('Follow')}</p><a href={contactDetails.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={contactDetails.facebook} target="_blank" rel="noopener noreferrer">Facebook</a><a href={contactDetails.whatsapp} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('whatsapp_click')}>WhatsApp</a><a href={contactDetails.maps} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('directions_click')}>Google Maps</a></div>
     <div className="footer-bottom"><span>© {new Date().getFullYear()} Joker Tattoo. {t('All rights reserved.')}</span><button className="footer-booking-link" onClick={openBooking}>{t('Request a Consultation')} →</button></div>
   </footer>;
 }

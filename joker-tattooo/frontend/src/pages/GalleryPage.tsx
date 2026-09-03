@@ -7,6 +7,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { SEO } from '../components/seo/SEO';
 import { breadcrumbSchema, imageObjectSchema, organizationSchema, webPageSchema } from '../components/seo/structuredData';
 import { seoConfig } from '../config/seo';
+import { trackEvent } from '../lib/analytics';
 
 const imagePreloads = new Map<string, Promise<string>>();
 const thumbnailSizes = '(max-width: 700px) calc(100vw - 40px), 33vw';
@@ -90,6 +91,7 @@ export function GalleryPage() {
     const item = galleryItems[index];
     setActiveImage(item.imageSmall);
     setActive(index);
+    trackEvent('gallery_image_open');
     loadFullImage(index, request);
   };
 

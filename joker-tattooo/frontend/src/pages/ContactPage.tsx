@@ -4,6 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { SEO } from '../components/seo/SEO';
 import { breadcrumbSchema, imageObjectSchema, localBusinessSchema, organizationSchema, webPageSchema } from '../components/seo/structuredData';
 import { seoConfig } from '../config/seo';
+import { trackEvent } from '../lib/analytics';
 
 export function ContactPage() {
   const { t } = useLanguage();
@@ -14,13 +15,13 @@ export function ContactPage() {
       <aside aria-label={t('Joker Tattoo business information')}>
         <address>
           <div><p className="eyebrow">{t('Find us')}</p><h2>Patong, Phuket</h2><p>{t(contactDetails.address)}</p></div>
-          <div><p className="eyebrow">{t('Talk to us')}</p><p><a href={contactDetails.whatsapp} target="_blank" rel="noopener noreferrer">{t(contactDetails.phone)} · WhatsApp</a></p><p>{t(contactDetails.email)}</p></div>
+          <div><p className="eyebrow">{t('Talk to us')}</p><p><a href={contactDetails.whatsapp} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('whatsapp_click')}>{t(contactDetails.phone)} · WhatsApp</a></p><p>{t(contactDetails.email)}</p></div>
           <div><p className="eyebrow">{t('Studio hours')}</p><p>{t(contactDetails.hours)}</p></div>
         </address>
-        <div className="social-row"><a href={contactDetails.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={contactDetails.facebook} target="_blank" rel="noopener noreferrer">Facebook</a><a href={contactDetails.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp</a></div>
+        <div className="social-row"><a href={contactDetails.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={contactDetails.facebook} target="_blank" rel="noopener noreferrer">Facebook</a><a href={contactDetails.whatsapp} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('whatsapp_click')}>WhatsApp</a></div>
         <div className="contact-map" id="map">
           <iframe src={contactDetails.mapsEmbed} title={t('Interactive map showing Joker Tattoo in Patong')} loading="lazy" allowFullScreen referrerPolicy="no-referrer-when-downgrade" />
-          <a href={contactDetails.maps} target="_blank" rel="noopener noreferrer">{t('Open Joker Tattoo in Google Maps')}<span aria-hidden="true">↗</span></a>
+          <a href={contactDetails.maps} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('directions_click')}>{t('Open Joker Tattoo in Google Maps')}<span aria-hidden="true">↗</span></a>
         </div>
       </aside>
       <article className="contact-booking-card">

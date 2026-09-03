@@ -4,6 +4,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { submitBookingRequest, type BookingRequest } from '../../services/booking';
 import { InternationalPhoneInput, type InternationalPhoneValue } from './InternationalPhoneInput';
 import { useMobileViewport } from '../../hooks/useMobileViewport';
+import { trackEvent } from '../../lib/analytics';
 
 const styles = ['Japanese', 'Realism', 'Black & Grey', 'Fine Line', 'Colour', 'Tribal', 'Bamboo Tattoo', 'Cover Up', 'Not Sure Yet'];
 const sizes = ['Small', 'Medium', 'Large', 'Full Sleeve', 'Half Sleeve', 'Back Piece', 'Leg Sleeve', 'Chest', 'Other'];
@@ -104,6 +105,7 @@ export function BookingModal({ open, onClose, onExitComplete }: { open: boolean;
     setSubmitting(true);
     try {
       await submitBookingRequest(request);
+      trackEvent('booking_request_success');
       formElement.reset();
       setSuccess(true);
     } catch {

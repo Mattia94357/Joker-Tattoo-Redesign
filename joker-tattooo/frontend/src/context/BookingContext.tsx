@@ -1,5 +1,6 @@
-import { createContext, useCallback, useContext, useState, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useRef, useState, type ReactNode } from 'react';
 import { BookingModal } from '../components/booking/BookingModal';
+import { trackEvent } from '../lib/analytics';
 
 type BookingContextValue = { openBooking: () => void; closeBooking: () => void; isBookingPresent: boolean };
 type BookingPhase = 'closed' | 'open' | 'closing';
@@ -7,12 +8,22 @@ const BookingContext = createContext<BookingContextValue | null>(null);
 
 export function BookingProvider({ children }: { children: ReactNode }) {
   const [phase, setPhase] = useState<BookingPhase>('closed');
-  const openBooking = useCallback(() => setPhase('open'), []);
+  const phaseRef = useRef<BookingPhase>('closed');
+  const openBooking = useCallback(() => {
+    if (phaseRef.current === 'open') return;
+    phaseRef.current = 'open';
+    setPhase('open');
+    trackEvent('booking_modal_open');
+  }, []);
   const closeBooking = useCallback(() => {
-    setPhase(current => current === 'open' ? 'closing' : current);
+    if (phaseRef.current !== 'open') return;
+    phaseRef.current = 'closing';
+    setPhase('closing');
   }, []);
   const completeExit = useCallback(() => {
-    setPhase(current => current === 'closing' ? 'closed' : current);
+    if (phaseRef.current !== 'closing') return;
+    phaseRef.current = 'closed';
+    setPhase('closed');
   }, []);
   const open = phase === 'open';
 
