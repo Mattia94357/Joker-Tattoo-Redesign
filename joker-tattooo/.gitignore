@@ -6,6 +6,10 @@ node_modules/
 dist/
 **/dist/
 coverage/
+test-results/
+**/test-results/
+responsive-previews/
+lighthouse-*.json
 
 # Environment files
 .env
@@ -39,4 +43,3 @@ Desktop.ini
 .eslintcache
 *.tsbuildinfo
 .vite/
-

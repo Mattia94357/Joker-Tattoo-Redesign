@@ -24,9 +24,16 @@ test.describe('global booking request', () => {
     await dialog.getByLabel('WhatsApp *').fill('0812345678');
     await dialog.getByLabel('Preferred Date *').fill('2027-01-20');
     await dialog.getByLabel('Preferred Time *').fill('14:30');
+    await dialog.locator('input[type="file"]').setInputFiles({
+      name: 'reference.png',
+      mimeType: 'image/png',
+      buffer: Buffer.from('booking-reference'),
+    });
+    await expect(dialog.getByLabel('Selected reference images')).toContainText('reference.png');
     await dialog.getByRole('button', { name: 'Send Booking Request' }).click();
     await expect(page.getByRole('heading', { name: 'Thank you!' })).toBeVisible();
     expect(submittedBody).toContain('+66812345678');
+    expect(submittedBody).toContain('reference.png');
     await page.getByRole('button', { name: 'Return to Website' }).click();
     await expect(dialog).toBeHidden();
   });

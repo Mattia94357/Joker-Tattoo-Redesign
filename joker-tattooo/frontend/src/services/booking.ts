@@ -12,11 +12,6 @@ export type BookingRequest = {
 
 export type BookingSubmission = { id: string };
 
-/**
- * Integration boundary for the booking request. Replace this function with a
- * multipart API call when Resend, Nodemailer, EmailJS, or another service is ready.
- * Keeping files in the request model also makes calendar/admin integrations additive.
- */
 export async function submitBookingRequest(request: BookingRequest): Promise<BookingSubmission> {
   const payload = new FormData();
   payload.append('name', request.name);

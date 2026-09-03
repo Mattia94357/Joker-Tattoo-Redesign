@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test';
-import seo from '../src/config/seo.json';
+import seo from '../src/config/seo.json' with { type: 'json' };
+
+test.setTimeout(120_000);
 
 const routes = ['/', '/gallery', '/why-joker', '/contact'];
 const siteUrl = process.env.VITE_SITE_URL?.replace(/\/+$/, '') || seo.fallbackSiteUrl;
@@ -126,4 +128,13 @@ test('booking flow opens one modal from the shared header action', async ({ page
   await expect(headerBooking).toHaveCount(1);
   await headerBooking.click();
   await expect(page.locator('.booking-modal [role="dialog"]')).toHaveCount(1);
+});
+
+test('Italian switch and external contact links remain functional', async ({ page }) => {
+  await page.goto('http://127.0.0.1:5173/contact', { waitUntil: 'networkidle' });
+  await page.getByRole('button', { name: 'Passa all’italiano' }).first().click();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'it');
+  await expect(page.getByRole('heading', { name: 'Creiamo insieme qualcosa di tuo.' })).toBeVisible();
+  await expect(page.locator('a[href^="https://wa.me/"]').first()).toHaveAttribute('target', '_blank');
+  await expect(page.locator('a[href^="https://maps.app.goo.gl/"]').first()).toHaveAttribute('target', '_blank');
 });

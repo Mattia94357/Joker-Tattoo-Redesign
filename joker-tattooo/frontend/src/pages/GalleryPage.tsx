@@ -58,6 +58,7 @@ export function GalleryPage() {
   const [active, setActive] = useState<number | null>(null);
   const [activeImage, setActiveImage] = useState('');
   const filterRequest = useRef(0);
+  const internalFilterCommit = useRef<GalleryFilterSlug | null>(null);
   const imageRequest = useRef(0);
   const imageElements = useRef(new Map<number, HTMLImageElement>());
   const { t } = useLanguage();
@@ -90,6 +91,7 @@ export function GalleryPage() {
       const nextSearchParams = new URLSearchParams(searchParams);
       if (category === 'all') nextSearchParams.delete('category');
       else nextSearchParams.set('category', category);
+      internalFilterCommit.current = category;
       setSearchParams(nextSearchParams);
     }
   };
@@ -133,8 +135,11 @@ export function GalleryPage() {
   }, [hash]);
 
   useEffect(() => {
-    filterRequest.current += 1;
-    setPendingFilter(null);
+    if (internalFilterCommit.current === filter) internalFilterCommit.current = null;
+    else {
+      filterRequest.current += 1;
+      setPendingFilter(null);
+    }
     imageRequest.current += 1;
     setActive(null);
   }, [filter]);

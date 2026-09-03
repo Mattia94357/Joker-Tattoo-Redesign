@@ -1,6 +1,6 @@
 # Joker Tattoo
 
-Development foundation for the upcoming Joker Tattoo website redesign. This repository currently contains only a minimal placeholder frontend and a health-check API; final website pages and features will be added later.
+Production website for Joker Tattoo Patong, with a Vite/React frontend and an Express API for booking requests.
 
 ## Technology
 

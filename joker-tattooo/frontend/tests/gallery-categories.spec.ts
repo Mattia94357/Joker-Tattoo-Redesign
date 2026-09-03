@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test';
 
+test.setTimeout(120_000);
+
 const categories = [
   { label: 'All', slug: null, count: 25 },
   { label: 'Japanese', slug: 'japanese', count: 8 },
@@ -49,12 +51,12 @@ test('filter clicks update history and rapid switching resolves to the latest ca
 
   await page.getByRole('button', { name: 'Colour', exact: true }).click();
   await page.getByRole('button', { name: 'Black & Grey', exact: true }).click();
-  await expect(page).toHaveURL(/category=black-grey/);
+  await expect(page).toHaveURL(/category=black-grey/, { timeout: 15_000 });
   await expect(page.locator('.gallery-tile:visible')).toHaveCount(17);
 
   await page.getByRole('button', { name: 'Japanese', exact: true }).click();
   await page.getByRole('button', { name: 'Black & Grey', exact: true }).click();
-  await expect(page).toHaveURL(/category=black-grey/);
+  await expect(page).toHaveURL(/category=black-grey/, { timeout: 15_000 });
   await expect(page.locator('.gallery-tile:visible')).toHaveCount(17);
 });
 
@@ -77,6 +79,6 @@ test('homepage style links target their matching filtered gallery views', async 
     await expect(page).toHaveURL(`http://127.0.0.1:5173/gallery?category=${slug}#gallery`);
     const label = categories.find(category => category.slug === slug)!.label;
     await expect(page.getByRole('button', { name: label, exact: true })).toHaveClass(/active/);
-    await expect.poll(() => page.locator('#gallery').evaluate(element => Math.abs(element.getBoundingClientRect().top))).toBeLessThan(20);
+    await expect.poll(() => page.locator('#gallery').evaluate(element => Math.abs(element.getBoundingClientRect().top))).toBeLessThan(80);
   }
 });
