@@ -13,7 +13,7 @@
 
 ## Public pages
 
-- [Home](https://www.jokertattoopatong.com/): Studio overview, tattoo styles and booking information.
-- [Tattoo Gallery](https://www.jokertattoopatong.com/gallery): Selected work by Joker Tattoo artists.
-- [Why Joker](https://www.jokertattoopatong.com/why-joker): Services, consultations, hygiene standards, client reasons, frequently asked questions and booking.
-- [Contact](https://www.jokertattoopatong.com/contact): Studio address, opening hours and appointment request.
+- [Home](https://joker-tattoo-redesign.vercel.app/): Studio overview, tattoo styles and booking information.
+- [Tattoo Gallery](https://joker-tattoo-redesign.vercel.app/gallery): Selected work by Joker Tattoo artists.
+- [Why Joker](https://joker-tattoo-redesign.vercel.app/why-joker): Services, consultations, hygiene standards, client reasons, frequently asked questions and booking.
+- [Contact](https://joker-tattoo-redesign.vercel.app/contact): Studio address, opening hours and appointment request.

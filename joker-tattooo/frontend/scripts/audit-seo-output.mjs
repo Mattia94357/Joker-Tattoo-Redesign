@@ -75,6 +75,9 @@ for (const page of Object.values(config.pages)) {
 
 const sitemap = await readFile(path.join(root, 'dist', 'sitemap.xml'), 'utf8');
 expect(occurrences(sitemap, /<url>/g) === publicPages.length, 'sitemap: incorrect public URL count');
+const sitemapLocations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
+expect(sitemapLocations.length === publicPages.length, 'sitemap: incorrect location count');
+expect(sitemapLocations.every(location => location.startsWith(`${siteUrl}/`)), 'sitemap: location uses a different origin');
 for (const page of publicPages) {
   expect(sitemap.includes(`<loc>${siteUrl}${page.path}</loc>`), `sitemap: missing ${page.path}`);
   expect(sitemap.includes(`<changefreq>${page.changefreq}</changefreq>`), `sitemap: missing ${page.changefreq} frequency`);
@@ -87,7 +90,7 @@ const robots = await readFile(path.join(root, 'dist', 'robots.txt'), 'utf8');
 expect(robots.includes('User-agent: *'), 'robots: missing wildcard user agent');
 expect(robots.includes('Allow: /'), 'robots: site is not explicitly crawlable');
 expect(!robots.includes('Disallow:'), 'robots: unexpected disallow directive');
-expect(robots.includes('Sitemap:'), 'robots: missing sitemap reference');
+expect(robots.includes(`Sitemap: ${siteUrl}/sitemap.xml`), 'robots: incorrect sitemap reference');
 
 const llms = await readFile(path.join(root, 'dist', 'llms.txt'), 'utf8');
 for (const page of publicPages) expect(llms.includes(`${siteUrl}${page.path}`), `llms.txt: missing ${page.path}`);

@@ -2,7 +2,7 @@
   "businessName": "Joker Tattoo",
   "defaultTitle": "Joker Tattoo Phuket | Custom Tattoo Studio in Patong",
   "defaultDescription": "Explore custom tattoo work by Joker Tattoo in Patong, Phuket. View our gallery and request a Consultation with an experienced Tattoo Artist.",
-  "fallbackSiteUrl": "https://www.jokertattoopatong.com",
+  "fallbackSiteUrl": "https://joker-tattoo-redesign.vercel.app",
   "defaultImage": "/images/og/joker-tattoo-og.jpg",
   "defaultImageWidth": 1200,
   "defaultImageHeight": 630,

@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test';
+import seo from '../src/config/seo.json';
 
 const routes = ['/', '/gallery', '/why-joker', '/contact'];
+const siteUrl = process.env.VITE_SITE_URL?.replace(/\/+$/, '') || seo.fallbackSiteUrl;
 const viewports = [
   { name: 'mobile', width: 390, height: 844 },
   { name: 'desktop', width: 1440, height: 900 },
@@ -30,7 +32,7 @@ test('public pages expose unique, complete metadata', async ({ page }) => {
 
     expect(result.title).toBeTruthy();
     expect(result.description).toBeTruthy();
-    expect(result.canonical).toBe(`https://www.jokertattoopatong.com${route}`);
+    expect(result.canonical).toBe(`${siteUrl}${route}`);
     expect(result.ogTitle).toBe(result.title);
     expect(result.ogDescription).toBe(result.description);
     expect(result.ogImage).toBeTruthy();
