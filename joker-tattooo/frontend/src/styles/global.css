@@ -149,7 +149,6 @@ address{font-style:normal}
 
 @media(max-width:600px){
   body{font-size:16px}
-  .header-actions>.language-switcher{display:none}
   .mobile-menu{padding:116px 1.25rem max(6rem,env(safe-area-inset-bottom))}
   .mobile-menu nav a{font-size:clamp(2.7rem,14vw,4.2rem);line-height:.92}
   .mobile-menu__meta{position:static;margin:2rem 0 0}
