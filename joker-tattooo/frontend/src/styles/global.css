@@ -194,11 +194,11 @@ address{font-style:normal}
 .map-placeholder small{display:inline-block;margin-top:.35rem;max-width:240px;color:var(--muted);font-size:.68rem;line-height:1.5;text-transform:none;letter-spacing:0}
 
 .language-switcher{gap:.3rem}
-.language-switcher button{display:grid;place-items:center;min-width:36px;min-height:36px;padding:.3rem;border:1px solid transparent;border-radius:8px;opacity:.52;filter:saturate(.72);transition:opacity .2s,filter .2s,background .2s,border-color .2s,transform .2s}
+.language-switcher button{display:grid;place-items:center;min-width:36px;min-height:36px;padding:.3rem;border:1px solid transparent;border-radius:8px;color:#fff;opacity:.72;filter:saturate(.72);transition:opacity .2s,filter .2s,background .2s,border-color .2s,transform .2s}
 .language-switcher button:hover{opacity:1;filter:saturate(1);transform:translateY(-1px)}
-.language-switcher button.active{opacity:1;filter:saturate(1);border-color:rgba(114,239,115,.45);background:rgba(114,239,115,.08)}
-.language-flag{display:block;font-size:1.15rem;line-height:1}
-@media(max-width:900px){.language-switcher button{min-width:44px;min-height:44px}.language-flag{font-size:1.25rem}}
+.language-switcher button.active{color:#fff;opacity:1;filter:saturate(1);border-color:rgba(114,239,115,.45);background:rgba(114,239,115,.08)}
+.language-code{display:block;color:#fff;font-size:.68rem;line-height:1;letter-spacing:.12em}
+@media(max-width:900px){.language-switcher button{min-width:44px;min-height:44px}.language-code{font-size:.76rem}}
 
 /* Global premium booking request */
 .service-booking-link{display:inline-flex;align-items:center;gap:.5rem;margin-top:.75rem;padding:.5rem 0;border:0;border-bottom:1px solid var(--green);background:none;color:var(--green);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
