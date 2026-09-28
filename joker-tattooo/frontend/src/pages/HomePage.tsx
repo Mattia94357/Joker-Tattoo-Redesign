@@ -1,4 +1,5 @@
 import processImage from '../../assets/japanesebackjokertattoo.avif';
+import heroVideo from '../../assets/jokertattooshopvideo.mp4';
 import processImageSmall from '../assets/images/optimized/japanesebackjokertattoo-480.avif';
 import processImageMedium from '../assets/images/optimized/japanesebackjokertattoo-768.avif';
 import { tattooStyles } from '../data/services';
@@ -20,7 +21,7 @@ export function HomePage() {
   return <main>
     <SEO {...seoConfig.pages.home} structuredData={[organizationSchema(), localBusinessSchema(), websiteSchema(), webPageSchema(seoConfig.pages.home.path, seoConfig.pages.home.title, seoConfig.pages.home.description), imageObjectSchema()]} />
     <section className="hero">
-      <picture><source type="image/avif" srcSet="/images/hero/traditional-tiger-sak-yant-tattoo-480.avif 480w, /images/hero/traditional-tiger-sak-yant-tattoo-768.avif 768w, /images/hero/traditional-tiger-sak-yant-tattoo.avif 1000w" sizes="100vw" /><img className="hero__image" src="/images/hero/traditional-tiger-sak-yant-tattoo.webp" srcSet="/images/hero/traditional-tiger-sak-yant-tattoo-480.webp 480w, /images/hero/traditional-tiger-sak-yant-tattoo-768.webp 768w, /images/hero/traditional-tiger-sak-yant-tattoo.webp 1000w" sizes="100vw" width="1000" height="1260" alt={t('Traditional tiger Sak Yant tattoo created at Joker Tattoo Patong')} loading="eager" fetchPriority="high" decoding="async" /></picture>
+      <video className="hero__image" src={heroVideo} width="883" height="1024" autoPlay muted loop playsInline preload="metadata" controls={false} controlsList="nodownload nofullscreen noremoteplayback" disablePictureInPicture aria-label={t('Tattoo Artist working with a client at Joker Tattoo in Patong')} />
       <div className="hero__overlay" />
       <div className="hero__content">
         <p className="eyebrow">{t('Patong · Phuket · Custom tattoo studio')}</p>

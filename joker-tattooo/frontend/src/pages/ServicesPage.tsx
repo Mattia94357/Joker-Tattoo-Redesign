@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import serviceHeroVideo from '../../assets/jokertattooshopvideo.mp4';
 import { faqs } from '../data/faq';
 import { services } from '../data/services';
 import { BookingButton } from '../components/booking/BookingButton';
@@ -22,20 +21,7 @@ export function WhyJokerPage() {
     <section className="service-hero">
       <div><p className="eyebrow">{t('Why Joker')}</p><h1>{t('Your idea.')}<br /><span>{t('Our craft.')}</span></h1><p>{t('Custom tattoo work, shaped with patience, precision and a clear point of view.')}</p></div>
       <div className="service-hero__media">
-        <video
-          src={serviceHeroVideo}
-          width="883"
-          height="1024"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          controls={false}
-          controlsList="nodownload nofullscreen noremoteplayback"
-          disablePictureInPicture
-          aria-label={t('Tattoo Artist working with a client at Joker Tattoo in Patong')}
-        />
+        <picture><source type="image/avif" srcSet="/images/hero/traditional-tiger-sak-yant-tattoo-480.avif 480w, /images/hero/traditional-tiger-sak-yant-tattoo-768.avif 768w, /images/hero/traditional-tiger-sak-yant-tattoo.avif 1000w" sizes="(max-width: 900px) 90vw, 45vw" /><img src="/images/hero/traditional-tiger-sak-yant-tattoo.webp" srcSet="/images/hero/traditional-tiger-sak-yant-tattoo-480.webp 480w, /images/hero/traditional-tiger-sak-yant-tattoo-768.webp 768w, /images/hero/traditional-tiger-sak-yant-tattoo.webp 1000w" sizes="(max-width: 900px) 90vw, 45vw" width="1000" height="1260" alt={t('Traditional tiger Sak Yant tattoo created at Joker Tattoo Patong')} loading="eager" fetchPriority="high" decoding="async" /></picture>
       </div>
     </section>
     <section className="section services">
