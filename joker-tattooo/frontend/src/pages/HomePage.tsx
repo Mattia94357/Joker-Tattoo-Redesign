@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import processImage from '../../assets/japanesebackjokertattoo.avif';
 import heroVideo from '../../assets/jokertattooshopvideo.mp4';
 import processImageSmall from '../assets/images/optimized/japanesebackjokertattoo-480.avif';
@@ -18,10 +19,27 @@ import { SafetySection } from '../components/sections/SafetySection';
 
 export function HomePage() {
   const { t } = useLanguage();
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+
+    const playVideo = () => {
+      video.muted = true;
+      const playback = video.play();
+      if (playback) void playback.catch(() => undefined);
+    };
+
+    video.addEventListener('canplay', playVideo);
+    playVideo();
+    return () => video.removeEventListener('canplay', playVideo);
+  }, []);
+
   return <main>
     <SEO {...seoConfig.pages.home} structuredData={[organizationSchema(), localBusinessSchema(), websiteSchema(), webPageSchema(seoConfig.pages.home.path, seoConfig.pages.home.title, seoConfig.pages.home.description), imageObjectSchema()]} />
     <section className="hero">
-      <video className="hero__image" src={heroVideo} width="883" height="1024" autoPlay muted loop playsInline preload="metadata" controls={false} controlsList="nodownload nofullscreen noremoteplayback" disablePictureInPicture aria-label={t('Tattoo Artist working with a client at Joker Tattoo in Patong')} />
+      <video ref={heroVideoRef} className="hero__image" src={heroVideo} width="883" height="1024" autoPlay muted loop playsInline preload="auto" controls={false} controlsList="nodownload nofullscreen noremoteplayback" disablePictureInPicture aria-label={t('Tattoo Artist working with a client at Joker Tattoo in Patong')} />
       <div className="hero__overlay" />
       <div className="hero__content">
         <p className="eyebrow">{t('Patong · Phuket · Custom tattoo studio')}</p>
