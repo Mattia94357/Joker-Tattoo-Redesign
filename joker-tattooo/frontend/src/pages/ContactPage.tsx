@@ -10,7 +10,7 @@ export function ContactPage() {
   const { t } = useLanguage();
   return <main className="page contact-page">
     <SEO {...seoConfig.pages.contact} structuredData={[organizationSchema(), webPageSchema(seoConfig.pages.contact.path, seoConfig.pages.contact.title, seoConfig.pages.contact.description), breadcrumbSchema('Contact', seoConfig.pages.contact.path), localBusinessSchema(), imageObjectSchema()]} />
-    <section className="contact-intro"><p className="eyebrow">{t('Consultation / Booking')}</p><h1>{t('Let’s create')}<br /><span>{t('something personal.')}</span></h1><p>{t('Tell us about your idea, preferred style and placement. We’ll reply personally and help you plan the next step.')}</p></section>
+    <section className="contact-intro"><p className="eyebrow">{t('Consultation / Booking')}</p><h1>{t('Let’s create')}<br /><span>{t('your next tattoo together.')}</span></h1><p>{t('Tell us your idea, the style you like and where you’d like the tattoo. We’ll help you work through every detail.')}</p></section>
     <section className="contact-layout">
       <aside aria-label={t('Joker Tattoo business information')}>
         <address>

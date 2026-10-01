@@ -17,7 +17,7 @@ import { seoConfig } from '../config/seo';
 import { SafetySection } from '../components/sections/SafetySection';
 
 export function HomePage() {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   return <main>
     <SEO {...seoConfig.pages.home} structuredData={[organizationSchema(), localBusinessSchema(), websiteSchema(), webPageSchema(seoConfig.pages.home.path, seoConfig.pages.home.title, seoConfig.pages.home.description), imageObjectSchema()]} />
     <section className="hero">
@@ -25,27 +25,27 @@ export function HomePage() {
       <div className="hero__overlay" />
       <div className="hero__content">
         <p className="eyebrow">{t('Patong · Phuket · Custom tattoo studio')}</p>
-        <h1>{language === 'it' ? <><span>UNA STORIA.</span><span>LA TUA.</span><em>CHE LASCIA IL SEGNO.</em></> : <><span>{t('Wear your story.')}</span><em>{t('Leave your mark.')}</em></>}</h1>
-        <p>{t('Custom tattoos, thoughtfully designed and expertly made in the heart of Patong, Phuket.')}</p>
+        <h1><span>{t('Your body.')}</span><span>{t('Your idea.')}</span><em>{t('Our art.')}</em></h1>
+        <p>{t('Custom tattoos, created with care in the heart of Patong, Phuket.')}</p>
         <div className="button-row"><Button to="/gallery">{t('Explore Our Work')}</Button><BookingButton variant="outline">{t('Book Your Tattoo')}</BookingButton></div>
       </div>
       <a className="scroll-cue" href="#intro">{t('Scroll to discover')} <span aria-hidden="true">↓</span></a>
     </section>
     <section className="section intro" id="intro">
       <Reveal className="intro__image"><img src={processImageSmall} srcSet={`${processImageSmall} 480w, ${processImageMedium} 768w, ${processImage} 813w`} sizes="(max-width: 600px) 88vw, 40vw" width="813" height="1024" alt={t('Japanese backpiece tattoo by Joker Tattoo Patong')} loading="lazy" decoding="async" /><span className="image-note">{t('Concept / Craft / Commitment')}</span></Reveal>
-      <Reveal className="intro__copy"><p className="eyebrow">{t('Made personal')}</p><h2>{t('More than decoration.')}<br /><span>{t('A piece of you.')}</span></h2><p>{t('Every tattoo begins with a conversation. Together, we shape your idea around your body, your style and the way you want to wear it.')}</p><MagneticLink to="/why-joker">{t('Meet Joker Tattoo')}</MagneticLink></Reveal>
+      <Reveal className="intro__copy"><p className="eyebrow">{t('Created for you')}</p><h2>{t('More than a tattoo.')}<br /><span>{t('A part of you.')}</span></h2><p>{t('We listen to your ideas and bring them to life, respecting your body and your style.')}</p><MagneticLink to="/why-joker">{t('Discover Joker Tattoo')}</MagneticLink></Reveal>
     </section>
-    <section className="section section--charcoal"><Reveal><SectionHeading eyebrow={t('Our tattoo styles')} title={t('A style that feels like yours.')} text={t('Explore the styles our Tattoo Artists create at Joker Tattoo in Patong.')}/></Reveal><div className="style-grid">{tattooStyles.map((style, index) => <ImageCard key={style.title} {...style} index={index} />)}</div></section>
+    <section className="section section--charcoal"><Reveal><SectionHeading eyebrow={t('Our styles')} title={t('The right style for you.')} text={t('From realism to traditional, Japanese to Sak Yant. Find the style that best fits your idea.')}/></Reveal><div className="style-grid">{tattooStyles.map((style, index) => <ImageCard key={style.title} {...style} index={index} />)}</div></section>
     <SafetySection />
     <section className="section reviews-section">
-      <Reveal><SectionHeading eyebrow={t('Google Reviews')} title={t('Words from our clients.')} text={t('What clients say about their time at Joker Tattoo in Patong.')} /></Reveal>
+      <Reveal><SectionHeading eyebrow={t('Google Reviews')} title={t('What our clients say.')} text={t('Experiences from people who chose Joker Tattoo in Patong.')} /></Reveal>
       <div className="reviews-grid">{customerReviews.map((review, index) => <Reveal key={review.name} className="review-card">
         <div className="review-card__top"><span className="review-card__index">{String(index + 1).padStart(2, '0')}</span><span className="review-card__stars" aria-label={`${review.rating} ${t('out of 5 stars')}`}>{'★'.repeat(review.rating)}</span></div>
         <blockquote>“{t(review.text)}”</blockquote>
-        <footer><strong>{review.name}</strong><span>{t('Customer Review')}</span></footer>
+        <footer><strong>{review.name}</strong><span>{t('Google Review')}</span></footer>
       </Reveal>)}</div>
       <a className="reviews-link" href={googleReviewsUrl} target="_blank" rel="noopener noreferrer">{t('Read all Google reviews')} <span aria-hidden="true">↗</span></a>
     </section>
-    <section className="booking-cta"><div><p className="eyebrow">{t('Your idea starts here')}</p><h2>{t('Ready to make')}<br />{t('it permanent?')}</h2></div><div className="button-row"><BookingButton variant="red">{t('Request a Consultation')}</BookingButton><BookingButton variant="outline">{t('Book Your Tattoo')}</BookingButton></div></section>
+    <section className="booking-cta"><div><p className="eyebrow">{t('Your idea starts here')}</p><h2>{t('Ready to create')}<br />{t('something unique?')}</h2></div><div className="button-row"><BookingButton variant="red">{t('Request a Consultation')}</BookingButton><BookingButton variant="outline">{t('Book Your Tattoo')}</BookingButton></div></section>
   </main>;
 }

@@ -21,6 +21,7 @@ import type { GalleryCategorySlug } from './gallery';
 type TattooStyle = {
   title: string;
   text: string;
+  cta: string;
   galleryCategory: GalleryCategorySlug;
   image: string;
   imageSmall: string;
@@ -30,20 +31,20 @@ type TattooStyle = {
 };
 
 export const tattooStyles: TattooStyle[] = [
-  { title: 'Realism', text: 'Depth, texture and detail with true-to-life presence.', galleryCategory: 'realism', image: realismImage, imageSmall: realismImageSmall, imageMedium: realismImageMedium, width: 757, height: 1024 },
-  { title: 'Black & Grey', text: 'Carefully balanced contrast with timeless character.', galleryCategory: 'black-grey', image: blackGreyImage, imageSmall: blackGreyImageSmall, imageMedium: blackGreyImageMedium, width: 1000, height: 1124 },
-  { title: 'Traditional', text: 'Bold lines, strong colour and forms made to endure.', galleryCategory: 'colour', image: traditionalImage, imageSmall: traditionalImageSmall, imageMedium: traditionalImageMedium, width: 512, height: 510 },
-  { title: 'Japanese', text: 'Flowing compositions shaped to move with the body.', galleryCategory: 'japanese', image: japaneseImage, imageSmall: japaneseImageSmall, imageMedium: japaneseImageMedium, width: 1016, height: 1024 },
-  { title: 'Fine Line', text: 'Delicate detail, clean spacing and precise linework.', galleryCategory: 'black-grey', image: fineLineImage, imageSmall: fineLineImageSmall, imageMedium: fineLineImageMedium, width: 624, height: 779 },
-  { title: 'Custom Designs', text: 'Original work drawn around your story and your body.', galleryCategory: 'black-grey', image: customImage, imageSmall: customImageSmall, imageMedium: customImageMedium, width: 1000, height: 1244 },
+  { title: 'Realism', text: 'Detail, depth and shading for a truly realistic result.', cta: 'Explore Realism Tattoos', galleryCategory: 'realism', image: realismImage, imageSmall: realismImageSmall, imageMedium: realismImageMedium, width: 757, height: 1024 },
+  { title: 'Black & Grey', text: 'Bold contrast, deep shading and a timeless style.', cta: 'Explore Black & Grey Tattoos', galleryCategory: 'black-grey', image: blackGreyImage, imageSmall: blackGreyImageSmall, imageMedium: blackGreyImageMedium, width: 1000, height: 1124 },
+  { title: 'Traditional', text: 'Bold lines, solid colour and a style made to last.', cta: 'Explore Traditional Tattoos', galleryCategory: 'colour', image: traditionalImage, imageSmall: traditionalImageSmall, imageMedium: traditionalImageMedium, width: 512, height: 510 },
+  { title: 'Japanese', text: 'Flowing compositions, bold details and designs that follow the shape of the body.', cta: 'Explore Japanese Tattoos', galleryCategory: 'japanese', image: japaneseImage, imageSmall: japaneseImageSmall, imageMedium: japaneseImageMedium, width: 1016, height: 1024 },
+  { title: 'Fine Line', text: 'Fine lines, precise details and light, elegant compositions.', cta: 'Explore Fine Line Tattoos', galleryCategory: 'black-grey', image: fineLineImage, imageSmall: fineLineImageSmall, imageMedium: fineLineImageMedium, width: 624, height: 779 },
+  { title: 'Custom Designs', text: 'Unique designs created around your idea, your body and your style.', cta: 'Explore Custom Designs', galleryCategory: 'black-grey', image: customImage, imageSmall: customImageSmall, imageMedium: customImageMedium, width: 1000, height: 1244 },
 ];
 
 export const services = [
-  ['Custom Tattoos', 'Original concepts developed around your idea, placement and personal style.'],
+  ['Custom Tattoos', 'Original designs created around your idea, your body and your style.'],
   ['Tattoo Consultations', 'A focused conversation to define the direction before design begins.'],
-  ['Cover-Ups', 'Carefully planned options for transforming an existing tattoo.'],
-  ['Tattoo Redesign', 'Older tattoos reworked with clearer detail, balance and composition.'],
-  ['Fine Line Work', 'Refined linework with attention to spacing, balance and scale.'],
-  ['Large-Scale Pieces', 'Sleeves, back pieces and multi-session work planned as one complete composition.'],
-  ['Aftercare Guidance', 'Practical, personalised guidance for caring for your new tattoo.'],
+  ['Cover-Ups', 'Carefully planned solutions to transform and enhance an existing tattoo.'],
+  ['Tattoo Restyling', 'Older tattoos reworked to improve detail, balance and composition.'],
+  ['Fine Line Tattoos', 'Fine, precise lines with careful attention to proportion, balance and detail.'],
+  ['Large-Scale Tattoos', 'Sleeves, backpieces and multi-session work designed as one complete composition.'],
+  ['Aftercare Guidance', 'Clear, personalised guidance to help you care for your tattoo throughout the healing process.'],
 ];

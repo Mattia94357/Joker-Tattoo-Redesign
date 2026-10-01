@@ -13,7 +13,7 @@ export function Footer() {
   return <footer className="site-footer">
     <div className="footer-brand">
       <img className="footer-wordmark" src={jokerWordmarkSmall} srcSet={`${jokerWordmarkSmall} 344w, ${jokerWordmark} 688w`} sizes="(max-width: 600px) calc(100vw - 40px), 25vw" width="688" height="181" alt={t('Joker Tattoo Patong studio wordmark')} loading="lazy" decoding="async" />
-      <p>{t('Custom tattoo work, created with care in the heart of Patong, Phuket.')}</p>
+      <p>{t('Custom tattoos, created with care in Patong, Phuket.')}</p>
       <nav className="footer-nav" aria-label={t('Footer navigation')}>{navigation.map(item => <Link key={item.to} to={item.to}>{t(item.label)}</Link>)}</nav>
     </div>
     <address><p className="eyebrow">{t('Visit')}</p><p>{t(contactDetails.address)}</p><p>{t(contactDetails.hours)}</p></address>

@@ -19,19 +19,19 @@ export function WhyJokerPage() {
   return <main className="page">
     <SEO {...seoConfig.pages.whyJoker} structuredData={[organizationSchema(), webPageSchema(seoConfig.pages.whyJoker.path, seoConfig.pages.whyJoker.title, seoConfig.pages.whyJoker.description), breadcrumbSchema('Why Joker', seoConfig.pages.whyJoker.path), faqSchema(visibleFaqs), imageObjectSchema()]} />
     <section className="service-hero">
-      <div><p className="eyebrow">{t('Why Joker')}</p><h1>{t('Your idea.')}<br /><span>{t('Our craft.')}</span></h1><p>{t('Custom tattoo work, shaped with patience, precision and a clear point of view.')}</p></div>
+      <div><p className="eyebrow">{t('Why Joker')}</p><h1>{t('Your idea.')}<br /><span>{t('Our art.')}</span></h1><p>{t('Custom tattoos created with precision, attention to detail and respect for your idea.')}</p></div>
       <div className="service-hero__media">
         <picture><source type="image/avif" srcSet="/images/hero/traditional-tiger-sak-yant-tattoo-480.avif 480w, /images/hero/traditional-tiger-sak-yant-tattoo-768.avif 768w, /images/hero/traditional-tiger-sak-yant-tattoo.avif 1000w" sizes="(max-width: 900px) 90vw, 45vw" /><img src="/images/hero/traditional-tiger-sak-yant-tattoo.webp" srcSet="/images/hero/traditional-tiger-sak-yant-tattoo-480.webp 480w, /images/hero/traditional-tiger-sak-yant-tattoo-768.webp 768w, /images/hero/traditional-tiger-sak-yant-tattoo.webp 1000w" sizes="(max-width: 900px) 90vw, 45vw" width="1000" height="1260" alt={t('Traditional tiger Sak Yant tattoo created at Joker Tattoo Patong')} loading="eager" fetchPriority="high" decoding="async" /></picture>
       </div>
     </section>
     <section className="section services">
-      <Reveal><SectionHeading eyebrow={t('Tattoo services')} title={t('Designed for you. Made to last.')} /></Reveal>
-      <div className="service-list">{services.filter(([title]) => title !== 'Tattoo Consultations').map(([title, text], index) => <Reveal key={title}><article><span>{String(index + 1).padStart(2, '0')}</span><h3>{t(title)}</h3><div><p>{t(text)}</p><button className="service-booking-link" onClick={openBooking}>{t('Discuss this tattoo service')} <span aria-hidden="true">→</span></button></div></article></Reveal>)}</div>
+      <Reveal><SectionHeading eyebrow={t('Tattoo services')} title={t('Made for you. Created to last.')} /></Reveal>
+      <div className="service-list">{services.filter(([title]) => title !== 'Tattoo Consultations').map(([title, text], index) => <Reveal key={title}><article><span>{String(index + 1).padStart(2, '0')}</span><h3>{t(title)}</h3><div><p>{t(text)}</p><button className="service-booking-link" onClick={openBooking}>{t('Tell us about your project')} <span aria-hidden="true">→</span></button></div></article></Reveal>)}</div>
     </section>
     <section className="premium-faq">
       <div className="premium-faq__glow" aria-hidden="true" />
       <div className="premium-faq__inner">
-        <Reveal><header className="premium-faq__header"><p className="eyebrow">{t('Before you book')}</p><h2>{t('Frequently Asked Questions')}</h2><p>{t('Clear answers to the questions clients ask before booking with Joker Tattoo in Patong, Phuket.')}</p></header></Reveal>
+        <Reveal><header className="premium-faq__header"><p className="eyebrow">{t('Before you book')}</p><h2>{t('Frequently Asked Questions')}</h2><p>{t('Everything you need to know before booking your tattoo with Joker Tattoo in Patong.')}</p></header></Reveal>
         <div className="premium-faq__grid">{visibleFaqs.map(([question, answer], index) => {
           const isOpen = open === index;
           const answerId = `faq-answer-${index}`;

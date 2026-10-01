@@ -157,7 +157,7 @@ export function GalleryPage() {
 
   return <main className="page">
     <SEO {...seoConfig.pages.gallery} structuredData={[organizationSchema(), webPageSchema(seoConfig.pages.gallery.path, seoConfig.pages.gallery.title, seoConfig.pages.gallery.description), breadcrumbSchema('Gallery', seoConfig.pages.gallery.path), imageObjectSchema()]} />
-    <section className="page-hero page-hero--gallery"><SectionHeading level="h1" eyebrow={t('Our work')} title={t('Made to belong to you.')} text={t('Explore tattoos created at Joker Tattoo in Patong, from Japanese sleeves and realism to traditional Sak Yant.')}/></section>
+    <section className="page-hero page-hero--gallery"><SectionHeading level="h1" eyebrow={t('Our work')} title={t('Custom creations for you.')} text={t('Explore work created by Joker Tattoo in Patong: Japanese, realism, Sak Yant, black & grey and much more.')}/></section>
     <section className="gallery-section" id="gallery" aria-label={t('Joker Tattoo portfolio gallery')}>
       <div className="filters" role="group" aria-label={t('Filter gallery')}>{galleryCategories.map(category => <button className={filter === category.slug ? 'active' : ''} onClick={() => void selectFilter(category.slug)} key={category.slug}>{t(category.label)}</button>)}</div>
       <div className="masonry">{galleryItems.map((item, index) => {
