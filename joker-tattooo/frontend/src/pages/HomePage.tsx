@@ -20,6 +20,7 @@ import { SafetySection } from '../components/sections/SafetySection';
 export function HomePage() {
   const { t } = useLanguage();
   const heroVideoRef = useRef<HTMLVideoElement>(null);
+  const heroVideoLayerRef = useRef<HTMLDivElement>(null);
   const setHeroVideoRef = useCallback((video: HTMLVideoElement | null) => {
     heroVideoRef.current = video;
     if (video) {
@@ -35,6 +36,11 @@ export function HomePage() {
 
     let disposed = false;
     const mobile = window.matchMedia('(max-width: 768px)').matches;
+    const ios = mobile && CSS.supports('-webkit-touch-callout', 'none');
+    const layer = heroVideoLayerRef.current;
+    let repaintFrame = 0;
+    let restoreFrame = 0;
+    let originalIsolation: string | undefined;
     const logState = (event: string, error?: unknown) => {
       if (!mobile || disposed) return;
       console.info('[hero-video]', JSON.stringify({
@@ -53,21 +59,42 @@ export function HomePage() {
       if (playback) void playback.then(() => logState('play-resolved'), error => logState('play-rejected', error));
     };
 
-    const readinessEvents = ['loadedmetadata', 'loadeddata', 'canplay'] as const;
+    const readinessEvents = ['loadeddata', 'canplay'] as const;
     const removeReadinessListeners = () => {
-      readinessEvents.forEach(event => video.removeEventListener(event, retryOnce));
+      readinessEvents.forEach(event => video.removeEventListener(event, onPlayable));
     };
-    const retryOnce = () => {
-      // Metadata alone may not include a decoded frame. Use the first ready event,
-      // then detach ALL listeners so subsequent events cannot trigger more retries.
+    let handledPlayable = false;
+    const onPlayable = () => {
       if (video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return;
+      if (handledPlayable) return;
+      handledPlayable = true;
       removeReadinessListeners();
-      if (video.paused) playVideo();
+      if (!ios || !layer) {
+        if (video.paused) playVideo();
+        return;
+      }
+      // Scrolling wakes the video layer on affected iPhones. Request one local
+      // stacking-context rebuild instead, without moving or hiding any content.
+      repaintFrame = window.requestAnimationFrame(() => {
+        if (disposed) return;
+        originalIsolation = layer.style.isolation;
+        layer.style.isolation = 'isolate';
+        void layer.offsetHeight;
+        logState('ios-repaint-start');
+        restoreFrame = window.requestAnimationFrame(() => {
+          if (disposed) return;
+          layer.style.isolation = originalIsolation!;
+          originalIsolation = undefined;
+          void layer.offsetHeight;
+          logState('ios-repaint-complete');
+          // This is the single readiness retry, not an additional autoplay loop.
+          if (video.paused) playVideo();
+        });
+      });
     };
-    if (video.readyState < HTMLMediaElement.HAVE_FUTURE_DATA) {
-      readinessEvents.forEach(event => video.addEventListener(event, retryOnce));
-    }
+    readinessEvents.forEach(event => video.addEventListener(event, onPlayable));
     playVideo();
+    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) onPlayable();
     logState('mount');
     // Finite observations only; these timers never start, pause, or reload media.
     const observations = mobile ? [1000, 3000, 8000].map(delay =>
@@ -75,6 +102,9 @@ export function HomePage() {
     return () => {
       disposed = true;
       removeReadinessListeners();
+      window.cancelAnimationFrame(repaintFrame);
+      window.cancelAnimationFrame(restoreFrame);
+      if (layer && originalIsolation !== undefined) layer.style.isolation = originalIsolation;
       observations.forEach(window.clearTimeout);
     };
   }, []);
@@ -82,7 +112,9 @@ export function HomePage() {
   return <main>
     <SEO {...seoConfig.pages.home} structuredData={[organizationSchema(), localBusinessSchema(), websiteSchema(), webPageSchema(seoConfig.pages.home.path, seoConfig.pages.home.title, seoConfig.pages.home.description), imageObjectSchema()]} />
     <section className="hero">
-      <video ref={setHeroVideoRef} className="hero__image" src={heroVideo} width="883" height="1024" autoPlay muted loop playsInline preload="auto" controls={false} controlsList="nodownload nofullscreen noremoteplayback" disablePictureInPicture aria-label={t('Tattoo Artist working with a client at Joker Tattoo in Patong')} />
+      <div ref={heroVideoLayerRef} className="hero__video-layer">
+        <video ref={setHeroVideoRef} className="hero__image" src={heroVideo} width="883" height="1024" autoPlay muted loop playsInline preload="auto" controls={false} controlsList="nodownload nofullscreen noremoteplayback" disablePictureInPicture aria-label={t('Tattoo Artist working with a client at Joker Tattoo in Patong')} />
+      </div>
       <div className="hero__overlay" />
       <div className="hero__content">
         <p className="eyebrow">{t('Patong · Phuket · Custom tattoo studio')}</p>
