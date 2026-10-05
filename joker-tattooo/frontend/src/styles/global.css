@@ -342,3 +342,11 @@ address{font-style:normal}
 
 /* Plain background layer; the iOS initial-paint workaround only toggles isolation. */
 .hero__video-layer{position:absolute;inset:0}
+
+/* Keep iOS hero sizing stable as browser chrome expands/collapses.
+   Preserve the existing 760px floor and explicit height for flex centering. */
+@supports (-webkit-touch-callout: none) and (height: 100svh){
+  @media(max-width:768px){
+    .hero{height:max(760px,100svh)}
+  }
+}
