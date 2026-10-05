@@ -339,3 +339,11 @@ address{font-style:normal}
 }
 
 .gallery-tile--preparing{position:fixed;width:1px;height:1px;visibility:hidden;pointer-events:none}
+
+/* Keep the inline iOS hero video on a stable layer from its first paint.
+   No animated transforms, parent promotion, or changes to mobile anti-flicker rules. */
+@supports (-webkit-touch-callout: none){
+  @media(max-width:768px){
+    .hero>video.hero__image{transform:translateZ(0)}
+  }
+}

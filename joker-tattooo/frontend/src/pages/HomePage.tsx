@@ -33,22 +33,49 @@ export function HomePage() {
     const video = heroVideoRef.current;
     if (!video) return;
 
-    let started = false;
+    let disposed = false;
+    const mobile = window.matchMedia('(max-width: 768px)').matches;
+    const logState = (event: string, error?: unknown) => {
+      if (!mobile || disposed) return;
+      console.info('[hero-video]', JSON.stringify({
+        event, paused: video.paused, currentTime: video.currentTime,
+        readyState: video.readyState, networkState: video.networkState,
+        currentSrc: video.currentSrc, videoWidth: video.videoWidth,
+        videoHeight: video.videoHeight, scrollY: window.scrollY,
+        error: error instanceof Error ? `${error.name}: ${error.message}` : undefined,
+      }));
+    };
     const playVideo = () => {
-      if (started) return;
       video.defaultMuted = true;
       video.muted = true;
       video.playsInline = true;
       const playback = video.play();
-      if (playback) void playback.then(() => { started = true; }, () => undefined);
+      if (playback) void playback.then(() => logState('play-resolved'), error => logState('play-rejected', error));
     };
 
-    video.addEventListener('loadedmetadata', playVideo);
-    video.addEventListener('canplay', playVideo);
+    const readinessEvents = ['loadedmetadata', 'loadeddata', 'canplay'] as const;
+    const removeReadinessListeners = () => {
+      readinessEvents.forEach(event => video.removeEventListener(event, retryOnce));
+    };
+    const retryOnce = () => {
+      // Metadata alone may not include a decoded frame. Use the first ready event,
+      // then detach ALL listeners so subsequent events cannot trigger more retries.
+      if (video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return;
+      removeReadinessListeners();
+      if (video.paused) playVideo();
+    };
+    if (video.readyState < HTMLMediaElement.HAVE_FUTURE_DATA) {
+      readinessEvents.forEach(event => video.addEventListener(event, retryOnce));
+    }
     playVideo();
+    logState('mount');
+    // Finite observations only; these timers never start, pause, or reload media.
+    const observations = mobile ? [1000, 3000, 8000].map(delay =>
+      window.setTimeout(() => logState(`mount+${delay}ms`), delay)) : [];
     return () => {
-      video.removeEventListener('loadedmetadata', playVideo);
-      video.removeEventListener('canplay', playVideo);
+      disposed = true;
+      removeReadinessListeners();
+      observations.forEach(window.clearTimeout);
     };
   }, []);
 
