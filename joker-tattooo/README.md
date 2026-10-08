@@ -56,7 +56,9 @@ The frontend project includes a same-origin Node function at `frontend/api/booki
 Production submissions default to `/api/bookings`; local development still uses the
 Express API on port 4001. Do not set a production `VITE_API_URL` to localhost.
 Leave it unset for the included function, or set it to a confirmed separate API URL
-ending in `/api` and configure that backend's `FRONTEND_URL` for the live website.
+ending in `/api`. The Express backend allows the old Vercel domain, the custom
+domain, and its `www` hostname. `FRONTEND_URL` can add comma-separated exact origins.
+The same-origin Vercel function needs no cross-origin CORS configuration.
 
 In the frontend Vercel project's Production environment, configure `SMTP_HOST`,
 `SMTP_USER`, and `SMTP_PASS`. For the existing Gmail account, use
@@ -73,6 +75,20 @@ Vercel's request-body limit. Preferred times use the published 13:00–20:00 hou
 
 After deployment, submit a clearly labelled test request and confirm receipt in
 the studio inbox (including spam). SMTP acceptance alone does not prove inbox delivery.
+
+Both production domains must point to the same current Vercel project/deployment.
+Use `frontend` as the Vercel Root Directory and `npm run build` as the build command.
+Leave `VITE_API_URL` unset (or `/api`) for the included function; changing a Vite
+environment variable requires a new build and redeploy. Check the `www` domain's
+DNS and TLS certificate in Vercel before using it for tests.
+
+If a POST returns Vercel's plain-text `FUNCTION_INVOCATION_FAILED` instead of the
+handler's JSON response, inspect function runtime logs before diagnosing SMTP.
+The function imports the shop configuration with the Node ESM JSON import
+attribute. `tests/booking-runtime.test.mjs` checks native Node startup separately
+from the local TypeScript runner so that runtime import failures are caught.
+Email failures log only provider error codes/status/command, never passwords or
+customer booking details. Missing SMTP settings log their names only.
 
 ## Checks and production builds
 

@@ -1,7 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import nodemailer from 'nodemailer';
 import { isValidPhoneNumber } from 'libphonenumber-js';
-import seo from '../src/config/seo.json';
+import seo from '../src/config/seo.json' with { type: 'json' };
 
 // Preserve the multipart stream for reference-image attachments.
 export const config = { helpers: false, api: { bodyParser: false } };
@@ -110,7 +110,14 @@ export default async function handler(request: IncomingMessage, response: Server
       transporter.close();
     }
   } catch (error) {
-    if (!(error instanceof RequestError)) console.error('[booking-api] delivery failed', error instanceof Error ? error.name : 'Unknown error');
+    if (!(error instanceof RequestError)) {
+      // Provider codes help diagnose delivery without logging credentials or booking details.
+      const smtpError = error as { name?: string; code?: string; responseCode?: number; command?: string } | null;
+      console.error('[booking-api] delivery failed', {
+        name: smtpError?.name ?? 'Unknown error', code: smtpError?.code,
+        responseCode: smtpError?.responseCode, command: smtpError?.command,
+      });
+    }
     respond(error instanceof RequestError ? error.status : 503, { success: false, message: 'We could not send your request. Please try again or contact the studio on WhatsApp.' });
   }
 }

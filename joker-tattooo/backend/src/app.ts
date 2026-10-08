@@ -6,11 +6,17 @@ import multer from 'multer';
 import bookingRoutes from './routes/bookings';
 
 const app = express();
+const allowedOrigins = new Set([
+  'https://joker-tattoo-redesign.vercel.app',
+  'https://jokertattoophuket.com',
+  'https://www.jokertattoophuket.com',
+  ...(process.env.FRONTEND_URL ?? 'http://localhost:5173').split(',').map(origin => origin.trim()).filter(Boolean),
+]);
 
 app.use(helmet());
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL ?? 'http://localhost:5173',
+    origin: (origin, done) => done(null, !origin || allowedOrigins.has(origin)),
   }),
 );
 app.use(morgan('dev'));
