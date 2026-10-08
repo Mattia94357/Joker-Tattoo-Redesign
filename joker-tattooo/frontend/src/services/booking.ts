@@ -11,6 +11,7 @@ export type BookingRequest = {
 };
 
 export type BookingSubmission = { id: string };
+export const MAX_REFERENCE_BYTES = 4 * 1024 * 1024;
 
 export async function submitBookingRequest(request: BookingRequest): Promise<BookingSubmission> {
   const payload = new FormData();
@@ -24,9 +25,31 @@ export async function submitBookingRequest(request: BookingRequest): Promise<Boo
   if (request.notes) payload.append('notes', request.notes);
   request.references.forEach(file => payload.append('references', file, file.name));
 
-  const apiUrl = (import.meta.env.VITE_API_URL ?? 'http://localhost:4001/api').replace(/\/$/, '');
-  const response = await fetch(`${apiUrl}/bookings`, { method: 'POST', body: payload });
-  const result = await response.json().catch(() => null) as { id?: string; message?: string } | null;
-  if (!response.ok) throw new Error(result?.message ?? 'Booking request delivery failed.');
-  return { id: result?.id ?? '' };
+  if (request.references.reduce((sum, file) => sum + file.size, 0) > MAX_REFERENCE_BYTES) throw new Error('Reference upload is too large.');
+  const configuredUrl = import.meta.env.VITE_API_URL?.trim();
+  const loopback = configuredUrl && /^https?:\/\/(?:localhost|127\.0\.0\.1|\[::1\])(?=[:/]|$)/i.test(configuredUrl);
+  const apiUrl = ((configuredUrl && (import.meta.env.DEV || !loopback) ? configuredUrl : undefined) ||
+    (import.meta.env.DEV ? 'http://localhost:4001/api' : '/api')).replace(/\/$/, '');
+  const endpoint = `${apiUrl}/bookings`;
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 15000);
+  try {
+    if (import.meta.env.DEV) console.debug('[booking] endpoint', endpoint);
+    const response = await fetch(endpoint, { method: 'POST', body: payload, signal: controller.signal });
+    if (import.meta.env.DEV) console.debug('[booking] HTTP status', response.status);
+    const body = await response.text();
+    if (import.meta.env.DEV) console.debug('[booking] response body', body);
+    const result: unknown = JSON.parse(body);
+    if (!response.ok || !result || typeof result !== 'object' ||
+        !('success' in result) || result.success !== true ||
+        !('id' in result) || typeof result.id !== 'string' || !result.id) {
+      throw new Error(`Booking request failed (HTTP ${response.status}).`);
+    }
+    return { id: result.id };
+  } catch (error) {
+    if (import.meta.env.DEV) console.error('[booking]', controller.signal.aborted ? 'request aborted' : 'request failed', error);
+    throw error;
+  } finally {
+    window.clearTimeout(timeout);
+  }
 }

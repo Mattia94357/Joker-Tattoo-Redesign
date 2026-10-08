@@ -1,13 +1,20 @@
 import { AnimatePresence, m } from 'framer-motion';
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type ChangeEvent, type DragEvent, type FormEvent, type MouseEvent } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { submitBookingRequest, type BookingRequest } from '../../services/booking';
+import { MAX_REFERENCE_BYTES, submitBookingRequest, type BookingRequest } from '../../services/booking';
+import { seoConfig } from '../../config/seo';
 import { InternationalPhoneInput, type InternationalPhoneValue } from './InternationalPhoneInput';
 import { useMobileViewport } from '../../hooks/useMobileViewport';
 import { trackEvent } from '../../lib/analytics';
 
 const styles = ['Japanese', 'Realism', 'Black & Grey', 'Fine Line', 'Colour', 'Tribal', 'Bamboo Tattoo', 'Cover Up', 'Not Sure Yet'];
 const sizes = ['Small', 'Medium', 'Large', 'Full Sleeve', 'Half Sleeve', 'Back Piece', 'Leg Sleeve', 'Chest', 'Other'];
+const bookingHours = seoConfig.openingHours[0];
+const toMinutes = (time: string) => Number(time.slice(0, 2)) * 60 + Number(time.slice(3));
+const appointmentTimes = Array.from({ length: Math.floor((toMinutes(bookingHours.closes) - toMinutes(bookingHours.opens)) / 30) + 1 }, (_, index) => {
+  const minutes = toMinutes(bookingHours.opens) + index * 30;
+  return `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`;
+});
 type Errors = Partial<Record<'name' | 'email' | 'whatsapp' | 'preferredDate' | 'preferredTime' | 'references' | 'submit', string>>;
 
 export function BookingModal({ open, onClose, onExitComplete }: { open: boolean; onClose: () => void; onExitComplete: () => void }) {
@@ -17,6 +24,7 @@ export function BookingModal({ open, onClose, onExitComplete }: { open: boolean;
   const closeRef = useRef<HTMLButtonElement>(null);
   const openRef = useRef(open);
   const backdropArmedRef = useRef(false);
+  const submittingRef = useRef(false);
   const [errors, setErrors] = useState<Errors>({});
   const [files, setFiles] = useState<File[]>([]);
   const [dragging, setDragging] = useState(false);
@@ -83,6 +91,7 @@ export function BookingModal({ open, onClose, onExitComplete }: { open: boolean;
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (submittingRef.current) return;
     const formElement = event.currentTarget;
     const data = new FormData(formElement);
     const value = (key: string) => String(data.get(key) ?? '').trim();
@@ -93,6 +102,7 @@ export function BookingModal({ open, onClose, onExitComplete }: { open: boolean;
     else if (!whatsapp.isValid) next.whatsapp = t('Please enter a valid WhatsApp number for the selected country.');
     if (!value('preferredDate')) next.preferredDate = t('Please choose a preferred date.');
     if (!value('preferredTime')) next.preferredTime = t('Please choose a preferred time.');
+    if (files.reduce((sum, file) => sum + file.size, 0) > MAX_REFERENCE_BYTES) next.references = t('Reference images must total 4 MB or less.');
     setErrors(next);
     if (Object.keys(next).length) return;
 
@@ -102,6 +112,7 @@ export function BookingModal({ open, onClose, onExitComplete }: { open: boolean;
       tattooStyle: value('tattooStyle') || undefined, estimatedSize: value('estimatedSize') || undefined,
       notes: value('notes') || undefined, references: files,
     };
+    submittingRef.current = true;
     setSubmitting(true);
     try {
       await submitBookingRequest(request);
@@ -109,8 +120,9 @@ export function BookingModal({ open, onClose, onExitComplete }: { open: boolean;
       formElement.reset();
       setSuccess(true);
     } catch {
-      setErrors({ submit: t('Something went wrong. Please try again or contact us directly.') });
+      setErrors({ submit: t("We couldn't send your request. Please try again or contact us on WhatsApp.") });
     } finally {
+      submittingRef.current = false;
       setSubmitting(false);
     }
   };
@@ -142,7 +154,7 @@ export function BookingModal({ open, onClose, onExitComplete }: { open: boolean;
           </div></fieldset>
           <fieldset><legend><span>02</span>{t('Preferred appointment')}</legend><div className="booking-fields booking-fields--two">
             <Field label={t('Preferred Date')} required error={errors.preferredDate}><input name="preferredDate" type="date" min={today} aria-invalid={!!errors.preferredDate} /></Field>
-            <Field label={t('Preferred Time')} required error={errors.preferredTime}><input name="preferredTime" type="time" aria-invalid={!!errors.preferredTime} /></Field>
+            <Field label={t('Preferred Time')} required error={errors.preferredTime}><select name="preferredTime" defaultValue="" aria-invalid={!!errors.preferredTime}><option value="">{t('Select a time')}</option>{appointmentTimes.map(time => <option key={time} value={time}>{time}</option>)}</select></Field>
           </div><p className="booking-request__hint">{t('This is a booking request. We will contact you to confirm availability.')}</p></fieldset>
           <fieldset><legend><span>03</span>{t('Your tattoo')}</legend><div className="booking-fields booking-fields--two">
             <Field label={t('Tattoo Style')}><select name="tattooStyle" defaultValue=""><option value="">{t('Select a style (optional)')}</option>{styles.map(style => <option key={style} value={style}>{t(style)}</option>)}</select></Field>
