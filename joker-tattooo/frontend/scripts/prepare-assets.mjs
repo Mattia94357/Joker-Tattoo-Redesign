@@ -58,6 +58,16 @@ const portfolioImages = [
   'japanese-sleeve.png',
 ];
 
+// Gallery replacements use the existing full-image and mobile-thumbnail formats.
+await Promise.all(['updatepic1.JPG', 'updatepic2.JPG', 'updatepic3.JPG'].flatMap(source => {
+  const input = path.join(sourceAssets, source);
+  const filename = path.parse(source).name;
+  return [
+    sharp(input).rotate().avif({ quality: 68, effort: 6 }).toFile(path.join(outputDir, `${filename}.avif`)),
+    sharp(input).rotate().resize({ width: 480, withoutEnlargement: true }).webp({ quality: 79, effort: 5, smartSubsample: true }).toFile(path.join(outputDir, `${filename}-480.webp`)),
+  ];
+}));
+
 await Promise.all(portfolioImages.flatMap(source => {
   const input = path.join(sourceAssets, source);
   const filename = path.parse(source).name;
