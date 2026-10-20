@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { selectBookingDate } from './helpers/bookingDate';
 
 test.describe('global booking request', () => {
   test.beforeEach(async ({ page }) => {
@@ -26,7 +27,7 @@ test.describe('global booking request', () => {
     await dialog.getByPlaceholder('Search by country or code').fill('Thailand');
     await dialog.getByRole('option', { name: 'Thailand +66' }).click();
     await dialog.getByLabel('WhatsApp *').fill('0812345678');
-    await dialog.getByLabel('Preferred Date *').fill('2027-01-20');
+    await selectBookingDate(page, '2027-01-20');
     await dialog.getByLabel('Preferred Time *').selectOption('14:30');
     await dialog.locator('input[type="file"]').setInputFiles({
       name: 'reference.png',
@@ -50,7 +51,7 @@ test.describe('global booking request', () => {
     await dialog.getByLabel('Email *').fill('alex@example.com');
     await dialog.getByLabel('WhatsApp *').fill('abc12-3');
     await expect(dialog.getByLabel('WhatsApp *')).toHaveValue('123');
-    await dialog.getByLabel('Preferred Date *').fill('2027-01-20');
+    await selectBookingDate(page, '2027-01-20');
     await dialog.getByLabel('Preferred Time *').selectOption('14:30');
     await dialog.getByRole('button', { name: 'Send Booking Request' }).click();
     await expect(dialog.getByText('Please enter a valid WhatsApp number for the selected country.')).toBeVisible();

@@ -4,6 +4,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { MAX_REFERENCE_BYTES, submitBookingRequest, type BookingRequest } from '../../services/booking';
 import { seoConfig } from '../../config/seo';
 import { InternationalPhoneInput, type InternationalPhoneValue } from './InternationalPhoneInput';
+import { PreferredDateField } from './PreferredDateField';
 import { useMobileViewport } from '../../hooks/useMobileViewport';
 import { trackEvent } from '../../lib/analytics';
 
@@ -15,22 +16,6 @@ const appointmentTimes = Array.from({ length: Math.floor((toMinutes(bookingHours
   const minutes = toMinutes(bookingHours.opens) + index * 30;
   return `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`;
 });
-
-function openDatePicker(input: HTMLInputElement) {
-  try {
-    if (typeof input.showPicker !== 'function') return false;
-    input.showPicker();
-    return true;
-  } catch {
-    // Keep the native date control usable when a browser cannot open it programmatically.
-    return false;
-  }
-}
-
-function clearPastDate(input: HTMLInputElement) {
-  // The form uses noValidate; never retain a past date in its payload.
-  if (input.value && input.value < input.min) input.value = '';
-}
 
 type Errors = Partial<Record<'name' | 'email' | 'whatsapp' | 'preferredDate' | 'preferredTime' | 'references' | 'submit', string>>;
 
@@ -144,9 +129,6 @@ export function BookingModal({ open, onClose, onExitComplete }: { open: boolean;
     }
   };
 
-  const now = new Date();
-  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-
   return <AnimatePresence onExitComplete={completeExit}>{open && <m.div className="booking-modal" initial={mobile ? false : { opacity: 0 }} animate={mobile ? undefined : { opacity: 1 }} exit={mobile ? undefined : { opacity: 0 }} transition={mobile ? undefined : { duration: .24 }}>
     <button className="booking-modal__backdrop" aria-label={t('Close booking form')} onClick={closeFromBackdrop} />
     <m.section className="booking-modal__panel" role="dialog" aria-modal="true" aria-labelledby={titleId} initial={mobile ? false : { opacity: 0, y: 34, scale: .985 }} animate={mobile ? undefined : { opacity: 1, y: 0, scale: 1 }} exit={mobile ? undefined : { opacity: 0, y: 28, scale: .99 }} transition={mobile ? undefined : { duration: .42, ease: [0.22, 1, 0.36, 1] }}>
@@ -171,15 +153,7 @@ export function BookingModal({ open, onClose, onExitComplete }: { open: boolean;
             <InternationalPhoneInput error={errors.whatsapp} onValueChange={updateWhatsapp} />
           </div></fieldset>
           <fieldset><legend><span>02</span>{t('Preferred appointment')}</legend><div className="booking-fields booking-fields--two">
-            <Field label={t('Preferred Date')} required error={errors.preferredDate}><input
-              name="preferredDate" type="date" min={today} required aria-invalid={!!errors.preferredDate}
-              onClick={event => openDatePicker(event.currentTarget)}
-              onKeyDown={event => {
-                if ((event.key === 'Enter' || event.key === ' ') && openDatePicker(event.currentTarget)) event.preventDefault();
-              }}
-              onInput={event => clearPastDate(event.currentTarget)}
-              onChange={event => clearPastDate(event.currentTarget)}
-            /></Field>
+            <PreferredDateField error={errors.preferredDate} />
             <Field label={t('Preferred Time')} required error={errors.preferredTime}><select name="preferredTime" defaultValue="" aria-invalid={!!errors.preferredTime}><option value="">{t('Select a time')}</option>{appointmentTimes.map(time => <option key={time} value={time}>{time}</option>)}</select></Field>
           </div><p className="booking-request__hint">{t('This is a booking request. We will contact you to confirm availability.')}</p></fieldset>
           <fieldset><legend><span>03</span>{t('Your tattoo')}</legend><div className="booking-fields booking-fields--two">

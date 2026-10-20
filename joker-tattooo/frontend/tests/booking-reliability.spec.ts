@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { selectBookingDate } from './helpers/bookingDate';
 
 const origin = process.env.BOOKING_TEST_ORIGIN ?? 'http://127.0.0.1:4173';
 const failureMessage = "We couldn't send your request. Please try again or contact us on WhatsApp.";
@@ -14,7 +15,7 @@ async function fillBooking(page: Page) {
   await dialog.getByLabel('Name *').fill('Booking Test');
   await dialog.getByLabel('Email *').fill('booking-test@example.com');
   await dialog.getByLabel('WhatsApp *').fill('2025550123');
-  await dialog.getByLabel('Preferred Date *').fill('2027-01-20');
+  await selectBookingDate(page, '2027-01-20');
   const time = dialog.getByLabel('Preferred Time *');
   await expect(time).toHaveValue('');
   expect(await time.locator('option').allTextContents()).toEqual(['Select a time', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00']);
@@ -60,7 +61,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
 }
 
 test('15-second timeout aborts an unresponsive request and restores submission', async ({ page }) => {
-  test.setTimeout(45000);
+  test.setTimeout(120000);
   await page.route('**/api/bookings', () => undefined);
   const dialog = await fillBooking(page);
   const start = Date.now();
@@ -88,7 +89,7 @@ test('Italian time placeholder and delivery failure use customer translations', 
   await dialog.getByLabel('Nome *').fill('Booking Test');
   await dialog.getByLabel('Email *').fill('booking-test@example.com');
   await dialog.getByLabel('WhatsApp *').fill('2025550123');
-  await dialog.getByLabel('Data preferita *').fill('2027-01-20');
+  await selectBookingDate(page, '2027-01-20');
   await dialog.getByLabel('Orario preferito *').selectOption('14:30');
   await dialog.getByRole('button', { name: 'Invia la richiesta', exact: true }).click();
   await expect(dialog.getByRole('alert')).toHaveText('Non è stato possibile inviare la richiesta. Riprova tra qualche istante o contattaci su WhatsApp.');

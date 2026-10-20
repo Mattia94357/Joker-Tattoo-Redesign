@@ -242,6 +242,30 @@ address{font-style:normal}
 .booking-field input,.booking-field select,.booking-field textarea{width:100%;min-height:55px;padding:.9rem 1rem;border:1px solid rgba(255,255,255,.13);border-radius:12px;outline:0;background:rgba(255,255,255,.035);color:#fff;transition:border-color .2s,background .2s,box-shadow .2s}
 .booking-field textarea{min-height:120px;resize:vertical}
 .booking-field select option{background:#111411}
+.booking-date-trigger{display:flex;align-items:center;justify-content:space-between;gap:.75rem;width:100%;min-height:55px;padding:.9rem 1rem;border:1px solid rgba(255,255,255,.13);border-radius:12px;background:rgba(255,255,255,.035);color:#fff;text-align:left;letter-spacing:normal;text-transform:none;cursor:pointer;transition:border-color .2s,background .2s,box-shadow .2s}
+.booking-date-trigger svg{flex:none;color:var(--green)}
+.booking-date-trigger:focus-visible,.booking-date-trigger[aria-expanded=true]{outline:0;border-color:rgba(114,239,115,.75);background:rgba(114,239,115,.045);box-shadow:0 0 0 3px rgba(114,239,115,.08)}
+.booking-date-trigger[aria-invalid=true]{border-color:#d55e63}
+.booking-date-placeholder{color:#8d938d}
+.booking-date-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.booking-calendar{position:fixed;z-index:300;width:min(352px,calc(100vw - 16px));max-height:calc(100dvh - 16px);overflow:auto;overscroll-behavior:contain;padding:.75rem;border:1px solid var(--line);border-radius:16px;background:var(--coal);color:var(--paper);box-shadow:0 24px 65px rgba(0,0,0,.55);font-family:var(--body);font-size:.85rem;color-scheme:dark}
+.booking-calendar__header{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:.5rem;margin-bottom:.5rem}
+.booking-calendar__header>span{text-align:center;font-weight:600;text-transform:capitalize}
+.booking-calendar button{border:1px solid transparent;border-radius:8px;background:transparent;cursor:pointer}
+.booking-calendar button:disabled{color:#596159;cursor:default}
+.booking-calendar button:not(:disabled):hover{background:rgba(114,239,115,.12);color:var(--green)}
+.booking-calendar button:focus-visible{outline:2px solid var(--green);outline-offset:-2px}
+.booking-calendar__header button{min-height:44px;color:var(--green);font-size:1.75rem;line-height:1}
+.booking-calendar table{width:100%;table-layout:fixed;border-collapse:collapse}
+.booking-calendar th{height:32px;padding:0;color:var(--muted);font-size:.65rem;font-weight:500;text-align:center;text-transform:uppercase}
+.booking-calendar td{padding:0;text-align:center}
+.booking-calendar td button{width:100%;min-height:44px;padding:.25rem 0;font-size:.85rem;color:var(--paper)}
+.booking-calendar td button.booking-calendar__outside:not(:disabled){color:var(--muted)}
+.booking-calendar td button[aria-current=date]{border-color:rgba(114,239,115,.4)}
+.booking-calendar td[aria-selected=true] button,.booking-calendar td[aria-selected=true] button:not(:disabled):hover{background:var(--green);color:var(--ink);font-weight:600}
+.booking-calendar__footer{display:flex;justify-content:flex-end;margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--line)}
+.booking-calendar__footer button{min-height:44px;padding:.5rem .75rem;color:var(--green);font-size:.75rem}
+@media(max-width:700px){.booking-date-trigger{min-height:58px;font-size:16px}}
 .booking-field input::placeholder,.booking-field textarea::placeholder{color:#666c66}
 .booking-field input:focus,.booking-field select:focus,.booking-field textarea:focus{border-color:rgba(114,239,115,.75);background:rgba(114,239,115,.045);box-shadow:0 0 0 3px rgba(114,239,115,.08)}
 .booking-field input[aria-invalid=true]{border-color:#d55e63}

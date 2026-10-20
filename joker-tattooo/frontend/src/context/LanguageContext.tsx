@@ -3,6 +3,11 @@ import { createContext, useContext, useEffect, useMemo, useState, type ReactNode
 export type Language = 'en' | 'it';
 
 const italian: Record<string, string> = {
+  'Select a date': 'Seleziona una data',
+  'Choose preferred date': 'Scegli la data preferita',
+  'Previous month': 'Mese precedente',
+  'Next month': 'Mese successivo',
+  'Close calendar': 'Chiudi calendario',
   'Home': 'Home',
   'Gallery': 'Galleria',
   'Why Joker': 'Scegli Joker',
