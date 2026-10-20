@@ -5,8 +5,8 @@ test.setTimeout(120_000);
 const categories = [
   { label: 'All', slug: null, count: 25 },
   { label: 'Japanese', slug: 'japanese', count: 8 },
-  { label: 'Realism', slug: 'realism', count: 7 },
-  { label: 'Sak Yant', slug: 'sak-yant', count: 5 },
+  { label: 'Realism', slug: 'realism', count: 9 },
+  { label: 'Sak Yant', slug: 'sak-yant', count: 3 },
   { label: 'Black & Grey', slug: 'black-grey', count: 17 },
   { label: 'Colour', slug: 'colour', count: 8 },
 ] as const;
